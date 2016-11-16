@@ -5,7 +5,12 @@ Autofac.Extras.IocManager
 Autofac.Extras.IocManager allows Autofac Container to be portable. It also provides all container resolve methods and conventional registration mechanism. IocManager is best alternative to Service Locator.
 
 #Usage
-
+```csharp
+ var builder = new ContainerBuilder();
+ builder.RegisterIocManager();
+ IContainer container = builder.Build();
+ container.UseIocManager();
+ ```
 ##Registrations
 ###Conventional assembly registrations
 
@@ -44,16 +49,6 @@ After the container build it can use:
 
 
 ##Resolvings
-Register and specify IocManager to the Container.
-```csharp
- var builder = new ContainerBuilder();
- builder.RegisterIocManager();
- IContainer container = builder.Build();
- container.UseIocManager();
- ```
- 
-##Extension Methods
- 
  Resolve instance:
  ```csharp
  IocManager.Instance.Resolve<IMyTransientClass>();
