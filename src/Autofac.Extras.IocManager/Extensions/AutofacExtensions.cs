@@ -25,12 +25,37 @@ namespace Autofac.Extras.IocManager.Extensions
         }
 
         /// <summary>
+        ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
+        /// </summary>
+        /// <param name="builder"></param>
+        public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder, IocManager iocManager)
+        {
+            builder.RegisterInstance(iocManager)
+                   .As<IIocManager, IIocResolver>()
+                   .AsSelf()
+                   .InjectPropertiesAsAutowired()
+                   .SingleInstance();
+
+            return builder;
+        }
+
+        /// <summary>
         ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
         /// </summary>
         /// <param name="container"></param>
         public static IContainer UseIocManager(this IContainer container)
         {
             IocManager.Instance.Container = container;
+            return container;
+        }
+
+        /// <summary>
+        ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
+        /// </summary>
+        /// <param name="container"></param>
+        public static IContainer UseIocManager(this IContainer container, IocManager iocManager)
+        {
+            iocManager.Container = container;
             return container;
         }
 

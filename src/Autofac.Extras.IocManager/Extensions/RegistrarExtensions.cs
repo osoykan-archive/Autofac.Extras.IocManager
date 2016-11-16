@@ -15,6 +15,7 @@ namespace Autofac.Extras.IocManager.Extensions
             RegisterSingletonDependencies(builder, assembly);
             RegisterTransientDependencies(builder, assembly);
             RegisterLifeTimeScopeDependencies(builder, assembly);
+            RegisterPerRequestDependencies(builder, assembly);
         }
 
         private static void RegisterSingletonDependencies(ContainerBuilder builder, Assembly assembly)

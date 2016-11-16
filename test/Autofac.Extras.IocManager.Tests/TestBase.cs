@@ -1,14 +1,10 @@
-﻿using Autofac.Extras.IocManager.Extensions;
-
-namespace Autofac.Extras.IocManager.Tests
+﻿namespace Autofac.Extras.IocManager.Tests
 {
-    public abstract class TestBase
+    public class TestBase
     {
-        internal ContainerBuilder Builder;
-
-        protected TestBase()
+        public TestBase()
         {
-            Builder = new ContainerBuilder().RegisterIocManager();
+            
         }
     }
 }

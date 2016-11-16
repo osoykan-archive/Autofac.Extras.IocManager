@@ -9,37 +9,41 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class ConventionalRegistrationTests : TestBase
+    public class ConventionalRegistrationTests
     {
         [Fact]
         public void ConventionalRegistrarShouldWork_WithDefaultInterfaces()
         {
-            Builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            Builder.Build().UseIocManager();
+            var localIocManager = new IocManager();
+            ContainerBuilder builder = new ContainerBuilder().RegisterIocManager(localIocManager);
+            builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            builder.Build().UseIocManager(localIocManager);
 
-            var myTransientInstance = IocManager.Instance.Resolve<IMyTransientClass>();
+            var myTransientInstance = localIocManager.Resolve<IMyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
-            myTransientInstance = IocManager.Instance.Resolve<MyTransientClass>();
+            myTransientInstance = localIocManager.Resolve<MyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
 
-            var mySingletonInstance = IocManager.Instance.Resolve<IMySingletonClass>();
+            var mySingletonInstance = localIocManager.Resolve<IMySingletonClass>();
             mySingletonInstance.ShouldNotBeNull();
-            mySingletonInstance = IocManager.Instance.Resolve<MySingletonClass>();
+            mySingletonInstance = localIocManager.Resolve<MySingletonClass>();
             mySingletonInstance.ShouldNotBeNull();
 
-            var myLifeTimeScopeInstance = IocManager.Instance.Resolve<IMyLifeTimeScopeClass>();
+            var myLifeTimeScopeInstance = localIocManager.Resolve<IMyLifeTimeScopeClass>();
             myLifeTimeScopeInstance.ShouldNotBeNull();
-            myLifeTimeScopeInstance = IocManager.Instance.Resolve<MyLifeTimeScopeClass>();
+            myLifeTimeScopeInstance = localIocManager.Resolve<MyLifeTimeScopeClass>();
             myLifeTimeScopeInstance.ShouldNotBeNull();
         }
 
         [Fact]
         public void ConventionalRegistrarShouldWork_GenericInterRegistrations()
         {
-            Builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            Builder.Build().UseIocManager();
+            var localIocManager = new IocManager();
+            ContainerBuilder builder = new ContainerBuilder().RegisterIocManager(localIocManager); ;
+            builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            builder.Build().UseIocManager(localIocManager);
 
-            var genericHumanInstance = IocManager.Instance.Resolve<IMyGenericClass<MyTransientClass>>();
+            var genericHumanInstance = localIocManager.Resolve<IMyGenericClass<MyTransientClass>>();
             genericHumanInstance.Object.ShouldBeAssignableTo(typeof(MyTransientClass));
         }
 
@@ -47,7 +51,7 @@ namespace Autofac.Extras.IocManager.Tests
 
         internal interface IMyTransientClass {}
 
-        internal class MySingletonClass : IMySingletonClass, ILifeTimeScopeDependency { }
+        internal class MySingletonClass : IMySingletonClass, ILifeTimeScopeDependency {}
 
         internal interface IMySingletonClass {}
 
