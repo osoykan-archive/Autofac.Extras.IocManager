@@ -21,7 +21,7 @@ after_build:
  
 test:
   assemblies:
-  - test\Autofac.Extras.IocManager\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.dll
+  - test\Autofac.Extras.IocManager\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.Tests.dll
 deploy:
 - provider: NuGet
   api_key:
