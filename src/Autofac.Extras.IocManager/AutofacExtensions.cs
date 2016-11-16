@@ -9,6 +9,10 @@ namespace Autofac.Extras.IocManager
 {
     public static class AutofacExtensions
     {
+        /// <summary>
+        ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
+        /// </summary>
+        /// <param name="builder"></param>
         public static void RegisterIocManager(this ContainerBuilder builder)
         {
             builder.RegisterInstance(IocManager.Instance)
@@ -18,6 +22,10 @@ namespace Autofac.Extras.IocManager
                    .SingleInstance();
         }
 
+        /// <summary>
+        ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
+        /// </summary>
+        /// <param name="container"></param>
         public static void UseIocManager(this IContainer container)
         {
             IocManager.Instance.Container = container;
@@ -38,6 +46,11 @@ namespace Autofac.Extras.IocManager
             return registration.OnActivated(args => InjectProperties(args.Context, args.Instance, true, new DoNotInjectAttributePropertySelector()));
         }
 
+        /// <summary>
+        ///     Helper for anonymouse resolvings <see cref="IocManager.Resolve{T}(object)" />
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
         internal static IEnumerable<TypedParameter> GetTypedResolvingParameters(this object @this)
         {
             foreach (PropertyInfo propertyInfo in @this.GetType().GetProperties())
