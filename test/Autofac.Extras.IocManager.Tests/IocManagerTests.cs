@@ -1,20 +1,15 @@
 ﻿using System;
 
+using Autofac.Extras.IocManager.Extensions;
+
 using Shouldly;
 
 using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class IocManagerTests
+    public class IocManagerTests : TestBase
     {
-        internal ContainerBuilder Builder;
-
-        public IocManagerTests()
-        {
-            Builder = new ContainerBuilder().RegisterIocManager();
-        }
-
         [Fact]
         public void IocManagerShouldWork()
         {
@@ -29,6 +24,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Builder.RegisterType<SimpleDependency>().As<ISimpleDependency>().InstancePerDependency();
             Builder.Build().UseIocManager();
+
             var simpleDependency = IocManager.Instance.Resolve<ISimpleDependency>();
             simpleDependency.ShouldNotBeNull();
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Autofac.Extras.IocManager
+namespace Autofac.Extras.IocManager.Extensions
 {
     public static class IocManagerExtensions
     {

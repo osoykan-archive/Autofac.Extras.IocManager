@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Autofac.Extras.IocManager.Extensions;
+
 namespace Autofac.Extras.IocManager
 {
     internal class DisposableDependencyObjectWrapper : DisposableDependencyObjectWrapper<object>, IDisposableDependencyObjectWrapper

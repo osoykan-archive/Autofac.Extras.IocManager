@@ -1,39 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 using Autofac.Builder;
 using Autofac.Core;
 
-namespace Autofac.Extras.IocManager
+namespace Autofac.Extras.IocManager.Extensions
 {
-    public static class AutofacExtensions
+    public static class RegistrationBuilderExtensions
     {
-        /// <summary>
-        ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
-        /// </summary>
-        /// <param name="builder"></param>
-        public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder)
-        {
-            builder.RegisterInstance(IocManager.Instance)
-                   .As<IIocManager, IIocResolver>()
-                   .AsSelf()
-                   .InjectPropertiesAsAutowired()
-                   .SingleInstance();
-
-            return builder;
-        }
-
-        /// <summary>
-        ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
-        /// </summary>
-        /// <param name="container"></param>
-        public static IContainer UseIocManager(this IContainer container)
-        {
-            IocManager.Instance.Container = container;
-            return container;
-        }
-
         /// <summary>
         ///     This extension allows circular dependencies and applies <see cref="DoNotInjectAttribute" />
         /// </summary>
@@ -47,19 +21,6 @@ namespace Autofac.Extras.IocManager
                 this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration)
         {
             return registration.OnActivated(args => InjectProperties(args.Context, args.Instance, true, new DoNotInjectAttributePropertySelector()));
-        }
-
-        /// <summary>
-        ///     Helper for anonymouse resolvings <see cref="IocManager.Resolve{T}(object)" />
-        /// </summary>
-        /// <param name="this"></param>
-        /// <returns></returns>
-        internal static IEnumerable<TypedParameter> GetTypedResolvingParameters(this object @this)
-        {
-            foreach (PropertyInfo propertyInfo in @this.GetType().GetProperties())
-            {
-                yield return new TypedParameter(propertyInfo.PropertyType, propertyInfo.GetValue(@this, null));
-            }
         }
 
         private static void InjectProperties(IComponentContext context, object instance, bool overrideSetValues, IPropertySelector propertySelector)
