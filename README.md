@@ -2,7 +2,7 @@ Autofac.Extras.IocManager
 =====================
 [![Build status](https://ci.appveyor.com/api/projects/status/udvakwrxb3nhb25d?svg=true)](https://ci.appveyor.com/project/osoykan/autofac-extras-iocmanager) [![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager)
 
-Autofac.Extras.IocManager allows Autofac Container to be portable. It also provides all container resolve methods and conventional registration mechanism. IocManager is best alternative to Service Locator.
+Autofac.Extras.IocManager allows Autofac Container to be portable. It also provides entire resolve methods which belong to Autofac Container and also provides conventional registration mechanism. IocManager is the best alternative to [common Service Locator anti-pattern](http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/).
 
 #Usage
 ```csharp
@@ -74,4 +74,22 @@ using (IIocScopedResolver iocScopedResolver = IocManager.Instance.CreateScope())
 }
 
 simpleDisposableDependency.DisposeCount.ShouldBe(1);
+```
+
+##Property Injection
+Autofac.Extras.IocManager also provides property injection on public and private properties with `InjectPropertiesAsAutowired()` extension.
+
+```csharp
+builder.RegisterType<ISimpleDependency>().AsSelf().AsImplementedInterfaces().InjectPropertiesAsAutowired();
+```
+
+Also you may not want to inject all properties for a dependency, it can be done with putting single attribute to target property.
+`DoNotInjectAttribute`
+
+```csharp
+ class MySimpleClass : IMySimpleClass, ILifeTimeScopeDependency
+ {
+     [DoNotInject]
+     public IHuman Human { get; set; }
+ }
 ```
