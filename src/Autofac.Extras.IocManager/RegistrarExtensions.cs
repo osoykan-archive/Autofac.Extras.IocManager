@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-using Autofac.Extras.IocManager.InterfaceMarking;
-
 using FluentAssemblyScanner;
 
-namespace Autofac.Extras.IocManager.Extensions
+namespace Autofac.Extras.IocManager
 {
     public static class RegistrarExtensions
     {

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Autofac.Extras.IocManager.Extensions;
-
 namespace Autofac.Extras.IocManager
 {
     public class IocScopedResolver : IIocScopedResolver

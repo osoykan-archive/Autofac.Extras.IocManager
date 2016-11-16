@@ -5,7 +5,7 @@ using System.Reflection;
 using Autofac.Builder;
 using Autofac.Features.Scanning;
 
-namespace Autofac.Extras.IocManager.Extensions
+namespace Autofac.Extras.IocManager
 {
     public static class AutofacExtensions
     {

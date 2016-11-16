@@ -4,7 +4,7 @@ using System.Reflection;
 using Autofac.Builder;
 using Autofac.Core;
 
-namespace Autofac.Extras.IocManager.Extensions
+namespace Autofac.Extras.IocManager
 {
     public static class RegistrationBuilderExtensions
     {

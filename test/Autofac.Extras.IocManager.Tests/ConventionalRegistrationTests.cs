@@ -1,8 +1,5 @@
 ﻿using System.Reflection;
 
-using Autofac.Extras.IocManager.Extensions;
-using Autofac.Extras.IocManager.InterfaceMarking;
-
 using Shouldly;
 
 using Xunit;

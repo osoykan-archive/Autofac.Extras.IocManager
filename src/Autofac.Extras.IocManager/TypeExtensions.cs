@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Autofac.Extras.IocManager.Extensions
+namespace Autofac.Extras.IocManager
 {
     public static class TypeExtensions
     {
