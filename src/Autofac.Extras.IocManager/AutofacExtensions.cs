@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 using Autofac.Builder;
 using Autofac.Features.Scanning;
@@ -27,7 +26,8 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="builder">Autofac's <see cref="ContainerBuilder" /></param>
+        /// <param name="iocManager">IocManager abstraction for Autofac <see cref="IocManager" /></param>
         public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder, IocManager iocManager)
         {
             builder.RegisterInstance(iocManager)
@@ -66,14 +66,20 @@ namespace Autofac.Extras.IocManager
         /// <returns></returns>
         internal static IEnumerable<TypedParameter> GetTypedResolvingParameters(this object @this)
         {
-            foreach (PropertyInfo propertyInfo in @this.GetType().GetProperties())
+            foreach (var propertyInfo in @this.GetType().GetProperties())
             {
                 yield return new TypedParameter(propertyInfo.PropertyType, propertyInfo.GetValue(@this, null));
             }
         }
 
+        /// <summary>
+        ///     Finds and registers as DefaultInterfaces to container conventionally.
+        /// </summary>
+        /// <typeparam name="TLimit"></typeparam>
+        /// <param name="registration"></param>
+        /// <returns></returns>
         public static IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle>
-            AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
+                AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
         {
             if (registration == null)
             {
