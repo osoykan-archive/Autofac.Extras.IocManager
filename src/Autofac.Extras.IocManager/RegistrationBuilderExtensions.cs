@@ -23,42 +23,53 @@ namespace Autofac.Extras.IocManager
             return registration.OnActivated(args => InjectProperties(args.Context, args.Instance, true, new DoNotInjectAttributePropertySelector()));
         }
 
+        private static bool IsInjectable(this IPropertySelector propertySelector, PropertyInfo propertyInfo, object instance)
+        {
+            return propertySelector.InjectProperty(propertyInfo, instance);
+        }
+
         private static void InjectProperties(IComponentContext context, object instance, bool overrideSetValues, IPropertySelector propertySelector)
         {
             if (context == null)
-            {
                 throw new ArgumentNullException(nameof(context));
-            }
+
             if (instance == null)
-            {
                 throw new ArgumentNullException(nameof(instance));
-            }
+
             if (propertySelector == null)
-            {
                 throw new ArgumentNullException(nameof(propertySelector));
-            }
 
             foreach (PropertyInfo propertyInfo in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
-                if (propertySelector.InjectProperty(propertyInfo, instance))
+                if (!propertySelector.IsInjectable(propertyInfo, instance))
                 {
                     continue;
                 }
 
                 Type propertyType = propertyInfo.PropertyType;
 
-                if ((!propertyType.IsValueType || propertyType.IsEnum) && (propertyInfo.GetIndexParameters().Length == 0) && context.IsRegistered(propertyType))
+                if (IsInjectable(context, propertyInfo, propertyType))
                 {
                     MethodInfo[] accessors = propertyInfo.GetAccessors(true);
 
-                    if (((accessors.Length != 1) || !(accessors[0].ReturnType != typeof(void)))
-                        && (overrideSetValues || (accessors.Length != 2) || (propertyInfo.GetValue(instance, null) == null)))
+                    if (IsInjectable(instance, overrideSetValues, propertyInfo, accessors))
                     {
                         object obj = context.Resolve(propertyType);
                         propertyInfo.SetValue(instance, obj, null);
                     }
                 }
             }
+        }
+
+        private static bool IsInjectable(object instance, bool overrideSetValues, PropertyInfo propertyInfo, MethodInfo[] accessors)
+        {
+            return ((accessors.Length != 1) || !(accessors[0].ReturnType != typeof(void)))
+                   && (overrideSetValues || (accessors.Length != 2) || (propertyInfo.GetValue(instance, null) == null));
+        }
+
+        private static bool IsInjectable(IComponentContext context, PropertyInfo propertyInfo, Type propertyType)
+        {
+            return (!propertyType.IsValueType || propertyType.IsEnum) && (propertyInfo.GetIndexParameters().Length == 0) && context.IsRegistered(propertyType);
         }
     }
 }

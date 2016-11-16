@@ -11,8 +11,10 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ConventionalRegistrarShouldWork_WithDefaultInterfaces()
         {
-            Builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            Builder.Build().UseIocManager(LocalIocManager);
+            Building(builder =>
+                     {
+                         builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+                     });
 
             var myTransientInstance = LocalIocManager.Resolve<IMyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
@@ -33,27 +35,38 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ConventionalRegistrarShouldWork_GenericInterRegistrations()
         {
-            var LocalIocManager = new IocManager();
-            ContainerBuilder builder = new ContainerBuilder().RegisterIocManager(LocalIocManager);
-            ;
-            builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            builder.Build().UseIocManager(LocalIocManager);
+            Building(builder =>
+                     {
+                         builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+                     });
 
             var genericHumanInstance = LocalIocManager.Resolve<IMyGenericClass<MyTransientClass>>();
             genericHumanInstance.Object.ShouldBeAssignableTo(typeof(MyTransientClass));
         }
 
-        internal class MyTransientClass : IMyTransientClass, ILifeTimeScopeDependency {}
+        internal class MyTransientClass : IMyTransientClass, ILifeTimeScopeDependency
+        {
+        }
 
-        internal interface IMyTransientClass {}
+        internal interface IMyTransientClass
+        {
+        }
 
-        internal class MySingletonClass : IMySingletonClass, ILifeTimeScopeDependency {}
+        internal class MySingletonClass : IMySingletonClass, ILifeTimeScopeDependency
+        {
+        }
 
-        internal interface IMySingletonClass {}
+        internal interface IMySingletonClass
+        {
+        }
 
-        internal class MyLifeTimeScopeClass : IMyLifeTimeScopeClass, ILifeTimeScopeDependency {}
+        internal class MyLifeTimeScopeClass : IMyLifeTimeScopeClass, ILifeTimeScopeDependency
+        {
+        }
 
-        internal interface IMyLifeTimeScopeClass {}
+        internal interface IMyLifeTimeScopeClass
+        {
+        }
 
         internal class MyGenericClass<T> : IMyGenericClass<T>, ILifeTimeScopeDependency
         {

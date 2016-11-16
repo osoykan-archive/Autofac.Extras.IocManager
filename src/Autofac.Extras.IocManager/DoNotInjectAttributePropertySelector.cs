@@ -1,7 +1,7 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 
 using Autofac.Core;
-using System.Linq;
 
 namespace Autofac.Extras.IocManager
 {
@@ -9,7 +9,12 @@ namespace Autofac.Extras.IocManager
     {
         public bool InjectProperty(PropertyInfo propertyInfo, object instance)
         {
-            return propertyInfo.GetCustomAttributes<DoNotInjectAttribute>().Any();
+            if (propertyInfo.GetCustomAttributes<DoNotInjectAttribute>().Any())
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
