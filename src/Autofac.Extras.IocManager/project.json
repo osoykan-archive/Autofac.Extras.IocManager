@@ -1,35 +1,36 @@
 {
-  "version" : "1.0.3-*",
+  "version": "1.0.3-*",
 
   "dependencies": {
     "Autofac": "4.2.0",
     "FluentAssemblyScanner": "1.0.3"
   },
 
-  "frameworks" : {
-    "net452" : {
-    
+  "frameworks": {
+    "net452": {
+
     }
   },
 
-  "packOptions" : {
-    "summary" : "An abstraction to Autofac resolvings.",
-    "tags" : [
+  "packOptions": {
+    "summary": "An abstraction to Autofac resolvings and registrations",
+    "tags": [
       "Autofac",
       "Resolve",
       "Composition Root",
       "Service Locator"
     ],
-    "owners" : ["Oguzhan Soykan"],
-    "iconUrl" : "https://raw.githubusercontent.com/osoykan/Stove/master/stove.png",
-    "projectUrl" : "https://github.com/osoykan/Autofac.Extras.IocManager",
-    "licenseUrl" : "https://github.com/osoykan/Autofac.Extras.IocManager/blob/master/LICENSE",
-    "requireLicenseAcceptance" : false,
+    "owners": [ "Oguzhan Soykan" ],
+    "authors": [ "Oguzhan Soykan" ],
+    "iconUrl": "https://raw.githubusercontent.com/osoykan/Stove/master/stove.png",
+    "projectUrl": "https://github.com/osoykan/Autofac.Extras.IocManager",
+    "licenseUrl": "https://github.com/osoykan/Autofac.Extras.IocManager/blob/master/LICENSE",
+    "requireLicenseAcceptance": false,
     "repository": {
       "type": "git",
       "url": "https://github.com/osoykan/Autofac.Extras.IocManager"
     },
-    "files" : {
+    "files": {
       "mappings": {
         "lib/net452/": "bin/Release/net452/Autofac.Extras.IocManager.pdb"
       }

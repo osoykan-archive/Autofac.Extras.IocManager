@@ -6,41 +6,35 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class IocManagerTests
+    public class IocManagerTests : TestBase
     {
         [Fact]
         public void IocManagerShouldWork()
         {
-            var localIocManager = new IocManager();
-            ContainerBuilder builder = new ContainerBuilder().RegisterIocManager(localIocManager);
-            builder.Build().UseIocManager(localIocManager);
+            Builder.Build().UseIocManager(LocalIocManager);
 
-            localIocManager.ShouldNotBeNull();
-            localIocManager.Container.ShouldNotBeNull();
+            LocalIocManager.ShouldNotBeNull();
+            LocalIocManager.Container.ShouldNotBeNull();
         }
 
         [Fact]
         public void IocManagerShould_Resolvedependency()
         {
-            var localIocManager = new IocManager();
-            ContainerBuilder builder = new ContainerBuilder().RegisterIocManager(localIocManager);
-            builder.RegisterType<SimpleDependency>().As<ISimpleDependency>().InstancePerLifetimeScope();
-            IContainer container = builder.Build().UseIocManager(localIocManager);
+            Builder.RegisterType<SimpleDependency>().As<ISimpleDependency>().InstancePerLifetimeScope();
+            Builder.Build().UseIocManager(LocalIocManager);
 
-            var simpleDependency = localIocManager.Resolve<ISimpleDependency>();
+            var simpleDependency = LocalIocManager.Resolve<ISimpleDependency>();
             simpleDependency.ShouldNotBeNull();
         }
 
         [Fact]
         public void IocManager_ShouldResolveDisposableDependency_And_Dispose_After_Scope_Finished()
         {
-            var localIocManager = new IocManager();
-            ContainerBuilder builder = new ContainerBuilder().RegisterIocManager(localIocManager);
-            builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
-            IContainer container = builder.Build().UseIocManager(localIocManager);
+            Builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
+            Builder.Build().UseIocManager(LocalIocManager);
 
             SimpleDisposableDependency simpleDisposableDependency;
-            using (IDisposableDependencyObjectWrapper<SimpleDisposableDependency> simpleDependencyWrapper = localIocManager.ResolveAsDisposable<SimpleDisposableDependency>())
+            using (IDisposableDependencyObjectWrapper<SimpleDisposableDependency> simpleDependencyWrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableDependency>())
             {
                 simpleDisposableDependency = simpleDependencyWrapper.Object;
             }
@@ -51,14 +45,27 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocManager_ShouldInjectAnyDependecy()
         {
-            var localIocManager = new IocManager();
-            ContainerBuilder builder = new ContainerBuilder().RegisterIocManager(localIocManager);
-            builder.RegisterType<SimpleDependencyWithIocManager>().InstancePerLifetimeScope();
-            IContainer container = builder.Build().UseIocManager(localIocManager);
+            Builder.RegisterType<SimpleDependencyWithIocManager>().InstancePerLifetimeScope();
+            IContainer container = Builder.Build().UseIocManager(LocalIocManager);
 
             var dependencyWithIocManager = container.Resolve<SimpleDependencyWithIocManager>();
 
-            dependencyWithIocManager.GetIocManager().ShouldBe(localIocManager);
+            dependencyWithIocManager.GetIocManager().ShouldBe(LocalIocManager);
+        }
+
+        [Fact]
+        public void IocManager_ScopeShouldWork()
+        {
+            Builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
+            Builder.Build().UseIocManager(LocalIocManager);
+
+            SimpleDisposableDependency simpleDisposableDependency;
+            using (IIocScopedResolver iocScopedResolver = LocalIocManager.CreateScope())
+            {
+                simpleDisposableDependency = iocScopedResolver.Resolve<SimpleDisposableDependency>();
+            }
+
+            simpleDisposableDependency.DisposeCount.ShouldBe(1);
         }
 
         internal interface ISimpleDependency {}
