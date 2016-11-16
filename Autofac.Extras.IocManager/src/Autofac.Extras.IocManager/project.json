@@ -1,0 +1,37 @@
+{
+  "version" : "1.0.0-*",
+
+  "dependencies" : {
+    "Autofac" : "4.2.0"
+  },
+
+  "frameworks" : {
+    "net452" : {
+    
+    }
+  },
+
+  "packOptions" : {
+    "summary" : "An abstraction to Autofac resolvings.",
+    "tags" : [
+      "Autofac",
+      "Resolve",
+      "Composition Root",
+      "Service Locator"
+    ],
+    "owners" : ["Oguzhan Soykan"],
+    "iconUrl" : "https://raw.githubusercontent.com/osoykan/Stove/master/stove.png",
+    "projectUrl" : "https://github.com/osoykan/Autofac.Extras.IocManager",
+    "licenseUrl" : "https://github.com/osoykan/Autofac.Extras.IocManager/blob/master/LICENSE",
+    "requireLicenseAcceptance" : false,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/osoykan/Autofac.Extras.IocManager"
+    },
+    "files" : {
+      "mappings": {
+        "lib/net452/": "bin/Release/net452/Autofac.Extras.IocManager.pdb"
+      }
+    }
+  }
+}
