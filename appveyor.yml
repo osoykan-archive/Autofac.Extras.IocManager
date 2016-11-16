@@ -18,6 +18,8 @@ build:
   verbosity: minimal
 after_build:
 - cmd: dotnet pack "src\Autofac.Extras.IocManager" -c "Release" -o "nupkg/"
+test:
+ assemblies: test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\Autofac.Extras.IocManager.Tests.dll
 deploy:
 - provider: NuGet
   api_key:
