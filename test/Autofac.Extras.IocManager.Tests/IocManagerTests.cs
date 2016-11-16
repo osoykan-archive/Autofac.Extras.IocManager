@@ -22,7 +22,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocManagerShould_Resolvedependency()
         {
-            Builder.RegisterType<SimpleDependency>().As<ISimpleDependency>().InstancePerDependency();
+            Builder.RegisterType<SimpleDependency>().As<ISimpleDependency>().InstancePerLifetimeScope();
             Builder.Build().UseIocManager();
 
             var simpleDependency = IocManager.Instance.Resolve<ISimpleDependency>();
@@ -32,7 +32,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocManager_ShouldResolveDisposableDependency_And_Dispose_After_Scope_Finished()
         {
-            Builder.RegisterType<SimpleDisposableDependency>().InstancePerDependency();
+            Builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
             Builder.Build().UseIocManager();
 
             SimpleDisposableDependency simpleDisposableDependency;
@@ -47,7 +47,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocManager_ShouldInjectAnyDependecy()
         {
-            Builder.RegisterType<SimpleDependencyWithIocManager>().InstancePerDependency();
+            Builder.RegisterType<SimpleDependencyWithIocManager>().InstancePerLifetimeScope();
             IContainer container = Builder.Build().UseIocManager();
 
             var dependencyWithIocManager = container.Resolve<SimpleDependencyWithIocManager>();
