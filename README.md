@@ -46,7 +46,7 @@ After the container build it can use:
  ```csharp
  IocManager.Instance.Resolve<ISimpleDependency3>();
  ```
- With this feature, you no longer don't have to define your registrations in builder explicitly. `RegisterAssemblyByConvention` does this with [interface marking pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern).
+ With this feature, you no longer don't have to define your registrations in `Builder`'s `Load` method explicitly. `RegisterAssemblyByConvention` does this with [interface marking pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern).
 
 ##Resolvings
  Resolve instance:
