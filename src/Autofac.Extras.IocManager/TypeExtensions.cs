@@ -9,6 +9,11 @@ namespace Autofac.Extras.IocManager
 {
     public static class TypeExtensions
     {
+        /// <summary>
+        ///     Finds default interfaces a givent type and given type adds itsel in returned list.
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns>Default interface types with adding given type itself</returns>
         public static Type[] GetDefaultInterfacesWithSelf(this Type @this)
         {
             var types = @this.GetInterfaces()
@@ -17,6 +22,16 @@ namespace Autofac.Extras.IocManager
             return types.Prepend(@this).ToArray();
         }
 
+        /// <summary>
+        ///     Finds default interfaces a givent type.
+        ///     <code>
+        /// class SimpleDependency : ISimpleDependency
+        /// {
+        /// }
+        ///  </code>
+        /// </summary>
+        /// <param name="this">Type to search</param>
+        /// <returns>Default interface types</returns>
         public static Type[] GetDefaultInterfaces(this Type @this)
         {
             return @this.GetInterfaces()
@@ -24,6 +39,12 @@ namespace Autofac.Extras.IocManager
                         .ToArray();
         }
 
+        /// <summary>
+        ///     Searches given assembly by given <see cref="@this" /> type.
+        /// </summary>
+        /// <param name="this">Type to search</param>
+        /// <param name="assembly">Target assembly to search</param>
+        /// <returns>Founded types list</returns>
         public static List<Type> AssignedTypesInAssembly(this Type @this, Assembly assembly)
         {
             return AssemblyScanner.FromAssembly(assembly)

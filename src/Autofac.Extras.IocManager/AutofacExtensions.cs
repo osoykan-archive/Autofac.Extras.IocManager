@@ -90,14 +90,26 @@ namespace Autofac.Extras.IocManager
             return registration.As(t => (IEnumerable<Type>)t.GetDefaultInterfacesWithSelf());
         }
 
-        public static void RegisterDependenciesByAssembly<TLifetime>(this ContainerBuilder builder, Assembly assembly) where TLifetime : ILifetime
+        /// <summary>
+        ///     Finds all types based <see cref="TLifetime" /> in given <see cref="Assembly" />
+        /// </summary>
+        /// <typeparam name="TLifetime">Lifetime of dependencies</typeparam>
+        /// <param name="builder">Autofac's <see cref="ContainerBuilder" /></param>
+        /// <param name="assembly">Assemby to search</param>
+        internal static void RegisterDependenciesByAssembly<TLifetime>(this ContainerBuilder builder, Assembly assembly) where TLifetime : ILifetime
         {
             typeof(TLifetime)
                     .AssignedTypesInAssembly(assembly)
                     .ForEach(builder.RegisterApplyingLifetime<TLifetime>);
         }
 
-        public static void RegisterApplyingLifetime<TLifetime>(this ContainerBuilder builder, Type typeToRegister) where TLifetime : ILifetime
+        /// <summary>
+        ///     Registers given type according to it's lifetime. Type can be generic or not.
+        /// </summary>
+        /// <typeparam name="TLifetime">Lifetime of dependency</typeparam>
+        /// <param name="builder">Autofac's <see cref="ContainerBuilder" /></param>
+        /// <param name="typeToRegister">Type to register Autofac Container</param>
+        internal static void RegisterApplyingLifetime<TLifetime>(this ContainerBuilder builder, Type typeToRegister) where TLifetime : ILifetime
         {
             if (typeToRegister.IsGenericTypeDefinition)
             {

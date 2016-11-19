@@ -28,7 +28,7 @@ namespace Autofac.Extras.IocManager
             return propertySelector.InjectProperty(propertyInfo, instance);
         }
 
-        public static void
+        internal static void
                 ApplyLifeStyle<TLimit, TActivatorData, TRegistrationStyle>(
                     this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration, Type lifetimeType)
         {
