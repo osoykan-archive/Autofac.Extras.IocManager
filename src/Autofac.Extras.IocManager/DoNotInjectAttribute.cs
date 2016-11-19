@@ -2,5 +2,8 @@
 
 namespace Autofac.Extras.IocManager
 {
-    public class DoNotInjectAttribute : Attribute {}
+    [AttributeUsage(AttributeTargets.Property)]
+    public class DoNotInjectAttribute : Attribute
+    {
+    }
 }
