@@ -1,24 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+
+using FluentAssemblyScanner;
 
 namespace Autofac.Extras.IocManager
 {
     public static class TypeExtensions
     {
-        public static Type[] GetDefaultInterfaceTypesWithSelf(this Type @this)
+        public static Type[] GetDefaultInterfacesWithSelf(this Type @this)
         {
-            Type[] types = @this.GetInterfaces()
-                                .Where(x => @this.Name.Contains(x.Name.TrimStart('I')))
-                                .ToArray();
+            var types = @this.GetInterfaces()
+                             .Where(x => @this.Name.Contains(x.Name.TrimStart('I')))
+                             .ToArray();
             return types.Prepend(@this).ToArray();
         }
 
-        public static Type[] GetDefaultInterfaceTypes(this Type @this)
+        public static Type[] GetDefaultInterfaces(this Type @this)
         {
             return @this.GetInterfaces()
                         .Where(x => @this.Name.Contains(x.Name.TrimStart('I')))
                         .ToArray();
+        }
+
+        public static List<Type> AssignedTypesInAssembly(this Type @this, Assembly assembly)
+        {
+            return AssemblyScanner.FromAssembly(assembly)
+                                  .IncludeNonPublicTypes()
+                                  .BasedOn(@this)
+                                  .Filter()
+                                  .Classes()
+                                  .NonStatic()
+                                  .Scan();
         }
 
         /// <summary>Appends the item to the specified sequence.</summary>
@@ -33,7 +47,7 @@ namespace Autofac.Extras.IocManager
                 throw new ArgumentNullException(nameof(sequence));
             }
 
-            foreach (T obj in sequence)
+            foreach (var obj in sequence)
             {
                 yield return obj;
             }
@@ -55,7 +69,7 @@ namespace Autofac.Extras.IocManager
 
             yield return leadingItem;
 
-            foreach (T obj in sequence)
+            foreach (var obj in sequence)
             {
                 yield return obj;
             }
@@ -63,7 +77,7 @@ namespace Autofac.Extras.IocManager
 
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
         {
-            foreach (T obj in items)
+            foreach (var obj in items)
             {
                 collection.Add(obj);
             }

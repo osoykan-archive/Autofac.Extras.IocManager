@@ -1,4 +1,4 @@
 ﻿namespace Autofac.Extras.IocManager
 {
-    public interface ILifeTimeScopeDependency {}
+    public interface ILifetimeScopeDependency : ILifetime { }
 }

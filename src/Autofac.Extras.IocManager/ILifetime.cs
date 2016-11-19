@@ -1,6 +1,6 @@
 ﻿namespace Autofac.Extras.IocManager
 {
-    public interface IPerRequestDependency : ILifetime
+    public interface ILifetime
     {
     }
 }

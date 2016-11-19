@@ -44,7 +44,7 @@ namespace Autofac.Extras.IocManager.Tests
             genericHumanInstance.Object.ShouldBeAssignableTo(typeof(MyTransientClass));
         }
 
-        internal class MyTransientClass : IMyTransientClass, ILifeTimeScopeDependency
+        internal class MyTransientClass : IMyTransientClass, ILifetimeScopeDependency
         {
         }
 
@@ -52,7 +52,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
         }
 
-        internal class MySingletonClass : IMySingletonClass, ILifeTimeScopeDependency
+        internal class MySingletonClass : IMySingletonClass, ILifetimeScopeDependency
         {
         }
 
@@ -60,7 +60,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
         }
 
-        internal class MyLifeTimeScopeClass : IMyLifeTimeScopeClass, ILifeTimeScopeDependency
+        internal class MyLifeTimeScopeClass : IMyLifeTimeScopeClass, ILifetimeScopeDependency
         {
         }
 
@@ -68,7 +68,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
         }
 
-        internal class MyGenericClass<T> : IMyGenericClass<T>, ILifeTimeScopeDependency
+        internal class MyGenericClass<T> : IMyGenericClass<T>, ILifetimeScopeDependency
         {
             public T Object { get; set; }
         }

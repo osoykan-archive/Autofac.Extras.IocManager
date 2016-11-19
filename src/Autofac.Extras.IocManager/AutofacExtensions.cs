@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 using Autofac.Builder;
 using Autofac.Features.Scanning;
@@ -86,7 +87,34 @@ namespace Autofac.Extras.IocManager
                 throw new ArgumentNullException(nameof(registration));
             }
 
-            return registration.As(t => (IEnumerable<Type>)t.GetDefaultInterfaceTypesWithSelf());
+            return registration.As(t => (IEnumerable<Type>)t.GetDefaultInterfacesWithSelf());
+        }
+
+        public static void RegisterDependenciesByAssembly<TLifetime>(this ContainerBuilder builder, Assembly assembly) where TLifetime : ILifetime
+        {
+            typeof(TLifetime)
+                    .AssignedTypesInAssembly(assembly)
+                    .ForEach(builder.RegisterApplyingLifetime<TLifetime>);
+        }
+
+        public static void RegisterApplyingLifetime<TLifetime>(this ContainerBuilder builder, Type typeToRegister) where TLifetime : ILifetime
+        {
+            if (typeToRegister.IsGenericTypeDefinition)
+            {
+                builder.RegisterGeneric(typeToRegister)
+                       .As(typeToRegister.GetDefaultInterfaces())
+                       .AsSelf()
+                       .InjectPropertiesAsAutowired()
+                       .ApplyLifeStyle(typeof(TLifetime));
+            }
+            else
+            {
+                builder.RegisterType(typeToRegister)
+                       .As(typeToRegister.GetDefaultInterfaces())
+                       .AsSelf()
+                       .InjectPropertiesAsAutowired()
+                       .ApplyLifeStyle(typeof(TLifetime));
+            }
         }
     }
 }

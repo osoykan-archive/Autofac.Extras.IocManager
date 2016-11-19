@@ -17,8 +17,8 @@ namespace Autofac.Extras.IocManager
         /// <param name="registration"></param>
         /// <returns></returns>
         public static IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle>
-            InjectPropertiesAsAutowired<TLimit, TActivatorData, TRegistrationStyle>(
-                this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration)
+                InjectPropertiesAsAutowired<TLimit, TActivatorData, TRegistrationStyle>(
+                    this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration)
         {
             return registration.OnActivated(args => InjectProperties(args.Context, args.Instance, true, new DoNotInjectAttributePropertySelector()));
         }
@@ -28,33 +28,64 @@ namespace Autofac.Extras.IocManager
             return propertySelector.InjectProperty(propertyInfo, instance);
         }
 
+        public static void
+                ApplyLifeStyle<TLimit, TActivatorData, TRegistrationStyle>(
+                    this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration, Type lifetimeType)
+        {
+            if (lifetimeType == typeof(ISingletonDependency))
+            {
+                registration.SingleInstance();
+            }
+
+            if (lifetimeType == typeof(ILifetimeScopeDependency))
+            {
+                registration.InstancePerLifetimeScope();
+            }
+
+            if (lifetimeType == typeof(ITransientDependency))
+            {
+                registration.InstancePerDependency();
+            }
+
+            if (lifetimeType == typeof(IPerRequestDependency))
+            {
+                registration.InstancePerRequest();
+            }
+        }
+
         private static void InjectProperties(IComponentContext context, object instance, bool overrideSetValues, IPropertySelector propertySelector)
         {
             if (context == null)
+            {
                 throw new ArgumentNullException(nameof(context));
+            }
 
             if (instance == null)
+            {
                 throw new ArgumentNullException(nameof(instance));
+            }
 
             if (propertySelector == null)
+            {
                 throw new ArgumentNullException(nameof(propertySelector));
+            }
 
-            foreach (PropertyInfo propertyInfo in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            foreach (var propertyInfo in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 if (!propertySelector.IsInjectable(propertyInfo, instance))
                 {
                     continue;
                 }
 
-                Type propertyType = propertyInfo.PropertyType;
+                var propertyType = propertyInfo.PropertyType;
 
                 if (IsInjectable(context, propertyInfo, propertyType))
                 {
-                    MethodInfo[] accessors = propertyInfo.GetAccessors(true);
+                    var accessors = propertyInfo.GetAccessors(true);
 
                     if (IsInjectable(instance, overrideSetValues, propertyInfo, accessors))
                     {
-                        object obj = context.Resolve(propertyType);
+                        var obj = context.Resolve(propertyType);
                         propertyInfo.SetValue(instance, obj, null);
                     }
                 }
