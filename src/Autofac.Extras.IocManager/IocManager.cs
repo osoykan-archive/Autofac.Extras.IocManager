@@ -44,7 +44,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
+        ///     Returning object must be Released (see <see cref="ILifetimeScope" />) after usage.
         /// </summary>
         /// <typeparam name="T">Type of the object to get</typeparam>
         /// <returns>The instance object</returns>
@@ -55,7 +55,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="Release" />) after usage.
+        ///     Returning object must be Released (see <see cref="ILifetimeScope" />) after usage.
         /// </summary>
         /// <typeparam name="T">Type of the object to cast</typeparam>
         /// <param name="type">Type of the object to resolve</param>
@@ -67,7 +67,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
+        ///     Returning object must be Released (see <see cref="ILifetimeScope" />) after usage.
         /// </summary>
         /// <typeparam name="T">Type of the object to get</typeparam>
         /// <param name="argumentsAsAnonymousType">Constructor arguments</param>
@@ -79,7 +79,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
+        ///     Returning object must be Released (see <see cref="ILifetimeScope" />) after usage.
         /// </summary>
         /// <param name="type">Type of the object to get</param>
         /// <returns>The instance object</returns>
@@ -90,7 +90,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
+        ///     Returning object must be Released (see <see cref="ILifetimeScope" />) after usage.
         /// </summary>
         /// <param name="type">Type of the object to get</param>
         /// <param name="argumentsAsAnonymousType">Constructor arguments</param>
@@ -100,13 +100,24 @@ namespace Autofac.Extras.IocManager
             return Container.Resolve(type, argumentsAsAnonymousType.GetTypedResolvingParameters());
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets all implementations for given type.
+        ///     Returning objects must be Released after usage.
+        /// </summary>
+        /// <typeparam name="T">Type of the objects to resolve</typeparam>
+        /// <returns>Object instances</returns>
         public T[] ResolveAll<T>()
         {
             return Container.Resolve<IEnumerable<T>>().ToArray();
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets all implementations for given type.
+        ///     Returning objects must be Released after usage.
+        /// </summary>
+        /// <typeparam name="T">Type of the objects to resolve</typeparam>
+        /// <param name="argumentsAsAnonymousType">Constructor arguments</param>
+        /// <returns>Object instances</returns>
         public T[] ResolveAll<T>(object argumentsAsAnonymousType)
         {
             return Container.Resolve<IEnumerable<T>>(argumentsAsAnonymousType.GetTypedResolvingParameters()).ToArray();
