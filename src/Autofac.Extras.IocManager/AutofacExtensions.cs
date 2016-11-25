@@ -4,6 +4,7 @@ using System.Reflection;
 
 using Autofac.Builder;
 using Autofac.Features.Scanning;
+using System.Linq;
 
 namespace Autofac.Extras.IocManager
 {
@@ -67,7 +68,7 @@ namespace Autofac.Extras.IocManager
         /// <returns></returns>
         internal static IEnumerable<TypedParameter> GetTypedResolvingParameters(this object @this)
         {
-            foreach (var propertyInfo in @this.GetType().GetProperties())
+            foreach (PropertyInfo propertyInfo in @this.GetType().GetProperties())
             {
                 yield return new TypedParameter(propertyInfo.PropertyType, propertyInfo.GetValue(@this, null));
             }
@@ -111,10 +112,17 @@ namespace Autofac.Extras.IocManager
         /// <param name="typeToRegister">Type to register Autofac Container</param>
         internal static void RegisterApplyingLifetime<TLifetime>(this ContainerBuilder builder, Type typeToRegister) where TLifetime : ILifetime
         {
+            var defaultInterfaces = typeToRegister.GetDefaultInterfaces().ToList();
+
+            if (typeToRegister.IsAssignableTo<IStartable>())
+            {
+                defaultInterfaces.Add(typeof(IStartable));
+            }
+
             if (typeToRegister.IsGenericTypeDefinition)
             {
                 builder.RegisterGeneric(typeToRegister)
-                       .As(typeToRegister.GetDefaultInterfaces())
+                       .As(defaultInterfaces.ToArray())
                        .AsSelf()
                        .InjectPropertiesAsAutowired()
                        .ApplyLifeStyle(typeof(TLifetime));
@@ -122,7 +130,7 @@ namespace Autofac.Extras.IocManager
             else
             {
                 builder.RegisterType(typeToRegister)
-                       .As(typeToRegister.GetDefaultInterfaces())
+                       .As(defaultInterfaces.ToArray())
                        .AsSelf()
                        .InjectPropertiesAsAutowired()
                        .ApplyLifeStyle(typeof(TLifetime));
