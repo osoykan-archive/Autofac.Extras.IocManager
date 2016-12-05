@@ -11,10 +11,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ConventionalRegistrarShouldWork_WithDefaultInterfaces()
         {
-            Building(builder =>
-                     {
-                         builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-                     });
+            Building(builder => { builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()); });
 
             var myTransientInstance = LocalIocManager.Resolve<IMyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
@@ -35,16 +32,13 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ConventionalRegistrarShouldWork_GenericInterRegistrations()
         {
-            Building(builder =>
-                     {
-                         builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-                     });
+            Building(builder => { builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()); });
 
             var genericHumanInstance = LocalIocManager.Resolve<IMyGenericClass<MyTransientClass>>();
             genericHumanInstance.Object.ShouldBeAssignableTo(typeof(MyTransientClass));
         }
 
-        internal class MyTransientClass : IMyTransientClass, ILifetimeScopeDependency
+        internal class MyTransientClass : IMyTransientClass, ITransientDependency
         {
         }
 
@@ -52,7 +46,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
         }
 
-        internal class MySingletonClass : IMySingletonClass, ILifetimeScopeDependency
+        internal class MySingletonClass : IMySingletonClass, ISingletonDependency
         {
         }
 
@@ -68,7 +62,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
         }
 
-        internal class MyGenericClass<T> : IMyGenericClass<T>, ILifetimeScopeDependency
+        internal class MyGenericClass<T> : IMyGenericClass<T>, ITransientDependency
         {
             public T Object { get; set; }
         }
