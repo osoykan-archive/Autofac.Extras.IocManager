@@ -76,8 +76,6 @@ namespace Autofac.Extras.IocManager
                     .InjectPropertiesAsAutowired()
                     .AsSelf();
 
-            registration.ApplyLifeStyle(lifetime);
-
             IRegistrationBuilder<TService, SimpleActivatorData, SingleRegistrationStyle> serviceRegistration = _containerBuilder
                     .Register<TService>(c => c.Resolve<TImplementation>())
                     .As<TService>()
@@ -87,6 +85,9 @@ namespace Autofac.Extras.IocManager
                                       TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
                                       args.ReplaceInstance(instance);
                                   });
+
+            registration.ApplyLifeStyle(lifetime);
+
             if (keepDefault)
             {
                 serviceRegistration.PreserveExistingDefaults();
