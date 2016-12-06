@@ -2,6 +2,6 @@
 {
     public interface IModule
     {
-        void Register(IocBuilder iocBuilder);
+        void Register(IIocBuilder iocBuilder);
     }
 }

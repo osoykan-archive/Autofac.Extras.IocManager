@@ -29,12 +29,35 @@ namespace Autofac.Extras.IocManager
             where TService2 : class
             where TImplementation : class, TService1, TService2
         {
-            IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder.RegisterType<TImplementation>().As<TService1, TService2>().InjectPropertiesAsAutowired().AsSelf();
+            IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                    .RegisterType<TImplementation>()
+                    .As<TService1, TService2>()
+                    .InjectPropertiesAsAutowired()
+                    .AsSelf();
 
-            if (lifetime == Lifetime.Singleton)
+            registration.ApplyLifeStyle(lifetime);
+
+            if (keepDefault)
             {
-                registration.SingleInstance();
+                registration.PreserveExistingDefaults();
             }
+        }
+
+        public void Register<TService1, TService2, TImplementation>(
+            TImplementation instance,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TService1 : class
+            where TService2 : class
+            where TImplementation : class, TService1, TService2
+        {
+            IRegistrationBuilder<TImplementation, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                    .RegisterInstance(instance)
+                    .As<TService1, TService2>()
+                    .AsSelf()
+                    .InjectPropertiesAsAutowired();
+
+            registration.ApplyLifeStyle(lifetime);
 
             if (keepDefault)
             {
@@ -48,15 +71,17 @@ namespace Autofac.Extras.IocManager
             where TImplementation : class, TService
             where TService : class
         {
-            IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder.RegisterType<TImplementation>().InjectPropertiesAsAutowired().AsSelf();
-            if (lifetime == Lifetime.Singleton)
-            {
-                registration.SingleInstance();
-            }
+            IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                    .RegisterType<TImplementation>()
+                    .InjectPropertiesAsAutowired()
+                    .AsSelf();
+
+            registration.ApplyLifeStyle(lifetime);
 
             IRegistrationBuilder<TService, SimpleActivatorData, SingleRegistrationStyle> serviceRegistration = _containerBuilder
                     .Register<TService>(c => c.Resolve<TImplementation>())
                     .As<TService>()
+                    .InjectPropertiesAsAutowired()
                     .OnActivating(args =>
                                   {
                                       TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
@@ -76,15 +101,14 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<TService, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                     .Register(cc => factory(new ResolverContext(new AutofacResolver(cc))))
+                    .InjectPropertiesAsAutowired()
                     .OnActivating(args =>
                                   {
                                       TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
                                       args.ReplaceInstance(instance);
                                   });
-            if (lifetime == Lifetime.Singleton)
-            {
-                registration.SingleInstance();
-            }
+            registration.ApplyLifeStyle(lifetime);
+
             if (keepDefault)
             {
                 registration.PreserveExistingDefaults();
@@ -100,15 +124,14 @@ namespace Autofac.Extras.IocManager
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                     .RegisterType(implementationType)
                     .As(serviceType)
+                    .InjectPropertiesAsAutowired()
                     .OnActivating(args =>
                                   {
                                       object instance = _decoratorService.Decorate(serviceType, args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
                                       args.ReplaceInstance(instance);
                                   });
-            if (lifetime == Lifetime.Singleton)
-            {
-                registration.SingleInstance();
-            }
+            registration.ApplyLifeStyle(lifetime);
+
             if (keepDefault)
             {
                 registration.PreserveExistingDefaults();
@@ -122,19 +145,23 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                     .RegisterType(serviceType)
+                    .InjectPropertiesAsAutowired()
                     .OnActivating(args =>
                                   {
                                       object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
                                       args.ReplaceInstance(instance);
                                   });
-            if (lifetime == Lifetime.Singleton)
-            {
-                registration.SingleInstance();
-            }
+            registration.ApplyLifeStyle(lifetime);
+
             if (keepDefault)
             {
                 registration.PreserveExistingDefaults();
             }
+        }
+
+        public void RegisterType<TService>(Lifetime lifetime = Lifetime.Transient, bool keepDefault = false)
+        {
+            RegisterType(typeof(TService), lifetime, keepDefault);
         }
 
         public void RegisterGeneric(
@@ -144,11 +171,16 @@ namespace Autofac.Extras.IocManager
             bool keepDefault = false)
         {
             IRegistrationBuilder<object, ReflectionActivatorData, DynamicRegistrationStyle> registration = _containerBuilder
-                    .RegisterGeneric(implementationType).As(serviceType);
-            if (lifetime == Lifetime.Singleton)
-            {
-                registration.SingleInstance();
-            }
+                    .RegisterGeneric(implementationType)
+                    .As(serviceType)
+                    .InjectPropertiesAsAutowired();
+
+            registration.ApplyLifeStyle(lifetime);
+        }
+
+        public void RegisterGeneric<TService, TImplementation>(Lifetime lifetime = Lifetime.Transient, bool keepDefault = false)
+        {
+            RegisterGeneric(typeof(TService), typeof(TImplementation), lifetime, keepDefault);
         }
 
         public void Decorate<TService>(Func<IResolverContext, TService, TService> factory)

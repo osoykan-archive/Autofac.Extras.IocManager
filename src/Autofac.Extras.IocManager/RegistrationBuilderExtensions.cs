@@ -48,6 +48,26 @@ namespace Autofac.Extras.IocManager
             }
         }
 
+        internal static void
+                ApplyLifeStyle<TLimit, TActivatorData, TRegistrationStyle>(
+                    this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration, Lifetime lifeTime)
+        {
+            if (lifeTime == Lifetime.Singleton)
+            {
+                registration.SingleInstance();
+            }
+
+            if (lifeTime == Lifetime.LifetimeScope)
+            {
+                registration.InstancePerLifetimeScope();
+            }
+
+            if (lifeTime == Lifetime.Transient)
+            {
+                registration.InstancePerDependency();
+            }
+        }
+
         private static void InjectProperties(IComponentContext context, object instance, bool overrideSetValues, IPropertySelector propertySelector)
         {
             if (context == null)

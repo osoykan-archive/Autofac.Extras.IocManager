@@ -12,6 +12,14 @@ namespace Autofac.Extras.IocManager
             where TService1 : class
             where TService2 : class;
 
+        void Register<TService1, TService2, TImplementation>(
+            TImplementation instance,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TImplementation : class, TService1, TService2
+            where TService1 : class
+            where TService2 : class;
+
         void Register<TService, TImplementation>(
             Lifetime lifetime = Lifetime.Transient,
             bool keepDefault = false)
@@ -35,9 +43,17 @@ namespace Autofac.Extras.IocManager
             Lifetime lifetime = Lifetime.Transient,
             bool keepDefault = false);
 
+        void RegisterType<TService>(
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false);
+
         void RegisterGeneric(
             Type serviceType,
             Type implementationType,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false);
+
+        void RegisterGeneric<TService, TImplementation>(
             Lifetime lifetime = Lifetime.Transient,
             bool keepDefault = false);
 

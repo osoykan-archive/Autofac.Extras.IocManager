@@ -6,26 +6,27 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class IocBuilderTests
+    public class IocBuilderTests : TestBaseWithIocBuilder
     {
         [Fact]
         public void IocBuilder_ShouldWork()
         {
-            using (IRootResolver resolver = IocBuilder.New
-                                                      .UseAutofacContainerBuilder()
-                                                      .RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())
-                                                      .CreateResolver())
-            {
-                var myDependency = resolver.Resolve<IMyDependency>();
-                myDependency.ShouldNotBeNull();
-            }
+            IResolver resolver = Building(builder =>
+                                          {
+                                              builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+                                          });
+
+            var myDependencyFromLocalIocManager = LocalIocManager.Resolve<IMyDependency>();
+            var myDependencyFromResolver = resolver.Resolve<IMyDependency>();
+
+            myDependencyFromLocalIocManager.ShouldBeSameAs(myDependencyFromResolver);
         }
 
         internal interface IMyDependency
         {
         }
 
-        internal class MyDependency : IMyDependency, ITransientDependency
+        internal class MyDependency : IMyDependency, ISingletonDependency
         {
         }
     }

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class CircularPropertyDependencyTests : TestBase
+    public class CircularPropertyDependencyTests : TestBaseWithIocBuilder
     {
         private void Initialize_Test_LifeTimeScope()
         {
@@ -13,11 +13,11 @@ namespace Autofac.Extras.IocManager.Tests
             MyClass3.CreateCount = 0;
 
             Building(builder =>
-            {
-                builder.RegisterType<MyClass1>().InstancePerLifetimeScope().InjectPropertiesAsAutowired();
-                builder.RegisterType<MyClass2>().InstancePerLifetimeScope().InjectPropertiesAsAutowired();
-                builder.RegisterType<MyClass3>().InstancePerLifetimeScope().InjectPropertiesAsAutowired();
-            });
+                     {
+                         builder.RegisterServices(f => f.RegisterType<MyClass1>(Lifetime.LifetimeScope));
+                         builder.RegisterServices(f => f.RegisterType<MyClass2>(Lifetime.LifetimeScope));
+                         builder.RegisterServices(f => f.RegisterType<MyClass3>(Lifetime.LifetimeScope));
+                     });
         }
 
         [Fact]

@@ -64,7 +64,6 @@ namespace Autofac.Extras.IocManager
         private void RegisterDefaults(IServiceRegistration serviceRegistration)
         {
             serviceRegistration.Register(_ => ModuleRegistration, Lifetime.Singleton);
-            serviceRegistration.Register<IIocManager, IIocResolver, IocManager>();
         }
     }
 }

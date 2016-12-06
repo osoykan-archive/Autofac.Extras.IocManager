@@ -6,7 +6,7 @@ using Autofac.Extras.IocManager;
 public class ModuleRegistration : IModuleRegistration
 {
     private readonly Dictionary<Type, IModule> _modules = new Dictionary<Type, IModule>();
-    private readonly IocBuilder iocBuilder;
+    private readonly IIocBuilder iocBuilder;
 
     public ModuleRegistration(IocBuilder iocBuilder)
     {

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class IocManagerTests : TestBase
+    public class IocManagerTests : TestBaseWithIocBuilder
     {
         [Fact]
         public void IocManagerShouldWork()
@@ -35,7 +35,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDependency>().As<ISimpleDependency>().InstancePerLifetimeScope();
+                         builder.RegisterServices(f => f.Register<ISimpleDependency, SimpleDependency>(Lifetime.LifetimeScope));
                      });
 
             var simpleDependency = LocalIocManager.Resolve<ISimpleDependency>();
@@ -47,7 +47,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
+                         builder.RegisterServices(f => f.RegisterType<SimpleDisposableDependency>(Lifetime.LifetimeScope));
                      });
 
             SimpleDisposableDependency simpleDisposableDependency;
@@ -62,12 +62,12 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocManager_ShouldInjectAnyDependecy()
         {
-            var container = Building(builder =>
+            var resolver = Building(builder =>
                                      {
-                                         builder.RegisterType<SimpleDependencyWithIocManager>().InstancePerLifetimeScope();
+                                         builder.RegisterServices(f => f.RegisterType<SimpleDependencyWithIocManager>(Lifetime.LifetimeScope));
                                      });
 
-            var dependencyWithIocManager = container.Resolve<SimpleDependencyWithIocManager>();
+            var dependencyWithIocManager = resolver.Resolve<SimpleDependencyWithIocManager>();
 
             dependencyWithIocManager.GetIocManager().ShouldBeSameAs(LocalIocManager);
         }
@@ -77,7 +77,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
+                         builder.RegisterServices(f => f.RegisterType<SimpleDisposableDependency>(Lifetime.LifetimeScope));
                      });
 
             SimpleDisposableDependency simpleDisposableDependency;

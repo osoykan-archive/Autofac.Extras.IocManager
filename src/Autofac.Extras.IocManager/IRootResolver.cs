@@ -2,5 +2,6 @@
 {
     public interface IRootResolver : IScopeResolver
     {
+        IContainer Container { get; }
     }
 }

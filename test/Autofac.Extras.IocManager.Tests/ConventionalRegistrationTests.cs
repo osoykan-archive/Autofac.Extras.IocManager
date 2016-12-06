@@ -6,12 +6,15 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class ConventionalRegistrationTests : TestBase
+    public class ConventionalRegistrationTests : TestBaseWithIocBuilder
     {
         [Fact]
         public void ConventionalRegistrarShouldWork_WithDefaultInterfaces()
         {
-            Building(builder => { builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()); });
+            Building(builder =>
+                     {
+                         builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+                     });
 
             var myTransientInstance = LocalIocManager.Resolve<IMyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
