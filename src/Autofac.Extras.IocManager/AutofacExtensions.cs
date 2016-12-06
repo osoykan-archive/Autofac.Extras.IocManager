@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using Autofac.Builder;
 using Autofac.Features.Scanning;
-using System.Linq;
 
 namespace Autofac.Extras.IocManager
 {
@@ -112,7 +112,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="typeToRegister">Type to register Autofac Container</param>
         internal static void RegisterApplyingLifetime<TLifetime>(this ContainerBuilder builder, Type typeToRegister) where TLifetime : ILifetime
         {
-            var defaultInterfaces = typeToRegister.GetDefaultInterfaces().ToList();
+            List<Type> defaultInterfaces = typeToRegister.GetDefaultInterfaces().ToList();
 
             if (typeToRegister.IsAssignableTo<IStartable>())
             {

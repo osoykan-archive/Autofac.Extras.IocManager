@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +10,10 @@ namespace Autofac.Extras.IocManager
 {
     public static class TypeExtensions
     {
+        private static readonly ConcurrentDictionary<Type, string> PrettyPrintCache = new ConcurrentDictionary<Type, string>();
+
+        private static readonly ConcurrentDictionary<Type, string> TypeCacheKeys = new ConcurrentDictionary<Type, string>();
+
         /// <summary>
         ///     Finds default interfaces a givent type and given type adds itsel in returned list.
         /// </summary>
@@ -16,9 +21,9 @@ namespace Autofac.Extras.IocManager
         /// <returns>Default interface types with adding given type itself</returns>
         public static Type[] GetDefaultInterfacesWithSelf(this Type @this)
         {
-            var types = @this.GetInterfaces()
-                             .Where(x => @this.Name.Contains(x.Name.TrimStart('I')))
-                             .ToArray();
+            Type[] types = @this.GetInterfaces()
+                                .Where(x => @this.Name.Contains(x.Name.TrimStart('I')))
+                                .ToArray();
             return types.Prepend(@this).ToArray();
         }
 
@@ -68,7 +73,7 @@ namespace Autofac.Extras.IocManager
                 throw new ArgumentNullException(nameof(sequence));
             }
 
-            foreach (var obj in sequence)
+            foreach (T obj in sequence)
             {
                 yield return obj;
             }
@@ -90,7 +95,7 @@ namespace Autofac.Extras.IocManager
 
             yield return leadingItem;
 
-            foreach (var obj in sequence)
+            foreach (T obj in sequence)
             {
                 yield return obj;
             }
@@ -98,10 +103,53 @@ namespace Autofac.Extras.IocManager
 
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
         {
-            foreach (var obj in items)
+            foreach (T obj in items)
             {
                 collection.Add(obj);
             }
+        }
+
+        public static string PrettyPrint(this Type type)
+        {
+            return PrettyPrintCache.GetOrAdd(
+                type,
+                t =>
+                {
+                    try
+                    {
+                        return PrettyPrintRecursive(t, 0);
+                    }
+                    catch (Exception)
+                    {
+                        return t.Name;
+                    }
+                });
+        }
+
+        public static string GetCacheKey(this Type type)
+        {
+            return TypeCacheKeys.GetOrAdd(
+                type,
+                t => $"{t.PrettyPrint()}[hash: {t.GetHashCode()}]");
+        }
+
+        private static string PrettyPrintRecursive(Type type, int depth)
+        {
+            if (depth > 3)
+            {
+                return type.Name;
+            }
+
+            string[] nameParts = type.Name.Split('`');
+            if (nameParts.Length == 1)
+            {
+                return nameParts[0];
+            }
+
+            Type[] genericArguments = type.GetGenericArguments();
+            return !type.IsConstructedGenericType
+                ? $"{nameParts[0]}<{new string(',', genericArguments.Length - 1)}>"
+                : $"{nameParts[0]}<{string.Join(",", genericArguments.Select(t => PrettyPrintRecursive(t, depth + 1)))}>";
         }
     }
 }

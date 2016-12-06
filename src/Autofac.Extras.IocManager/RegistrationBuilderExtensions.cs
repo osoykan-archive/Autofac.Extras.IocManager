@@ -46,11 +46,6 @@ namespace Autofac.Extras.IocManager
             {
                 registration.InstancePerDependency();
             }
-
-            if (lifetimeType == typeof(IPerRequestDependency))
-            {
-                registration.InstancePerRequest();
-            }
         }
 
         private static void InjectProperties(IComponentContext context, object instance, bool overrideSetValues, IPropertySelector propertySelector)
@@ -70,22 +65,22 @@ namespace Autofac.Extras.IocManager
                 throw new ArgumentNullException(nameof(propertySelector));
             }
 
-            foreach (var propertyInfo in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            foreach (PropertyInfo propertyInfo in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 if (!propertySelector.IsInjectable(propertyInfo, instance))
                 {
                     continue;
                 }
 
-                var propertyType = propertyInfo.PropertyType;
+                Type propertyType = propertyInfo.PropertyType;
 
                 if (IsInjectable(context, propertyInfo, propertyType))
                 {
-                    var accessors = propertyInfo.GetAccessors(true);
+                    MethodInfo[] accessors = propertyInfo.GetAccessors(true);
 
                     if (IsInjectable(instance, overrideSetValues, propertyInfo, accessors))
                     {
-                        var obj = context.Resolve(propertyType);
+                        object obj = context.Resolve(propertyType);
                         propertyInfo.SetValue(instance, obj, null);
                     }
                 }

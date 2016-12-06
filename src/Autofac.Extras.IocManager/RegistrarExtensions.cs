@@ -9,7 +9,6 @@ namespace Autofac.Extras.IocManager
             builder.RegisterDependenciesByAssembly<ISingletonDependency>(assembly);
             builder.RegisterDependenciesByAssembly<ITransientDependency>(assembly);
             builder.RegisterDependenciesByAssembly<ILifetimeScopeDependency>(assembly);
-            builder.RegisterDependenciesByAssembly<IPerRequestDependency>(assembly);
         }
     }
 }
