@@ -17,14 +17,14 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
             IResolver resolver = Building(builder =>
             {
                 builder.UseNLog()
-                       .UserEventStore()
+                       .UseEventStore()
                        .UseRabbitMQ()
                        .RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
             });
 
-            resolver.HasRegistrationFor<IEventStore>().ShouldBe(true);
-            resolver.HasRegistrationFor<ILogger>().ShouldBe(true);
-            resolver.HasRegistrationFor<IBus>().ShouldBe(true);
+            resolver.IsRegistered<IEventStore>().ShouldBe(true);
+            resolver.IsRegistered<ILogger>().ShouldBe(true);
+            resolver.IsRegistered<IBus>().ShouldBe(true);
 
             LocalIocManager.IsRegistered<IEventStore>().ShouldBe(true);
             LocalIocManager.IsRegistered<ILogger>().ShouldBe(true);
@@ -34,15 +34,33 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
         [Fact]
         public void Injectable_IocResolvers_ShouldWork()
         {
-           
-
-            IResolver resolver = Building(builder =>
-            {
-                builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            });
+            IResolver resolver = Building(builder => { builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()); });
 
             var injectable = resolver.Resolve<InjectableIocResolver>();
             injectable.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public void Module_Registration_Should_Work()
+        {
+            IResolver resolver = Building(builder => { builder.RegisterModule<FakeEventStoreModule>(); });
+
+            bool moduleBasedEventStore = resolver.IsRegistered<IModuleBasedEventStore>();
+
+            moduleBasedEventStore.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public void Module_Registration_Should_Work_WithExtension()
+        {
+            IResolver resolver = Building(builder =>
+            {
+                builder.UseEventStore();
+            });
+
+            bool moduleBasedEventStore = resolver.IsRegistered<IModuleBasedEventStore>();
+
+            moduleBasedEventStore.ShouldNotBeNull();
         }
 
         internal class InjectableIocResolver : ITransientDependency

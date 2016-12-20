@@ -41,13 +41,13 @@ namespace Autofac.Extras.IocManager
                                     .Select(x => x.ServiceType);
         }
 
-        public bool HasRegistrationFor<T>()
+        public bool IsRegistered<T>()
             where T : class
         {
-            return HasRegistrationFor(typeof(T));
+            return IsRegistered(typeof(T));
         }
 
-        public bool HasRegistrationFor(Type type)
+        public bool IsRegistered(Type type)
         {
             return GetRegisteredServices().Any(t => t == type);
         }

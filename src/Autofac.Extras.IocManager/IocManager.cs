@@ -30,7 +30,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="type">Type to check</param>
         public bool IsRegistered(Type type)
         {
-            return Resolver.HasRegistrationFor(type);
+            return Resolver.IsRegistered(type);
         }
 
         /// <summary>

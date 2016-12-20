@@ -17,8 +17,8 @@ namespace Autofac.Extras.IocManager
 
         IEnumerable<Type> GetRegisteredServices();
 
-        bool HasRegistrationFor<T>() where T : class;
+        bool IsRegistered<T>() where T : class;
 
-        bool HasRegistrationFor(Type type);
+        bool IsRegistered(Type type);
     }
 }

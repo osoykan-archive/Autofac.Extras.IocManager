@@ -15,7 +15,7 @@ namespace Autofac.Extras.IocManager
 
         public bool IsRegistered(Type type)
         {
-            return _scope.HasRegistrationFor(type);
+            return _scope.IsRegistered(type);
         }
 
         public bool IsRegistered<T>()
