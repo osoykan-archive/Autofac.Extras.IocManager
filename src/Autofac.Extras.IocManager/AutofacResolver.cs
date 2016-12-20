@@ -9,6 +9,9 @@ namespace Autofac.Extras.IocManager
 {
     internal class AutofacResolver : IResolver
     {
+        /// <summary>
+        ///     The component context
+        /// </summary>
         private readonly IComponentContext _componentContext;
 
         /// <summary>
@@ -51,6 +54,10 @@ namespace Autofac.Extras.IocManager
             return ((IEnumerable)_componentContext.Resolve(enumerableType)).OfType<object>().ToList();
         }
 
+        /// <summary>
+        ///     Gets the registered services.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Type> GetRegisteredServices()
         {
             return _componentContext.ComponentRegistry.Registrations

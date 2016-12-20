@@ -8,13 +8,27 @@ namespace Autofac.Extras.IocManager
 {
     internal class AutofacServiceRegistration : IServiceRegistration
     {
+        /// <summary>
+        ///     The container builder
+        /// </summary>
         private readonly ContainerBuilder _containerBuilder;
+
+        /// <summary>
+        ///     The decorator service
+        /// </summary>
         private readonly DecoratorService _decoratorService = new DecoratorService();
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AutofacServiceRegistration" /> class.
+        /// </summary>
         public AutofacServiceRegistration() : this(null)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AutofacServiceRegistration" /> class.
+        /// </summary>
+        /// <param name="containerBuilder">The container builder.</param>
         public AutofacServiceRegistration(ContainerBuilder containerBuilder)
         {
             _containerBuilder = containerBuilder ?? new ContainerBuilder();
@@ -216,6 +230,13 @@ namespace Autofac.Extras.IocManager
             RegisterType(typeof(TService), lifetime, keepDefault);
         }
 
+        /// <summary>
+        ///     Registers the generic.
+        /// </summary>
+        /// <param name="serviceType">Type of the service.</param>
+        /// <param name="implementationType">Type of the implementation.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
         public void RegisterGeneric(
             Type serviceType,
             Type implementationType,

@@ -7,5 +7,7 @@ namespace Autofac.Extras.IocManager
     /// </summary>
     /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property)]
-    public class DoNotInjectAttribute : Attribute {}
+    public class DoNotInjectAttribute : Attribute
+    {
+    }
 }

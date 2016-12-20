@@ -21,6 +21,10 @@
             return new AutofacScopeResolver(_lifetimeScope.BeginLifetimeScope());
         }
 
+        /// <summary>
+        ///     Performs application-defined <see cref="ILifetimeScope" /> tasks associated with freeing, releasing, or resetting
+        ///     unmanaged resources.
+        /// </summary>
         public virtual void Dispose()
         {
             _lifetimeScope.Dispose();

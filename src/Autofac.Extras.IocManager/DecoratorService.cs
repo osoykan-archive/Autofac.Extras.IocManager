@@ -8,6 +8,7 @@ namespace Autofac.Extras.IocManager
 {
     public class DecoratorService : IDecoratorService
     {
+      
         private readonly ConcurrentDictionary<Type, List<Func<object, IResolverContext, object>>> _decorators = new ConcurrentDictionary<Type, List<Func<object, IResolverContext, object>>>();
         private readonly ConcurrentDictionary<Type, Func<object, IResolverContext, object>> _genericDecoratorCall = new ConcurrentDictionary<Type, Func<object, IResolverContext, object>>();
 
