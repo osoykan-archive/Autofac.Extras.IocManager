@@ -26,11 +26,7 @@ class SimpleDependency2 : ISimpleDependency2, ISingletonDependency {}
 
 interface ISimpleDependency3 {}
 
-class SimpleDependency3 : ISimpleDependency3, ILifeTimeScopeDependency {}
-
-interface ISimpleDependency4 {}
-
-class SimpleDependency4 : ISimpleDependency4, IPerRequestDependency {}
+class SimpleDependency3 : ISimpleDependency3, ILifetimeScopeDependency {}
 ```
 Registration extension:
 
