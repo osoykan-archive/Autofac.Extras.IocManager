@@ -9,30 +9,37 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests.FluentTests
 {
-    public class FluentBootstrapperTests
+    public class FluentBootstrapperTests : TestBaseWithIocBuilder
     {
         [Fact]
         public void FluentBootstrapper_Should_Work()
         {
-            var iocManager = new IocManager();
-
-            IRootResolver resolver = IocBuilder.New
-                                               .UseAutofacContainerBuilder()
-                                               .UseNLog()
-                                               .UserEventStore()
-                                               .UseRabbitMQ()
-                                               .RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())
-                                               .RegisterIocManager(iocManager)
-                                               .CreateResolver()
-                                               .UseIocManager(iocManager);
+            IResolver resolver = Building(builder =>
+            {
+                builder.UseNLog()
+                       .UserEventStore()
+                       .UseRabbitMQ()
+                       .RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            });
 
             resolver.HasRegistrationFor<IEventStore>().ShouldBe(true);
             resolver.HasRegistrationFor<ILogger>().ShouldBe(true);
             resolver.HasRegistrationFor<IBus>().ShouldBe(true);
 
-            iocManager.IsRegistered<IEventStore>().ShouldBe(true);
-            iocManager.IsRegistered<ILogger>().ShouldBe(true);
-            iocManager.IsRegistered<IBus>().ShouldBe(true);
+            LocalIocManager.IsRegistered<IEventStore>().ShouldBe(true);
+            LocalIocManager.IsRegistered<ILogger>().ShouldBe(true);
+            LocalIocManager.IsRegistered<IBus>().ShouldBe(true);
+        }
+
+        [Fact]
+        public void Injectable_IocResolvers_ShouldWork()
+        {
+           
+
+            IResolver resolver = Building(builder =>
+            {
+                builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            });
 
             var injectable = resolver.Resolve<InjectableIocResolver>();
             injectable.ShouldNotBeNull();
