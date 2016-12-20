@@ -1,9 +1,13 @@
-﻿namespace Autofac.Extras.IocManager
+﻿using Autofac.Builder;
+
+namespace Autofac.Extras.IocManager
 {
     /// <summary>
-    ///     All classes implement this interface are automatically registered to dependency injection as transient object.
+    ///     <seealso cref="Autofac.Extras.IocManager.ILifetime" />
+    ///     Marks an interface's or class's lifetime to be
+    ///     <see cref="IRegistrationBuilder{TLimit,TActivatorData,TRegistrationStyle}.InstancePerDependency"></see>
+    ///     All classes implement this interface are automatically registered to dependency injection as
+    ///     <see cref="IRegistrationBuilder{TLimit,TActivatorData,TRegistrationStyle}.InstancePerDependency" /> object.
     /// </summary>
-    public interface ITransientDependency : ILifetime
-    {
-    }
+    public interface ITransientDependency : ILifetime {}
 }

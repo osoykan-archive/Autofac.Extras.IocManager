@@ -13,7 +13,8 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="builder">The builder.</param>
+        /// <returns></returns>
         public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder)
         {
             builder.RegisterInstance(IocManager.Instance)
@@ -30,6 +31,7 @@ namespace Autofac.Extras.IocManager
         /// </summary>
         /// <param name="builder">Autofac's <see cref="ContainerBuilder" /></param>
         /// <param name="iocManager">IocManager abstraction for Autofac <see cref="IocManager" /></param>
+        /// <returns></returns>
         public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder, IocManager iocManager)
         {
             builder.RegisterInstance(iocManager)
@@ -44,7 +46,7 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Helper for anonymouse resolvings <see cref="IocManager.Resolve{T}(object)" />
         /// </summary>
-        /// <param name="this"></param>
+        /// <param name="this">The this.</param>
         /// <returns></returns>
         internal static IEnumerable<TypedParameter> GetTypedResolvingParameters(this object @this)
         {
@@ -57,9 +59,10 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Finds and registers as DefaultInterfaces to container conventionally.
         /// </summary>
-        /// <typeparam name="TLimit"></typeparam>
-        /// <param name="registration"></param>
+        /// <typeparam name="TLimit">The type of the limit.</typeparam>
+        /// <param name="registration">The registration.</param>
         /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">registration</exception>
         public static IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle>
             AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
         {

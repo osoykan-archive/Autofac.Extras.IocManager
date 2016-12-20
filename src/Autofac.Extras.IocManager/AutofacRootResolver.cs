@@ -8,6 +8,12 @@
             Container = container;
         }
 
+        /// <summary>
+        ///     Gets the Autofac Container.
+        /// </summary>
+        /// <value>
+        ///     The Autofac Container.
+        /// </value>
         public IContainer Container { get; }
 
         public override void Dispose()

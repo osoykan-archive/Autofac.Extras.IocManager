@@ -10,6 +10,12 @@
             _lifetimeScope = lifetimeScope;
         }
 
+        /// <summary>
+        ///     Begins the lifetimescope.
+        /// </summary>
+        /// <returns>
+        ///     <see cref="IScopeResolver" />
+        /// </returns>
         public IScopeResolver BeginScope()
         {
             return new AutofacScopeResolver(_lifetimeScope.BeginLifetimeScope());

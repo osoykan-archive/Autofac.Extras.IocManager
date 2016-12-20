@@ -5,14 +5,29 @@ using Autofac.Extras.IocManager;
 
 public class ModuleRegistration : IModuleRegistration
 {
+    /// <summary>
+    ///     The modules
+    /// </summary>
     private readonly Dictionary<Type, IModule> _modules = new Dictionary<Type, IModule>();
+
+    /// <summary>
+    ///     The ioc builder
+    /// </summary>
     private readonly IIocBuilder iocBuilder;
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ModuleRegistration" /> class.
+    /// </summary>
+    /// <param name="iocBuilder">The ioc builder.</param>
     public ModuleRegistration(IocBuilder iocBuilder)
     {
         this.iocBuilder = iocBuilder;
     }
 
+    /// <summary>
+    ///     Registers this instance.
+    /// </summary>
+    /// <typeparam name="TModule">The type of the module.</typeparam>
     public void Register<TModule>()
         where TModule : IModule, new()
     {
@@ -20,6 +35,12 @@ public class ModuleRegistration : IModuleRegistration
         Register(module);
     }
 
+    /// <summary>
+    ///     Registers the specified module.
+    /// </summary>
+    /// <typeparam name="TModule">The type of the module.</typeparam>
+    /// <param name="module">The module.</param>
+    /// <exception cref="System.ArgumentException"></exception>
     public void Register<TModule>(TModule module)
         where TModule : IModule
     {
@@ -33,6 +54,12 @@ public class ModuleRegistration : IModuleRegistration
         _modules.Add(moduleType, module);
     }
 
+    /// <summary>
+    ///     Gets the module.
+    /// </summary>
+    /// <typeparam name="TModule">The type of the module.</typeparam>
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentException"></exception>
     public TModule GetModule<TModule>()
         where TModule : IModule
     {
@@ -45,6 +72,12 @@ public class ModuleRegistration : IModuleRegistration
         return module;
     }
 
+    /// <summary>
+    ///     Tries the get module.
+    /// </summary>
+    /// <typeparam name="TModule">The type of the module.</typeparam>
+    /// <param name="module">The module.</param>
+    /// <returns></returns>
     public bool TryGetModule<TModule>(out TModule module)
         where TModule : IModule
     {
