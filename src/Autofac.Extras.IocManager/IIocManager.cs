@@ -10,7 +10,7 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Reference to the Autofac Container.
         /// </summary>
-        IContainer Container { get; }
+        IRootResolver Resolver { get; }
 
         /// <summary>
         ///     Checks whether given type is registered before.

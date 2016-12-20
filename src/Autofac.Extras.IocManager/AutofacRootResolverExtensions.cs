@@ -4,13 +4,13 @@
     {
         public static IRootResolver UseIocManager(this IRootResolver resolver)
         {
-            resolver.Container.UseIocManager();
+            IocManager.Instance.Resolver = resolver;
             return resolver;
         }
 
         public static IRootResolver UseIocManager(this IRootResolver resolver, IocManager iocManager)
         {
-            resolver.Container.UseIocManager(iocManager);
+            iocManager.Resolver = resolver;
             return resolver;
         }
     }

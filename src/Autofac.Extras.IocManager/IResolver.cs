@@ -7,13 +7,18 @@ namespace Autofac.Extras.IocManager
     {
         T Resolve<T>();
 
+        T Resolve<T>(object argumentAsAnonymousType);
+
+        object Resolve(Type type, object argumentAsAnonymousType);
+
         object Resolve(Type serviceType);
 
         IEnumerable<object> ResolveAll(Type serviceType);
 
         IEnumerable<Type> GetRegisteredServices();
 
-        bool HasRegistrationFor<T>()
-            where T : class;
+        bool HasRegistrationFor<T>() where T : class;
+
+        bool HasRegistrationFor(Type type);
     }
 }

@@ -14,7 +14,7 @@ namespace Autofac.Extras.IocManager.Tests
             Building(builder => { });
 
             LocalIocManager.ShouldNotBeNull();
-            LocalIocManager.Container.ShouldNotBeNull();
+            LocalIocManager.Resolver.ShouldNotBeNull();
         }
 
         [Fact]

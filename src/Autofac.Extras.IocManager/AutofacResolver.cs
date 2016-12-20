@@ -21,24 +21,14 @@ namespace Autofac.Extras.IocManager
             return _componentContext.Resolve<T>();
         }
 
-        public T Resolve<T>(params Parameter[] parameters)
-        {
-            return _componentContext.Resolve<T>(parameters);
-        }
-
         public object Resolve(Type serviceType)
         {
             return _componentContext.Resolve(serviceType);
         }
 
-        public object Resolve(Type serviceType, params Parameter[] parameters)
-        {
-            return _componentContext.Resolve(serviceType, parameters);
-        }
-
         public IEnumerable<object> ResolveAll(Type serviceType)
         {
-            var enumerableType = typeof(IEnumerable<>).MakeGenericType(serviceType);
+            Type enumerableType = typeof(IEnumerable<>).MakeGenericType(serviceType);
             return ((IEnumerable)_componentContext.Resolve(enumerableType)).OfType<object>().ToList();
         }
 
@@ -54,8 +44,32 @@ namespace Autofac.Extras.IocManager
         public bool HasRegistrationFor<T>()
             where T : class
         {
-            var serviceType = typeof(T);
-            return GetRegisteredServices().Any(t => serviceType == t);
+            return HasRegistrationFor(typeof(T));
+        }
+
+        public bool HasRegistrationFor(Type type)
+        {
+            return GetRegisteredServices().Any(t => t == type);
+        }
+
+        public T Resolve<T>(object argumentAsAnonymousType)
+        {
+            return _componentContext.Resolve<T>(argumentAsAnonymousType.GetTypedResolvingParameters());
+        }
+
+        public object Resolve(Type type, object argumentAsAnonymousType)
+        {
+            return _componentContext.Resolve(type, argumentAsAnonymousType.GetTypedResolvingParameters());
+        }
+
+        public T Resolve<T>(params Parameter[] parameters)
+        {
+            return _componentContext.Resolve<T>(parameters);
+        }
+
+        public object Resolve(Type serviceType, params Parameter[] parameters)
+        {
+            return _componentContext.Resolve(serviceType, parameters);
         }
     }
 }

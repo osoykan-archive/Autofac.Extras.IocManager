@@ -22,7 +22,7 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Reference to the Autofac Container.
         /// </summary>
-        public IContainer Container { get; internal set; }
+        public IRootResolver Resolver { get; internal set; }
 
         /// <summary>
         ///     Checks whether given type is registered before.
@@ -30,7 +30,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="type">Type to check</param>
         public bool IsRegistered(Type type)
         {
-            return Container.IsRegistered(type);
+            return Resolver.HasRegistrationFor(type);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Autofac.Extras.IocManager
         /// <typeparam name="TType">Type to check</typeparam>
         public bool IsRegistered<TType>()
         {
-            return Container.IsRegistered<TType>();
+            return IsRegistered(typeof(TType));
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object</returns>
         public T Resolve<T>()
         {
-            return Container.Resolve<T>();
+            return (T)Resolve(typeof(T));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The object instance</returns>
         public T Resolve<T>(Type type)
         {
-            return (T)Container.Resolve(type);
+            return (T)Resolver.Resolve(type);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object</returns>
         public T Resolve<T>(object argumentsAsAnonymousType)
         {
-            return Container.Resolve<T>(argumentsAsAnonymousType.GetTypedResolvingParameters());
+            return Resolver.Resolve<T>(argumentsAsAnonymousType.GetTypedResolvingParameters());
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object</returns>
         public object Resolve(Type type)
         {
-            return Container.Resolve(type);
+            return Resolver.Resolve(type);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object</returns>
         public object Resolve(Type type, object argumentsAsAnonymousType)
         {
-            return Container.Resolve(type, argumentsAsAnonymousType.GetTypedResolvingParameters());
+            return Resolver.Resolve(type, argumentsAsAnonymousType);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>Object instances</returns>
         public T[] ResolveAll<T>()
         {
-            return Container.Resolve<IEnumerable<T>>().ToArray();
+            return Resolver.Resolve<IEnumerable<T>>().ToArray();
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>Object instances</returns>
         public T[] ResolveAll<T>(object argumentsAsAnonymousType)
         {
-            return Container.Resolve<IEnumerable<T>>(argumentsAsAnonymousType.GetTypedResolvingParameters()).ToArray();
+            return Resolver.Resolve<IEnumerable<T>>(argumentsAsAnonymousType).ToArray();
         }
     }
 }

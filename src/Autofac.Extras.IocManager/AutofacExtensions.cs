@@ -42,26 +42,6 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
-        ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
-        /// </summary>
-        /// <param name="container"></param>
-        public static IContainer UseIocManager(this IContainer container)
-        {
-            IocManager.Instance.Container = container;
-            return container;
-        }
-
-        /// <summary>
-        ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
-        /// </summary>
-        /// <param name="container"></param>
-        public static IContainer UseIocManager(this IContainer container, IocManager iocManager)
-        {
-            iocManager.Container = container;
-            return container;
-        }
-
-        /// <summary>
         ///     Helper for anonymouse resolvings <see cref="IocManager.Resolve{T}(object)" />
         /// </summary>
         /// <param name="this"></param>
@@ -81,7 +61,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="registration"></param>
         /// <returns></returns>
         public static IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle>
-                AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
+            AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
         {
             if (registration == null)
             {
@@ -100,8 +80,8 @@ namespace Autofac.Extras.IocManager
         internal static void RegisterDependenciesByAssembly<TLifetime>(this ContainerBuilder builder, Assembly assembly) where TLifetime : ILifetime
         {
             typeof(TLifetime)
-                    .AssignedTypesInAssembly(assembly)
-                    .ForEach(builder.RegisterApplyingLifetime<TLifetime>);
+                .AssignedTypesInAssembly(assembly)
+                .ForEach(builder.RegisterApplyingLifetime<TLifetime>);
         }
 
         /// <summary>

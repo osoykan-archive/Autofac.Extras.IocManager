@@ -6,16 +6,16 @@ namespace Autofac.Extras.IocManager
 {
     public class IocScopedResolver : IIocScopedResolver
     {
-        private readonly ILifetimeScope _scope;
+        private readonly IScopeResolver _scope;
 
-        public IocScopedResolver(ILifetimeScope scope)
+        public IocScopedResolver(IScopeResolver scope)
         {
             _scope = scope;
         }
 
         public bool IsRegistered(Type type)
         {
-            return _scope.IsRegistered(type);
+            return _scope.HasRegistrationFor(type);
         }
 
         public bool IsRegistered<T>()
@@ -35,7 +35,7 @@ namespace Autofac.Extras.IocManager
 
         public T Resolve<T>(object argumentsAsAnonymousType)
         {
-            return _scope.Resolve<T>(argumentsAsAnonymousType.GetTypedResolvingParameters());
+            return _scope.Resolve<T>(argumentsAsAnonymousType);
         }
 
         public object Resolve(Type type)
@@ -45,7 +45,7 @@ namespace Autofac.Extras.IocManager
 
         public object Resolve(Type type, object argumentsAsAnonymousType)
         {
-            return _scope.Resolve(type, argumentsAsAnonymousType.GetTypedResolvingParameters());
+            return _scope.Resolve(type, argumentsAsAnonymousType);
         }
 
         public T[] ResolveAll<T>()
@@ -55,8 +55,9 @@ namespace Autofac.Extras.IocManager
 
         public T[] ResolveAll<T>(object argumentsAsAnonymousType)
         {
-            return _scope.Resolve<IEnumerable<T>>(argumentsAsAnonymousType.GetTypedResolvingParameters()).ToArray();
+            return _scope.Resolve<IEnumerable<T>>(argumentsAsAnonymousType).ToArray();
         }
+
         public void Dispose()
         {
             _scope.Dispose();
