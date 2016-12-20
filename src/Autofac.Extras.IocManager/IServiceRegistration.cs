@@ -137,16 +137,6 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Registers the assembly as closed types of.
         /// </summary>
-        /// <typeparam name="TClosedService">The type of the closed service.</typeparam>
-        /// <param name="assembly">The assembly.</param>
-        /// <param name="lifetime">The lifetime.</param>
-        void RegisterAssemblyAsClosedTypesOf<TClosedService>(
-            Assembly assembly,
-            Lifetime lifetime = Lifetime.Transient);
-
-        /// <summary>
-        ///     Registers the assembly as closed types of.
-        /// </summary>
         /// <param name="assembly">The assembly.</param>
         /// <param name="closedServiceType">Type of the closed service.</param>
         /// <param name="lifetime">The lifetime.</param>

@@ -11,10 +11,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocBuilder_ShouldWork()
         {
-            IResolver resolver = Building(builder =>
-                                          {
-                                              builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-                                          });
+            IResolver resolver = Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
             var myDependencyFromLocalIocManager = LocalIocManager.Resolve<IMyDependency>();
             var myDependencyFromResolver = resolver.Resolve<IMyDependency>();

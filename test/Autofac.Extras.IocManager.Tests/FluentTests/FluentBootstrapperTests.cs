@@ -19,7 +19,7 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
                 builder.UseNLog()
                        .UseEventStore()
                        .UseRabbitMQ()
-                       .RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+                       .RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
             });
 
             resolver.IsRegistered<IEventStore>().ShouldBe(true);
@@ -34,7 +34,7 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
         [Fact]
         public void Injectable_IocResolvers_ShouldWork()
         {
-            IResolver resolver = Building(builder => { builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()); });
+            IResolver resolver = Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
 
             var injectable = resolver.Resolve<InjectableIocResolver>();
             injectable.ShouldNotBeNull();

@@ -11,7 +11,9 @@ namespace Autofac.Extras.IocManager
         private readonly ContainerBuilder _containerBuilder;
         private readonly DecoratorService _decoratorService = new DecoratorService();
 
-        public AutofacServiceRegistration() : this(null) {}
+        public AutofacServiceRegistration() : this(null)
+        {
+        }
 
         public AutofacServiceRegistration(ContainerBuilder containerBuilder)
         {
@@ -262,21 +264,13 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Registers the assembly as closed types of.
         /// </summary>
-        /// <typeparam name="TClosedService">The type of the closed service.</typeparam>
-        /// <param name="assembly">The assembly.</param>
-        /// <param name="lifetime">The lifetime.</param>
-        public void RegisterAssemblyAsClosedTypesOf<TClosedService>(Assembly assembly, Lifetime lifetime = Lifetime.Transient)
-        {
-            RegisterAssemblyAsClosedTypesOf(assembly, typeof(TClosedService), lifetime);
-        }
-
-        /// <summary>
-        ///     Registers the assembly as closed types of.
-        /// </summary>
         /// <param name="assembly">The assembly.</param>
         /// <param name="closedServiceType">Type of the closed service.</param>
         /// <param name="lifetime">The lifetime.</param>
-        public void RegisterAssemblyAsClosedTypesOf(Assembly assembly, Type closedServiceType, Lifetime lifetime = Lifetime.Transient)
+        public void RegisterAssemblyAsClosedTypesOf(
+            Assembly assembly,
+            Type closedServiceType,
+            Lifetime lifetime = Lifetime.Transient)
         {
             IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> registration = _containerBuilder
                 .RegisterAssemblyTypes(assembly)

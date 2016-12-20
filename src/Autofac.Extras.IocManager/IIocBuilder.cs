@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace Autofac.Extras.IocManager
 {
@@ -12,13 +11,6 @@ namespace Autofac.Extras.IocManager
         ///     The module registration.
         /// </value>
         IModuleRegistration ModuleRegistration { get; }
-
-        /// <summary>
-        ///     Registers the assembly by convention.
-        /// </summary>
-        /// <param name="assembly">The assembly.</param>
-        /// <returns></returns>
-        IIocBuilder RegisterAssemblyByConvention(Assembly assembly);
 
         /// <summary>
         ///     Registers the services.

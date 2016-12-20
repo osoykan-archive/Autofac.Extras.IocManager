@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace Autofac.Extras.IocManager
 {
@@ -24,17 +23,6 @@ namespace Autofac.Extras.IocManager
         public static IIocBuilder UseAutofacContainerBuilder(this IIocBuilder iocBuilder, ContainerBuilder containerBuilder)
         {
             return iocBuilder.UseServiceRegistration(new AutofacServiceRegistration(containerBuilder));
-        }
-
-        /// <summary>
-        ///     Registers the assembly by convention.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <param name="assembly">The assembly.</param>
-        /// <returns></returns>
-        public static IIocBuilder RegisterAssemblyByConvention(this IIocBuilder builder, Assembly assembly)
-        {
-            return builder.RegisterAssemblyByConvention(assembly);
         }
 
         /// <summary>

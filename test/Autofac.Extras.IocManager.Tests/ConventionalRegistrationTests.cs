@@ -11,10 +11,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ConventionalRegistrarShouldWork_WithDefaultInterfaces()
         {
-            Building(builder =>
-                     {
-                         builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-                     });
+            Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
 
             var myTransientInstance = LocalIocManager.Resolve<IMyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
@@ -35,7 +32,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ConventionalRegistrarShouldWork_GenericInterRegistrations()
         {
-            Building(builder => { builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()); });
+            Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
 
             var genericHumanInstance = LocalIocManager.Resolve<IMyGenericClass<MyTransientClass>>();
             genericHumanInstance.Object.ShouldBeAssignableTo(typeof(MyTransientClass));

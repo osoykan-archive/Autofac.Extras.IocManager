@@ -11,7 +11,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void StartableShouldWork()
         {
-            Building(builder => builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
             var startableDependency = LocalIocManager.Resolve<IStartableDependency>();
             startableDependency.StartCallExecuted.ShouldBe(true);
@@ -20,7 +20,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void Startable_ShouldInject_Any_Dependency()
         {
-            Building(builder => builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
             var startableDependency = LocalIocManager.Resolve<IStartableDependency2>();
 
