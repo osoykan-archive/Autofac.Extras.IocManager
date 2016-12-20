@@ -18,10 +18,8 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void NoDecoratorReturnsSame()
         {
-            // Act
             var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock.Object);
 
-            // Assert
             instance.ShouldNotBeNull();
             instance.ShouldBeAssignableTo<MagicClass>();
         }
@@ -29,14 +27,11 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void WithTwoDecoratorsWithGeneric()
         {
-            // Arrange
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator1(s));
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator2(s));
 
-            // Act
             var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock.Object);
 
-            // Assert
             instance.ShouldBeAssignableTo<MagicClassDecorator2>();
             var magicClassDecorator2 = (MagicClassDecorator2)instance;
             magicClassDecorator2.Inner.ShouldBeAssignableTo<MagicClassDecorator1>();
@@ -47,14 +42,11 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void WithTwoDecoratorsWithTyped()
         {
-            // Arrange
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator1(s));
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator2(s));
 
-            // Act
             object instance = Sut.Decorate(typeof(IMagicInterface), new MagicClass(), _resolverContextMock.Object);
 
-            // Assert
             instance.ShouldBeAssignableTo<MagicClassDecorator2>();
             var magicClassDecorator2 = (MagicClassDecorator2)instance;
             magicClassDecorator2.Inner.ShouldBeAssignableTo<MagicClassDecorator1>();
@@ -62,13 +54,9 @@ namespace Autofac.Extras.IocManager.Tests
             magicClassDecorator1.Inner.ShouldBeAssignableTo<MagicClass>();
         }
 
-        private interface IMagicInterface
-        {
-        }
+        private interface IMagicInterface {}
 
-        private class MagicClass : IMagicInterface
-        {
-        }
+        private class MagicClass : IMagicInterface {}
 
         private class MagicClassDecorator1 : IMagicInterface
         {
