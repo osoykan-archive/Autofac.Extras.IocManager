@@ -89,3 +89,45 @@ Also you may not want to inject all properties for a dependency, it can be done 
      public IHuman Human { get; set; }
  }
 ```
+
+##Injectable IocManager
+IocManager also self-injectable in any dependencies. For example:
+
+```csharp
+internal class SimpleDependencyWithIocManager
+{
+    private readonly IIocManager _iocManager;
+
+    public SimpleDependencyWithIocManager(IIocManager iocManager)
+    {
+        _iocManager = iocManager;
+    }
+
+    public IIocManager GetIocManager()
+    {
+        return _iocManager;
+    }
+
+    public void DoSomeStuff()
+    {
+        _iocManager.Resolve<SomeType>();
+
+        // It would be disposed automatically.
+        using (var someType = _iocManager.ResolveAsDisposable<SomeType>())
+        {
+            someType.Object.DoStuff();
+        }
+
+        // All instances would be disposed automatically after the using statement.
+        using (IIocScopedResolver iocScopedResolver = _iocManager.CreateScope())
+        {
+            iocScopedResolver.Resolve<SomeKindOfType>();
+            iocScopedResolver.Resolve<HumanClass>();
+            iocScopedResolver.Resolve<BirdClass>();
+        }
+
+    }
+}
+
+```
+feel free to use `IIocManager` for resolving operations in any dependency.
