@@ -94,7 +94,7 @@ Also you may not want to inject all properties for a dependency, it can be done 
 IocManager also self-injectable in any dependencies. For example:
 
 ```csharp
-internal class SimpleDependencyWithIocManager
+class SimpleDependencyWithIocManager
 {
     private readonly IIocManager _iocManager;
 
@@ -125,7 +125,6 @@ internal class SimpleDependencyWithIocManager
             iocScopedResolver.Resolve<HumanClass>();
             iocScopedResolver.Resolve<BirdClass>();
         }
-
     }
 }
 ```
