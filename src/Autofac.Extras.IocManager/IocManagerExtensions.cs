@@ -69,7 +69,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="doAction"></param>
         public static void ResolveUsing<T>(this IIocManager iocManager, Action<T> doAction)
         {
-            using (var wrapper = iocManager.ResolveAsDisposable<T>())
+            using (IDisposableDependencyObjectWrapper<T> wrapper = iocManager.ResolveAsDisposable<T>())
             {
                 doAction(wrapper.Object);
             }
@@ -86,7 +86,7 @@ namespace Autofac.Extras.IocManager
         /// <returns></returns>
         public static TReturn ResolveUsing<TService, TReturn>(this IIocManager iocManager, Func<TService, TReturn> func)
         {
-            using (var wrapper = iocManager.ResolveAsDisposable<TService>())
+            using (IDisposableDependencyObjectWrapper<TService> wrapper = iocManager.ResolveAsDisposable<TService>())
             {
                 return func(wrapper.Object);
             }
@@ -100,7 +100,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="action">An action that can use the resolved object</param>
         public static void UsingScope(this IIocManager iocResolver, Action<IIocScopedResolver> action)
         {
-            using (var scope = iocResolver.CreateScope())
+            using (IIocScopedResolver scope = iocResolver.CreateScope())
             {
                 action(scope);
             }

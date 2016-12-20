@@ -38,6 +38,8 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
 
             var injectable = resolver.Resolve<InjectableIocResolver>();
             injectable.ShouldNotBeNull();
+            injectable.GetResolver().ShouldBeAssignableTo<IResolver>();
+            injectable.GetScopeResolver().ShouldBeAssignableTo<IScopeResolver>();
         }
 
         [Fact]
@@ -53,10 +55,7 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
         [Fact]
         public void Module_Registration_Should_Work_WithExtension()
         {
-            IResolver resolver = Building(builder =>
-            {
-                builder.UseEventStore();
-            });
+            IResolver resolver = Building(builder => { builder.UseEventStore(); });
 
             bool moduleBasedEventStore = resolver.IsRegistered<IModuleBasedEventStore>();
 
@@ -72,6 +71,16 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
             {
                 _resolver = resolver;
                 _scopeResolver = scopeResolver;
+            }
+
+            public IResolver GetResolver()
+            {
+                return _resolver;
+            }
+
+            public IScopeResolver GetScopeResolver()
+            {
+                return _scopeResolver;
             }
         }
     }

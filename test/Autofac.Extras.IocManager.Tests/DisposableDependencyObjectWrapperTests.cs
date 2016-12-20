@@ -16,7 +16,7 @@ namespace Autofac.Extras.IocManager.Tests
                          builder.RegisterServices(f => f.RegisterType<SimpleDisposableObject>());
                      });
 
-            using (var wrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableObject>(new { myData = 42 }))
+            using (IDisposableDependencyObjectWrapper<SimpleDisposableObject> wrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableObject>(new { myData = 42 }))
             {
                 wrapper.Object.MyData.ShouldBe(42);
             }

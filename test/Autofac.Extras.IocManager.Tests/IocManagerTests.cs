@@ -51,7 +51,7 @@ namespace Autofac.Extras.IocManager.Tests
                      });
 
             SimpleDisposableDependency simpleDisposableDependency;
-            using (var simpleDependencyWrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableDependency>())
+            using (IDisposableDependencyObjectWrapper<SimpleDisposableDependency> simpleDependencyWrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableDependency>())
             {
                 simpleDisposableDependency = simpleDependencyWrapper.Object;
             }
@@ -62,7 +62,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocManager_ShouldInjectAnyDependecy()
         {
-            var resolver = Building(builder =>
+            IResolver resolver = Building(builder =>
                                      {
                                          builder.RegisterServices(f => f.RegisterType<SimpleDependencyWithIocManager>(Lifetime.LifetimeScope));
                                      });
@@ -81,7 +81,7 @@ namespace Autofac.Extras.IocManager.Tests
                      });
 
             SimpleDisposableDependency simpleDisposableDependency;
-            using (var iocScopedResolver = LocalIocManager.CreateScope())
+            using (IIocScopedResolver iocScopedResolver = LocalIocManager.CreateScope())
             {
                 simpleDisposableDependency = iocScopedResolver.Resolve<SimpleDisposableDependency>();
             }
