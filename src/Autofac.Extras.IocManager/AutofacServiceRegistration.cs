@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using Autofac.Builder;
+using Autofac.Features.Scanning;
 
 namespace Autofac.Extras.IocManager
 {
@@ -256,6 +257,34 @@ namespace Autofac.Extras.IocManager
         public void RegisterAssemblyByConvention(Assembly assembly)
         {
             _containerBuilder.RegisterAssemblyByConvention(assembly);
+        }
+
+        /// <summary>
+        ///     Registers the assembly as closed types of.
+        /// </summary>
+        /// <typeparam name="TClosedService">The type of the closed service.</typeparam>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterAssemblyAsClosedTypesOf<TClosedService>(Assembly assembly, Lifetime lifetime = Lifetime.Transient)
+        {
+            RegisterAssemblyAsClosedTypesOf(assembly, typeof(TClosedService), lifetime);
+        }
+
+        /// <summary>
+        ///     Registers the assembly as closed types of.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="closedServiceType">Type of the closed service.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterAssemblyAsClosedTypesOf(Assembly assembly, Type closedServiceType, Lifetime lifetime = Lifetime.Transient)
+        {
+            IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> registration = _containerBuilder
+                .RegisterAssemblyTypes(assembly)
+                .AsClosedTypesOf(closedServiceType)
+                .AsImplementedInterfaces()
+                .InjectPropertiesAsAutowired();
+
+            registration.ApplyLifeStyle(lifetime);
         }
 
         /// <summary>
