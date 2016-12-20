@@ -128,6 +128,5 @@ internal class SimpleDependencyWithIocManager
 
     }
 }
-
 ```
 feel free to use `IIocManager` for resolving operations in any dependency.
