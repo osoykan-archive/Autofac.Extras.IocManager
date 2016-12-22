@@ -31,6 +31,30 @@ namespace Autofac.Extras.IocManager.Tests
             startableDependency.IocResolver.ShouldBeSameAs(LocalIocManager);
         }
 
+        [Fact]
+        public void ConcreteStartable_should_instantiatable()
+        {
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
+
+            var concreteStartable = LocalIocManager.Resolve<ConcreteStartable>();
+
+            concreteStartable.StartCallExecuted.ShouldBe(true);
+        }
+
+        internal class ConcreteStartable : MyConcreteStartable, ISingletonDependency, IStartable
+        {
+            public bool StartCallExecuted { get; private set; }
+
+            public void Start()
+            {
+                StartCallExecuted = true;
+            }
+        }
+
+        internal class MyConcreteStartable
+        {
+        }
+
         internal class StartableDependency : IStartableDependency, IStartable, ISingletonDependency
         {
             public void Start()
