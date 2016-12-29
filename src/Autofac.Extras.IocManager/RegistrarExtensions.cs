@@ -2,7 +2,7 @@
 
 namespace Autofac.Extras.IocManager
 {
-    public static class RegistrarExtensions
+    internal static class RegistrarExtensions
     {
         /// <summary>
         ///     Registers the assembly by convention.
