@@ -161,6 +161,12 @@ namespace Autofac.Extras.IocManager
             Lifetime lifetime = Lifetime.Transient);
 
         /// <summary>
+        ///     Throughes the container.
+        /// </summary>
+        /// <param name="builderAction">The builder action.</param>
+        void ThroughBuilder(Action<ContainerBuilder> builderAction);
+
+        /// <summary>
         ///     Creates the resolver.
         /// </summary>
         /// <returns></returns>

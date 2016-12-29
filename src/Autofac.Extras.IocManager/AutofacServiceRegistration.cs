@@ -339,5 +339,14 @@ namespace Autofac.Extras.IocManager
             IContainer container = _containerBuilder.Build();
             return new AutofacRootResolver(container);
         }
+
+        /// <summary>
+        ///     Throughes the container.
+        /// </summary>
+        /// <param name="builderAction">The builder action.</param>
+        public void ThroughBuilder(Action<ContainerBuilder> builderAction)
+        {
+            builderAction(_containerBuilder);
+        }
     }
 }
