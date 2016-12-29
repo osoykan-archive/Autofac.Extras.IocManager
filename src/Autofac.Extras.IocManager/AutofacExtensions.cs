@@ -11,39 +11,6 @@ namespace Autofac.Extras.IocManager
     public static class AutofacExtensions
     {
         /// <summary>
-        ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <returns></returns>
-        public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder)
-        {
-            builder.RegisterInstance(IocManager.Instance)
-                   .As<IIocManager, IIocResolver>()
-                   .AsSelf()
-                   .InjectPropertiesAsAutowired()
-                   .SingleInstance();
-
-            return builder;
-        }
-
-        /// <summary>
-        ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
-        /// </summary>
-        /// <param name="builder">Autofac's <see cref="ContainerBuilder" /></param>
-        /// <param name="iocManager">IocManager abstraction for Autofac <see cref="IocManager" /></param>
-        /// <returns></returns>
-        public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder, IocManager iocManager)
-        {
-            builder.RegisterInstance(iocManager)
-                   .As<IIocManager, IIocResolver>()
-                   .AsSelf()
-                   .InjectPropertiesAsAutowired()
-                   .SingleInstance();
-
-            return builder;
-        }
-
-        /// <summary>
         ///     Helper for anonymouse resolvings <see cref="IocManager.Resolve{T}(object)" />
         /// </summary>
         /// <param name="this">The this.</param>

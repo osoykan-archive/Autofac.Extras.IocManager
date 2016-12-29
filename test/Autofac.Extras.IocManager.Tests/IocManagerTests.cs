@@ -70,6 +70,7 @@ namespace Autofac.Extras.IocManager.Tests
             var dependencyWithIocManager = resolver.Resolve<SimpleDependencyWithIocManager>();
 
             dependencyWithIocManager.GetIocManager().ShouldBeSameAs(LocalIocManager);
+            dependencyWithIocManager.GetIocResolver().ShouldBeSameAs(LocalIocManager);
         }
 
         [Fact]
@@ -110,15 +111,22 @@ namespace Autofac.Extras.IocManager.Tests
         internal class SimpleDependencyWithIocManager
         {
             private readonly IIocManager _iocManager;
+            private readonly IIocResolver _iocResolver;
 
-            public SimpleDependencyWithIocManager(IIocManager iocManager)
+            public SimpleDependencyWithIocManager(IIocManager iocManager, IIocResolver iocResolver)
             {
                 _iocManager = iocManager;
+                _iocResolver = iocResolver;
             }
 
             public IIocManager GetIocManager()
             {
                 return _iocManager;
+            }
+
+            public IIocResolver GetIocResolver()
+            {
+                return _iocResolver;
             }
         }
     }
