@@ -22,7 +22,7 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Reference to the Autofac Container.
         /// </summary>
-        public IRootResolver Resolver { get; internal set; }
+        public IRootResolver Resolver { get; set; }
 
         /// <summary>
         ///     Checks whether given type is registered before.

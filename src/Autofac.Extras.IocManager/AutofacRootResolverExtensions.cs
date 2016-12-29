@@ -19,7 +19,7 @@
         /// <param name="resolver">The resolver.</param>
         /// <param name="iocManager">The ioc manager.</param>
         /// <returns></returns>
-        public static IRootResolver UseIocManager(this IRootResolver resolver, IocManager iocManager)
+        public static IRootResolver UseIocManager(this IRootResolver resolver, IIocManager iocManager)
         {
             iocManager.Resolver = resolver;
             return resolver;

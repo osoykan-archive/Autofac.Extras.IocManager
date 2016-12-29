@@ -5,7 +5,7 @@ namespace Autofac.Extras.IocManager.Tests
     public class TestBaseWithIocBuilder
     {
         protected IIocBuilder IocBuilder;
-        protected IocManager LocalIocManager;
+        protected IIocManager LocalIocManager;
 
         protected TestBaseWithIocBuilder()
         {

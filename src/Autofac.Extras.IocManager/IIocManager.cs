@@ -12,6 +12,6 @@ namespace Autofac.Extras.IocManager
         /// <value>
         ///     The resolver.
         /// </value>
-        IRootResolver Resolver { get; }
+        IRootResolver Resolver { get; set; }
     }
 }

@@ -98,6 +98,34 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
+        ///     Registers the specified instance.
+        /// </summary>
+        /// <typeparam name="TService1">The type of the service1.</typeparam>
+        /// <typeparam name="TService2">The type of the service2.</typeparam>
+        /// <param name="instance">The instance.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
+        public void Register<TService1, TService2>(
+            object instance,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TService1 : class
+            where TService2 : class
+        {
+            IRegistrationBuilder<object, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterInstance(instance).As<TService1, TService2>()
+                .AsSelf()
+                .InjectPropertiesAsAutowired();
+
+            registration.ApplyLifeStyle(lifetime);
+
+            if (keepDefault)
+            {
+                registration.PreserveExistingDefaults();
+            }
+        }
+
+        /// <summary>
         ///     Registers the specified lifetime.
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>
