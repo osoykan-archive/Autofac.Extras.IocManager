@@ -341,10 +341,10 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
-        ///     Throughes the container.
+        ///     Uses the builder to register components.
         /// </summary>
         /// <param name="builderAction">The builder action.</param>
-        public void ThroughBuilder(Action<ContainerBuilder> builderAction)
+        public void UseBuilder(Action<ContainerBuilder> builderAction)
         {
             builderAction(_containerBuilder);
         }

@@ -9,7 +9,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ContainerBuilderTestsShouldWork()
         {
-            Building(builder => { builder.RegisterServices(r => r.ThroughBuilder(containerBuilder => containerBuilder.RegisterType<MyClass>())); });
+            Building(builder => { builder.RegisterServices(r => r.UseBuilder(containerBuilder => containerBuilder.RegisterType<MyClass>())); });
 
             LocalIocManager.Resolve<MyClass>().ShouldNotBeNull();
         }
