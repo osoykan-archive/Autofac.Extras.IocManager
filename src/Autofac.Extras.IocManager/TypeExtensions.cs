@@ -52,7 +52,7 @@ namespace Autofac.Extras.IocManager
         public static Type[] GetDefaultInterfaces(this Type @this)
         {
             return @this.GetInterfaces()
-                        .Where(x => @this.Name.Contains(x.Name.TrimStart('I')))
+                        .Where(x => @this.Name.Contains(x.GetFriendlyNameWithoutTypeNames().TrimStart('I')))
                         .ToArray();
         }
 
@@ -73,6 +73,55 @@ namespace Autofac.Extras.IocManager
                                   .Classes()
                                   .NonStatic()
                                   .Scan();
+        }
+
+        /// <summary>
+        ///     Gets the name of the friendly.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static string GetFriendlyName(this Type type)
+        {
+            string friendlyName = type.Name;
+            if (type.IsGenericType)
+            {
+                int iBacktick = friendlyName.IndexOf('`');
+                if (iBacktick > 0)
+                {
+                    friendlyName = friendlyName.Remove(iBacktick);
+                }
+                friendlyName += "<";
+                Type[] typeParameters = type.GetGenericArguments();
+                for (var i = 0; i < typeParameters.Length; ++i)
+                {
+                    string typeParamName = typeParameters[i].Name;
+                    friendlyName += i == 0 ? typeParamName : "," + typeParamName;
+                }
+
+                friendlyName += ">";
+            }
+
+            return friendlyName;
+        }
+
+        /// <summary>
+        ///     Gets the friendly name without type names.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static string GetFriendlyNameWithoutTypeNames(this Type type)
+        {
+            string friendlyName = type.Name;
+            if (type.IsGenericType)
+            {
+                int iBacktick = friendlyName.IndexOf('`');
+                if (iBacktick > 0)
+                {
+                    friendlyName = friendlyName.Remove(iBacktick);
+                }
+            }
+
+            return friendlyName;
         }
 
         /// <summary>

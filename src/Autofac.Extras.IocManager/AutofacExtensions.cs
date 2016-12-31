@@ -64,26 +64,33 @@ namespace Autofac.Extras.IocManager
         {
             List<Type> defaultInterfaces = typeToRegister.GetDefaultInterfaces().ToList();
 
-            if (typeToRegister.IsAssignableTo<IStartable>())
-            {
-                defaultInterfaces.Add(typeof(IStartable));
-            }
-
             if (typeToRegister.IsGenericTypeDefinition)
             {
+                List<Type> defaultGenerics = defaultInterfaces.Where(t => t.IsGenericType).ToList();
+                AddStartableIfPossible(typeToRegister, defaultGenerics);
                 builder.RegisterGeneric(typeToRegister)
-                       .As(defaultInterfaces.ToArray())
+                       .As(defaultGenerics.ToArray())
                        .AsSelf()
                        .InjectPropertiesAsAutowired()
                        .ApplyLifeStyle(typeof(TLifetime));
             }
             else
             {
+                List<Type> defaults = defaultInterfaces.Where(t => !t.IsGenericType).ToList();
+                AddStartableIfPossible(typeToRegister, defaults);
                 builder.RegisterType(typeToRegister)
-                       .As(defaultInterfaces.ToArray())
+                       .As(defaults.ToArray())
                        .AsSelf()
                        .InjectPropertiesAsAutowired()
                        .ApplyLifeStyle(typeof(TLifetime));
+            }
+        }
+
+        private static void AddStartableIfPossible(Type typeToRegister, ICollection<Type> defaultInterfaces)
+        {
+            if (typeToRegister.IsAssignableTo<IStartable>())
+            {
+                defaultInterfaces.Add(typeof(IStartable));
             }
         }
     }
