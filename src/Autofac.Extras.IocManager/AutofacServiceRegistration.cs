@@ -98,6 +98,37 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
+        ///     Registers the specified lifetime.
+        /// </summary>
+        /// <typeparam name="TService1">The type of the service1.</typeparam>
+        /// <typeparam name="TService2">The type of the service2.</typeparam>
+        /// <typeparam name="TService3"></typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
+        public void Register<TService1, TService2, TService3, TImplementation>(
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TService1 : class
+            where TService2 : class
+            where TService3 : class
+            where TImplementation : class, TService1, TService2, TService3
+        {
+            IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterType<TImplementation>()
+                .As<TService1, TService2, TService3>()
+                .InjectPropertiesAsAutowired()
+                .AsSelf();
+
+            registration.ApplyLifeStyle(lifetime);
+
+            if (keepDefault)
+            {
+                registration.PreserveExistingDefaults();
+            }
+        }
+
+        /// <summary>
         ///     Registers the specified instance.
         /// </summary>
         /// <typeparam name="TService1">The type of the service1.</typeparam>
@@ -114,6 +145,68 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<object, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterInstance(instance).As<TService1, TService2>()
+                .AsSelf()
+                .InjectPropertiesAsAutowired();
+
+            registration.ApplyLifeStyle(lifetime);
+
+            if (keepDefault)
+            {
+                registration.PreserveExistingDefaults();
+            }
+        }
+
+        /// <summary>
+        ///     Registers the specified instance.
+        /// </summary>
+        /// <typeparam name="TService1">The type of the service1.</typeparam>
+        /// <typeparam name="TService2">The type of the service2.</typeparam>
+        /// <typeparam name="TService3">The type of the service3.</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
+        /// <param name="instance">The instance.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
+        public void Register<TService1, TService2, TService3, TImplementation>(
+            TImplementation instance,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TService1 : class
+            where TService2 : class
+            where TService3 : class
+            where TImplementation : class, TService1, TService2, TService3
+        {
+            IRegistrationBuilder<object, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterInstance(instance).As<TService1, TService2, TService3>()
+                .AsSelf()
+                .InjectPropertiesAsAutowired();
+
+            registration.ApplyLifeStyle(lifetime);
+
+            if (keepDefault)
+            {
+                registration.PreserveExistingDefaults();
+            }
+        }
+
+        /// <summary>
+        ///     Registers the specified instance.
+        /// </summary>
+        /// <typeparam name="TService1">The type of the service1.</typeparam>
+        /// <typeparam name="TService2">The type of the service2.</typeparam>
+        /// <typeparam name="TService3"></typeparam>
+        /// <param name="instance">The instance.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
+        public void Register<TService1, TService2, TService3>(
+            object instance,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TService1 : class
+            where TService2 : class
+            where TService3 : class
+        {
+            IRegistrationBuilder<object, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterInstance(instance).As<TService1, TService2, TService3>()
                 .AsSelf()
                 .InjectPropertiesAsAutowired();
 

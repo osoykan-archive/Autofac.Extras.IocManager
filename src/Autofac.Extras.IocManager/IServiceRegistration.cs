@@ -21,6 +21,23 @@ namespace Autofac.Extras.IocManager
             where TService2 : class;
 
         /// <summary>
+        ///     Registers the specified lifetime.
+        /// </summary>
+        /// <typeparam name="TService1">The type of the service1.</typeparam>
+        /// <typeparam name="TService2">The type of the service2.</typeparam>
+        /// <typeparam name="TService3">The type of the service3.</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
+        void Register<TService1, TService2, TService3, TImplementation>(
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TImplementation : class, TService1, TService2, TService3
+            where TService1 : class
+            where TService2 : class
+            where TService3 : class;
+
+        /// <summary>
         ///     Registers the specified instance.
         /// </summary>
         /// <typeparam name="TService1">The type of the service1.</typeparam>
@@ -36,6 +53,42 @@ namespace Autofac.Extras.IocManager
             where TImplementation : class, TService1, TService2
             where TService1 : class
             where TService2 : class;
+
+        /// <summary>
+        ///     Registers the specified instance.
+        /// </summary>
+        /// <typeparam name="TService1">The type of the service1.</typeparam>
+        /// <typeparam name="TService2">The type of the service2.</typeparam>
+        /// <typeparam name="TService3">The type of the service3.</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
+        /// <param name="instance">The instance.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
+        void Register<TService1, TService2, TService3, TImplementation>(
+            TImplementation instance,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TImplementation : class, TService1, TService2, TService3
+            where TService1 : class
+            where TService2 : class
+            where TService3 : class;
+
+        /// <summary>
+        ///     Registers the specified instance.
+        /// </summary>
+        /// <typeparam name="TService1">The type of the service1.</typeparam>
+        /// <typeparam name="TService2">The type of the service2.</typeparam>
+        /// <typeparam name="TService3"></typeparam>
+        /// <param name="instance">The instance.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        /// <param name="keepDefault">if set to <c>true</c> [keep default].</param>
+        void Register<TService1, TService2, TService3>(
+            object instance,
+            Lifetime lifetime = Lifetime.Transient,
+            bool keepDefault = false)
+            where TService1 : class
+            where TService2 : class
+            where TService3 : class;
 
         /// <summary>
         ///     Registers the specified instance.
