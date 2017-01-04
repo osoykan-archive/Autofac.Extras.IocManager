@@ -300,6 +300,7 @@ namespace Autofac.Extras.IocManager
                 .RegisterType(implementationType)
                 .As(serviceType)
                 .InjectPropertiesAsAutowired()
+                .AsSelf()
                 .OnActivating(args =>
                 {
                     object instance = _decoratorService.Decorate(serviceType, args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
@@ -327,6 +328,7 @@ namespace Autofac.Extras.IocManager
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType(serviceType)
                 .InjectPropertiesAsAutowired()
+                .AsSelf()
                 .OnActivating(args =>
                 {
                     object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
@@ -367,6 +369,7 @@ namespace Autofac.Extras.IocManager
             IRegistrationBuilder<object, ReflectionActivatorData, DynamicRegistrationStyle> registration = _containerBuilder
                 .RegisterGeneric(implementationType)
                 .As(serviceType)
+                .AsSelf()
                 .InjectPropertiesAsAutowired();
 
             registration.ApplyLifeStyle(lifetime);
