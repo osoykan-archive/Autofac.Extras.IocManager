@@ -4,11 +4,11 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class AutofacServiceRegistrationTests : Test
+    public class AutofacServiceRegistration_Tests : Test
     {
         private readonly ServiceRegistration _sut;
 
-        public AutofacServiceRegistrationTests()
+        public AutofacServiceRegistration_Tests()
         {
             _sut = new ServiceRegistration();
         }

@@ -6,11 +6,11 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class DecoratorServiceTests : TestFor<DecoratorService>
+    public class DecoratorService_Tests : TestFor<DecoratorService>
     {
         private readonly Mock<IResolverContext> _resolverContextMock;
 
-        public DecoratorServiceTests()
+        public DecoratorService_Tests()
         {
             _resolverContextMock = new Mock<IResolverContext>();
         }

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class CircularPropertyDependencyTests : TestBaseWithIocBuilder
+    public class CircularPropertyDependency_Tests : TestBaseWithIocBuilder
     {
         private void Initialize_Test_LifeTimeScope()
         {

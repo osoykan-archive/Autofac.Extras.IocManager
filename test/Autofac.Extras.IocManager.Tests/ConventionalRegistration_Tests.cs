@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class ConventionalRegistrationTests : TestBaseWithIocBuilder
+    public class ConventionalRegistration_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void ConventionalRegistrarShouldWork_WithDefaultInterfaces()
@@ -30,7 +30,7 @@ namespace Autofac.Extras.IocManager.Tests
         }
 
         [Fact]
-        public void ConventionalRegistrarShouldWork_GenericInterRegistrations()
+        public void ConventionalRegistrarShouldWork_GenericInterfaceRegistrations()
         {
             Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
 

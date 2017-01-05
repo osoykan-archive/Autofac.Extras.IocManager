@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class DisposableDependencyObjectWrapperTests : TestBaseWithIocBuilder
+    public class DisposableDependencyObjectWrapper_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void ResolveAsDisposable_With_Constructor_Args_Should_Work()

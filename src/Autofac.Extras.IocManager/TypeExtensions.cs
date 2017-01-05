@@ -32,7 +32,7 @@ namespace Autofac.Extras.IocManager
         public static Type[] GetDefaultInterfacesWithSelf(this Type @this)
         {
             Type[] types = @this.GetInterfaces()
-                                .Where(x => @this.Name.Contains(x.Name.TrimStart('I')))
+                                .Where(x => x.GetFriendlyNameWithoutTypeNames().TrimStart('I').Contains(@this.GetFriendlyNameWithoutTypeNames()))
                                 .ToArray();
             return types.Prepend(@this).ToArray();
         }
@@ -52,7 +52,7 @@ namespace Autofac.Extras.IocManager
         public static Type[] GetDefaultInterfaces(this Type @this)
         {
             return @this.GetInterfaces()
-                        .Where(x => @this.Name.Contains(x.GetFriendlyNameWithoutTypeNames().TrimStart('I')))
+                        .Where(x => x.GetFriendlyNameWithoutTypeNames().TrimStart('I').Contains(@this.GetFriendlyNameWithoutTypeNames()))
                         .ToArray();
         }
 

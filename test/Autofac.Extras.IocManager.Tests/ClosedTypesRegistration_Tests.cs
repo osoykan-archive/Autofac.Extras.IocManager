@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class ClosedTypesRegistrationTests : TestBaseWithIocBuilder
+    public class ClosedTypesRegistration_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void ClosedTypesRegistration_ShouldWork()

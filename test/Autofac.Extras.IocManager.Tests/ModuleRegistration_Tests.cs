@@ -7,7 +7,7 @@ using Shouldly;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class ModuleRegistrationTests : TestFor<ModuleRegistration>
+    public class ModuleRegistration_Tests : TestFor<ModuleRegistration>
     {
         [Fact]
         public void RegisterInvokesRegister()

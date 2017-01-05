@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class RegistrationThroughContainerBuilderTests : TestBaseWithIocBuilder
+    public class RegistrationThroughContainerBuilder_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void ContainerBuilderTestsShouldWork()

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class IocBuilderTests : TestBaseWithIocBuilder
+    public class IocBuilder_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void IocBuilder_ShouldWork()
