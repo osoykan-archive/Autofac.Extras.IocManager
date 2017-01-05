@@ -24,10 +24,8 @@ someDomainService.DoSomeStuff();
  ```
  
 
-##Extension oriented registration:
- 
- Example:
- 
+##Extension Oriented Registrations
+  
  ```csharp
  public static class StoveRegistrationExtensions
 {
