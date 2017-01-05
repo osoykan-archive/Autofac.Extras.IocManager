@@ -4,7 +4,7 @@ Autofac.Extras.IocManager
 
 Autofac.Extras.IocManager allows Autofac Container to be portable. It also provides entire resolve methods which belong to Autofac Container and also provides conventional registration mechanism. IocManager is the best alternative to [common Service Locator anti-pattern](http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/).
 
-#Usage
+#Sample Usage
 ```csharp
 IRootResolver resolver = IocBuilder.New
                                    .UseAutofacContainerBuilder()
@@ -25,7 +25,9 @@ someDomainService.DoSomeStuff();
  
 
 ##Extension Oriented Registrations
-  
+ 
+ Extension sample:
+ 
  ```csharp
 public static class StoveRegistrationExtensions
 {
