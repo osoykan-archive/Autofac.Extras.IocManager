@@ -193,6 +193,8 @@ public static class SomeRegistrationExtensions
     public static IIocBuilder UseSomeFeature(this IIocBuilder builder)
     {
         builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+        //do some registrations which belong to the feature
+        //...
         return builder;
     }
 }
