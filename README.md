@@ -27,7 +27,7 @@ someDomainService.DoSomeStuff();
 ##Extension Oriented Registrations
   
  ```csharp
- public static class StoveRegistrationExtensions
+public static class StoveRegistrationExtensions
 {
     public static IIocBuilder UseStove(this IIocBuilder builder)
     {
