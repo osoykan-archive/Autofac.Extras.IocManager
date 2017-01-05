@@ -6,11 +6,11 @@ namespace Autofac.Extras.IocManager.Tests
 {
     public class AutofacServiceRegistrationTests : Test
     {
-        private readonly AutofacServiceRegistration _sut;
+        private readonly ServiceRegistration _sut;
 
         public AutofacServiceRegistrationTests()
         {
-            _sut = new AutofacServiceRegistration();
+            _sut = new ServiceRegistration();
         }
 
         [Fact]

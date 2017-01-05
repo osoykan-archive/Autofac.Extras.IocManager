@@ -10,14 +10,14 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     The lazy registration factory
         /// </summary>
-        private Lazy<IServiceRegistration> _lazyRegistrationFactory = new Lazy<IServiceRegistration>(() => new AutofacServiceRegistration());
+        private Lazy<IServiceRegistration> _lazyRegistrationFactory = new Lazy<IServiceRegistration>(() => new ServiceRegistration());
 
         /// <summary>
         ///     Prevents a default instance of the <see cref="IocBuilder" /> class from being created.
         /// </summary>
         private IocBuilder()
         {
-            UseServiceRegistration(new AutofacServiceRegistration());
+            UseServiceRegistration(new ServiceRegistration());
             ModuleRegistration = new ModuleRegistration(this);
         }
 

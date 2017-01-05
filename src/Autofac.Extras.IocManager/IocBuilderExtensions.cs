@@ -22,7 +22,7 @@ namespace Autofac.Extras.IocManager
         /// <returns></returns>
         public static IIocBuilder UseAutofacContainerBuilder(this IIocBuilder iocBuilder, ContainerBuilder containerBuilder)
         {
-            return iocBuilder.UseServiceRegistration(new AutofacServiceRegistration(containerBuilder));
+            return iocBuilder.UseServiceRegistration(new ServiceRegistration(containerBuilder));
         }
 
         /// <summary>

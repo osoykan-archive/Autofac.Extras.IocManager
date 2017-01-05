@@ -6,7 +6,7 @@ using Autofac.Features.Scanning;
 
 namespace Autofac.Extras.IocManager
 {
-    internal class AutofacServiceRegistration : IServiceRegistration
+    internal class ServiceRegistration : IServiceRegistration
     {
         /// <summary>
         ///     The container builder
@@ -19,17 +19,17 @@ namespace Autofac.Extras.IocManager
         private readonly DecoratorService _decoratorService = new DecoratorService();
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AutofacServiceRegistration" /> class.
+        ///     Initializes a new instance of the <see cref="ServiceRegistration" /> class.
         /// </summary>
-        public AutofacServiceRegistration() : this(null)
+        public ServiceRegistration() : this(null)
         {
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AutofacServiceRegistration" /> class.
+        ///     Initializes a new instance of the <see cref="ServiceRegistration" /> class.
         /// </summary>
         /// <param name="containerBuilder">The container builder.</param>
-        public AutofacServiceRegistration(ContainerBuilder containerBuilder)
+        public ServiceRegistration(ContainerBuilder containerBuilder)
         {
             _containerBuilder = containerBuilder ?? new ContainerBuilder();
 
