@@ -6,10 +6,18 @@ Autofac.Extras.IocManager allows Autofac Container to be portable. It also provi
 
 #Usage
 ```csharp
- var builder = new ContainerBuilder();
- builder.RegisterIocManager();
- IContainer container = builder.Build();
- container.UseIocManager();
+IRootResolver resolver = IocBuilder.New
+                                   .UseAutofacContainerBuilder()
+                                   .UseStove()
+                                   .UseStoveEntityFramework()
+                                   .UseDefaultEventBus()
+                                   .UseDbContextEfTransactionStrategy()
+                                   .UseTypedConnectionStringResolver()
+                                   .UseNLog()
+                                   .RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()))
+                                   .RegisterIocManager()
+                                   .CreateResolver()
+                                   .UseIocManager();
  ```
 ##Registrations
 ###Conventional assembly registrations
