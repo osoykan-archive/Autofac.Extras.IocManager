@@ -33,8 +33,8 @@ namespace Autofac.Extras.IocManager
         {
             _containerBuilder = containerBuilder ?? new ContainerBuilder();
 
-            _containerBuilder.RegisterType<AutofacResolver>().As<IResolver>();
-            _containerBuilder.RegisterType<AutofacScopeResolver>().As<IScopeResolver>();
+            _containerBuilder.RegisterType<Resolver>().As<IResolver>();
+            _containerBuilder.RegisterType<ScopeResolver>().As<IScopeResolver>();
             _containerBuilder.Register<IDecoratorService>(_ => _decoratorService).SingleInstance();
         }
 
@@ -242,7 +242,7 @@ namespace Autofac.Extras.IocManager
                 .InjectPropertiesAsAutowired()
                 .OnActivating(args =>
                 {
-                    TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
+                    TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
                     args.ReplaceInstance(instance);
                 });
 
@@ -268,11 +268,11 @@ namespace Autofac.Extras.IocManager
             where TService : class
         {
             IRegistrationBuilder<TService, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
-                .Register(cc => factory(new ResolverContext(new AutofacResolver(cc))))
+                .Register(cc => factory(new ResolverContext(new Resolver(cc))))
                 .InjectPropertiesAsAutowired()
                 .OnActivating(args =>
                 {
-                    TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
+                    TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
                     args.ReplaceInstance(instance);
                 });
             registration.ApplyLifeStyle(lifetime);
@@ -303,7 +303,7 @@ namespace Autofac.Extras.IocManager
                 .AsSelf()
                 .OnActivating(args =>
                 {
-                    object instance = _decoratorService.Decorate(serviceType, args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
+                    object instance = _decoratorService.Decorate(serviceType, args.Instance, new ResolverContext(new Resolver(args.Context)));
                     args.ReplaceInstance(instance);
                 });
             registration.ApplyLifeStyle(lifetime);
@@ -331,7 +331,7 @@ namespace Autofac.Extras.IocManager
                 .AsSelf()
                 .OnActivating(args =>
                 {
-                    object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new AutofacResolver(args.Context)));
+                    object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
                     args.ReplaceInstance(instance);
                 });
             registration.ApplyLifeStyle(lifetime);
@@ -433,7 +433,7 @@ namespace Autofac.Extras.IocManager
         public IRootResolver CreateResolver()
         {
             IContainer container = _containerBuilder.Build();
-            return new AutofacRootResolver(container);
+            return new RootResolver(container);
         }
 
         /// <summary>

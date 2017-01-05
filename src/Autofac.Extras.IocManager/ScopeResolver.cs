@@ -1,10 +1,10 @@
 ﻿namespace Autofac.Extras.IocManager
 {
-    internal class AutofacScopeResolver : AutofacResolver, IScopeResolver
+    internal class ScopeResolver : Resolver, IScopeResolver
     {
         private readonly ILifetimeScope _lifetimeScope;
 
-        public AutofacScopeResolver(ILifetimeScope lifetimeScope)
+        public ScopeResolver(ILifetimeScope lifetimeScope)
             : base(lifetimeScope)
         {
             _lifetimeScope = lifetimeScope;
@@ -18,7 +18,7 @@
         /// </returns>
         public IScopeResolver BeginScope()
         {
-            return new AutofacScopeResolver(_lifetimeScope.BeginLifetimeScope());
+            return new ScopeResolver(_lifetimeScope.BeginLifetimeScope());
         }
 
         /// <summary>

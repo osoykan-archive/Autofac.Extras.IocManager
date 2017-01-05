@@ -37,7 +37,7 @@ namespace Autofac.Extras.IocManager
         public static IContainer CreateContainer(this IIocBuilder iocBuilder)
         {
             IRootResolver rootResolver = iocBuilder.CreateResolver();
-            var autofacRootResolver = rootResolver as AutofacRootResolver;
+            var autofacRootResolver = rootResolver as RootResolver;
             if (autofacRootResolver == null)
             {
                 throw new InvalidOperationException(

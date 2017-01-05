@@ -7,7 +7,7 @@ using Autofac.Core;
 
 namespace Autofac.Extras.IocManager
 {
-    internal class AutofacResolver : IResolver
+    internal class Resolver : IResolver
     {
         /// <summary>
         ///     The component context
@@ -15,10 +15,10 @@ namespace Autofac.Extras.IocManager
         private readonly IComponentContext _componentContext;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AutofacResolver" /> class.
+        ///     Initializes a new instance of the <see cref="Resolver" /> class.
         /// </summary>
         /// <param name="componentContext">The component context.</param>
-        public AutofacResolver(IComponentContext componentContext)
+        public Resolver(IComponentContext componentContext)
         {
             _componentContext = componentContext;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Autofac.Extras.IocManager
 {
-    public static class AutofacRootResolverExtensions
+    public static class RootResolverExtensions
     {
         /// <summary>
         ///     Enables and uses the Ioc Manager.

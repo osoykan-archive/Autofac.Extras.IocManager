@@ -1,12 +1,12 @@
 ﻿namespace Autofac.Extras.IocManager
 {
-    internal class AutofacRootResolver : AutofacScopeResolver, IRootResolver
+    internal class RootResolver : ScopeResolver, IRootResolver
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AutofacRootResolver" /> class.
+        ///     Initializes a new instance of the <see cref="RootResolver" /> class.
         /// </summary>
         /// <param name="container">The container.</param>
-        public AutofacRootResolver(IContainer container)
+        public RootResolver(IContainer container)
             : base(container)
         {
             Container = container;
