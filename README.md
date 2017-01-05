@@ -81,16 +81,10 @@ interface ISimpleDependency3 {}
 
 class SimpleDependency3 : ISimpleDependency3, ILifetimeScopeDependency {}
 ```
-Registration extension:
 
-```csharp
-protected override void Load(ContainerBuilder builder)
-{
-    builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-}
-```
+##IocManager Using
 
-After the container build it can use:
+After the container build which means `CreateResolver()` it can use:
 
  ```csharp
  IocManager.Instance.Resolve<ISimpleDependency3>();
