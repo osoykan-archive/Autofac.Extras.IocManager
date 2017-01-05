@@ -18,7 +18,49 @@ IRootResolver resolver = IocBuilder.New
                                    .RegisterIocManager()
                                    .CreateResolver()
                                    .UseIocManager();
+                                   
+var someDomainService = resolver.Resolve<SomeDomainService>();
+someDomainService.DoSomeStuff();
  ```
+ ###Extension oriented registration:
+ Example:
+ 
+ ```csharp
+ public static class StoveRegistrationExtensions
+{
+    public static IIocBuilder UseStove(this IIocBuilder builder)
+    {
+        RegisterDefaults(builder);
+        return builder;
+    }
+
+    private static void RegisterDefaults(IIocBuilder builder)
+    {
+        builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+        builder.RegisterServices(r => r.Register<IGuidGenerator>(context => SequentialGuidGenerator.Instance));
+        builder.RegisterServices(r => r.Register<IStoveStartupConfiguration, StoveStartupConfiguration>(Lifetime.Singleton));
+    }
+
+    public static IIocBuilder UseDefaultConnectionStringResolver(this IIocBuilder builder)
+    {
+        builder.RegisterServices(r => r.Register<IConnectionStringResolver, DefaultConnectionStringResolver>());
+        return builder;
+    }
+
+    public static IIocBuilder UseDefaultEventBus(this IIocBuilder builder)
+    {
+        builder.RegisterServices(r => r.Register<IEventBus>(context => EventBus.Default));
+        return builder;
+    }
+
+    public static IIocBuilder UseEventBus(this IIocBuilder builder)
+    {
+        builder.RegisterServices(r => r.Register<IEventBus, EventBus>());
+        return builder;
+    }
+}
+ ```
+ 
 ##Registrations
 ###Conventional assembly registrations
 
