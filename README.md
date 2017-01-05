@@ -121,6 +121,7 @@ simpleDisposableDependency.DisposeCount.ShouldBe(1);
 
 ##Property Injection
 Autofac.Extras.IocManager also provides property injection on public and private properties with `InjectPropertiesAsAutowired()` extension.
+It does this autowire operation internally. Just use register api `builder.RegisterServices(r => r.Register<IConnectionStringResolver, DefaultConnectionStringResolver>());` it autowires all propery injections implicitly according to your `[DoNotInject]` attribute.
 
 ```csharp
 builder.RegisterType<ISimpleDependency>().AsSelf().AsImplementedInterfaces().InjectPropertiesAsAutowired();
