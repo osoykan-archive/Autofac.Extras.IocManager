@@ -95,8 +95,8 @@ After the container build which means `CreateResolver()` it can use:
 
 ###Injectable Resolvers
 
-`IResolver`: Atomic resolver which uses Autofac's `IComponentContext` internally.
-`IScopeResolver` : Able to start a new lifetime scope. An abstraction to Autofac's `ILifetimeScope`
+* `IResolver`: Atomic resolver which uses Autofac's `IComponentContext` internally.
+* `IScopeResolver` : Able to start a new lifetime scope. An abstraction to Autofac's `ILifetimeScope`
 
  Resolve instance:
  ```csharp
