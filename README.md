@@ -22,7 +22,10 @@ IRootResolver resolver = IocBuilder.New
 var someDomainService = resolver.Resolve<SomeDomainService>();
 someDomainService.DoSomeStuff();
  ```
- ###Extension oriented registration:
+ 
+
+##Extension oriented registration:
+ 
  Example:
  
  ```csharp
