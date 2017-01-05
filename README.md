@@ -92,6 +92,12 @@ After the container build which means `CreateResolver()` it can use:
  With this feature, you no longer don't have to define your registrations in `Builder`'s `Load` method explicitly. `RegisterAssemblyByConvention` does this with [interface marking pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern).
 
 ##Resolvings
+
+###Injectable Resolvers
+
+`IResolver`: Atomic resolver which uses Autofac's `IComponentContext` internally.
+`IScopeResolver` : Able to start a new lifetime scope. An abstraction to Autofac's `ILifetimeScope`
+
  Resolve instance:
  ```csharp
  IocManager.Instance.Resolve<IMyTransientClass>();
