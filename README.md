@@ -182,3 +182,34 @@ class SimpleDependencyWithIocManager
 }
 ```
 feel free to use `IIocManager` for resolving operations in any dependency.
+
+
+#Example
+
+Extension:
+```csharp
+public static class SomeRegistrationExtensions
+{
+    public static IIocBuilder UseSomeFeature(this IIocBuilder builder)
+    {
+        builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+        return builder;
+    }
+}
+```
+Composition Root or Program.cs
+
+```csharp
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        IocBuilder.New
+                  .UseAutofacContainerBuilder()
+                  .UseSomeFeature();
+    }
+}
+```
+
+
+
