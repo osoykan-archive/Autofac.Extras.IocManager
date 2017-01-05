@@ -6,17 +6,17 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class DisposableDependencyObjectWrapperTests : TestBase
+    public class DisposableDependencyObjectWrapper_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void ResolveAsDisposable_With_Constructor_Args_Should_Work()
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDisposableObject>().InstancePerDependency();
+                         builder.RegisterServices(f => f.RegisterType<SimpleDisposableObject>());
                      });
 
-            using (var wrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableObject>(new { myData = 42 }))
+            using (IDisposableDependencyObjectWrapper<SimpleDisposableObject> wrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableObject>(new { myData = 42 }))
             {
                 wrapper.Object.MyData.ShouldBe(42);
             }
@@ -27,7 +27,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDisposableObject>().InstancePerDependency();
+                         builder.RegisterServices(f => f.RegisterType<SimpleDisposableObject>());
                      });
 
             LocalIocManager.ResolveUsing<SimpleDisposableObject>(obj => obj.MyData.ShouldBe(0));

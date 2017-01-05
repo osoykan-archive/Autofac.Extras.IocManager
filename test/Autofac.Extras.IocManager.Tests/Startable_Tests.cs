@@ -6,12 +6,12 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class StartableTests : TestBase
+    public class Startable_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void StartableShouldWork()
         {
-            Building(builder => builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
             var startableDependency = LocalIocManager.Resolve<IStartableDependency>();
             startableDependency.StartCallExecuted.ShouldBe(true);
@@ -20,7 +20,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void Startable_ShouldInject_Any_Dependency()
         {
-            Building(builder => builder.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
             var startableDependency = LocalIocManager.Resolve<IStartableDependency2>();
 
@@ -29,6 +29,30 @@ namespace Autofac.Extras.IocManager.Tests
             startableDependency.GetIocManager().ShouldBeSameAs(LocalIocManager);
             startableDependency.IocResolver.ShouldNotBeNull();
             startableDependency.IocResolver.ShouldBeSameAs(LocalIocManager);
+        }
+
+        [Fact]
+        public void ConcreteStartable_should_instantiatable()
+        {
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
+
+            var concreteStartable = LocalIocManager.Resolve<ConcreteStartable>();
+
+            concreteStartable.StartCallExecuted.ShouldBe(true);
+        }
+
+        internal class ConcreteStartable : MyConcreteStartable, ISingletonDependency, IStartable
+        {
+            public bool StartCallExecuted { get; private set; }
+
+            public void Start()
+            {
+                StartCallExecuted = true;
+            }
+        }
+
+        internal class MyConcreteStartable
+        {
         }
 
         internal class StartableDependency : IStartableDependency, IStartable, ISingletonDependency

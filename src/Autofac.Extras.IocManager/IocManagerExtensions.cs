@@ -12,7 +12,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object wrapped by <see cref="IocScopedResolver" /></returns>
         public static IIocScopedResolver CreateScope(this IIocManager iocManager)
         {
-            return new IocScopedResolver(iocManager.Container.BeginLifetimeScope());
+            return new IocScopedResolver(iocManager.Resolver.BeginScope());
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object wrapped by <see cref="DisposableDependencyObjectWrapper{T}" /></returns>
         public static IDisposableDependencyObjectWrapper ResolveAsDisposable(this IIocManager iocManager, Type type, object argumentsAsAnonymousType)
         {
-            return new DisposableDependencyObjectWrapper(iocManager.Container.BeginLifetimeScope(), type, argumentsAsAnonymousType);
+            return new DisposableDependencyObjectWrapper(iocManager.Resolver.BeginScope(), type, argumentsAsAnonymousType);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object wrapped by <see cref="DisposableDependencyObjectWrapper{T}" /></returns>
         public static IDisposableDependencyObjectWrapper ResolveAsDisposable(this IIocManager iocManager, Type type)
         {
-            return new DisposableDependencyObjectWrapper(iocManager.Container.BeginLifetimeScope(), type, null);
+            return new DisposableDependencyObjectWrapper(iocManager.Resolver.BeginScope(), type, null);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object wrapped by <see cref="DisposableDependencyObjectWrapper{T}" /></returns>
         public static IDisposableDependencyObjectWrapper<T> ResolveAsDisposable<T>(this IIocManager iocManager)
         {
-            return new DisposableDependencyObjectWrapper<T>(iocManager.Container.BeginLifetimeScope(), typeof(T), null);
+            return new DisposableDependencyObjectWrapper<T>(iocManager.Resolver.BeginScope(), typeof(T), null);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Autofac.Extras.IocManager
         /// <returns>The instance object wrapped by <see cref="DisposableDependencyObjectWrapper{T}" /></returns>
         public static IDisposableDependencyObjectWrapper<T> ResolveAsDisposable<T>(this IIocManager iocManager, object argumentsAsAnonymousType)
         {
-            return new DisposableDependencyObjectWrapper<T>(iocManager.Container.BeginLifetimeScope(), typeof(T), argumentsAsAnonymousType);
+            return new DisposableDependencyObjectWrapper<T>(iocManager.Resolver.BeginScope(), typeof(T), argumentsAsAnonymousType);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="doAction"></param>
         public static void ResolveUsing<T>(this IIocManager iocManager, Action<T> doAction)
         {
-            using (var wrapper = iocManager.ResolveAsDisposable<T>())
+            using (IDisposableDependencyObjectWrapper<T> wrapper = iocManager.ResolveAsDisposable<T>())
             {
                 doAction(wrapper.Object);
             }
@@ -86,7 +86,7 @@ namespace Autofac.Extras.IocManager
         /// <returns></returns>
         public static TReturn ResolveUsing<TService, TReturn>(this IIocManager iocManager, Func<TService, TReturn> func)
         {
-            using (var wrapper = iocManager.ResolveAsDisposable<TService>())
+            using (IDisposableDependencyObjectWrapper<TService> wrapper = iocManager.ResolveAsDisposable<TService>())
             {
                 return func(wrapper.Object);
             }
@@ -100,7 +100,7 @@ namespace Autofac.Extras.IocManager
         /// <param name="action">An action that can use the resolved object</param>
         public static void UsingScope(this IIocManager iocResolver, Action<IIocScopedResolver> action)
         {
-            using (var scope = iocResolver.CreateScope())
+            using (IIocScopedResolver scope = iocResolver.CreateScope())
             {
                 action(scope);
             }

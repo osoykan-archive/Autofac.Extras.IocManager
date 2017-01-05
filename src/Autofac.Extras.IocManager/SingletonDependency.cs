@@ -15,7 +15,7 @@ namespace Autofac.Extras.IocManager
         /// <value>
         /// The instance.
         /// </value>
-        public static T Instance { get { return LazyInstance.Value; } }
+        public static T Instance => LazyInstance.Value;
         private static readonly Lazy<T> LazyInstance;
 
         static SingletonDependency()

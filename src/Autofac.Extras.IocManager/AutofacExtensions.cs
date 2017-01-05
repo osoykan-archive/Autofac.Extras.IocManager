@@ -1,70 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using Autofac.Builder;
 using Autofac.Features.Scanning;
-using System.Linq;
 
 namespace Autofac.Extras.IocManager
 {
     public static class AutofacExtensions
     {
         /// <summary>
-        ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
-        /// </summary>
-        /// <param name="builder"></param>
-        public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder)
-        {
-            builder.RegisterInstance(IocManager.Instance)
-                   .As<IIocManager, IIocResolver>()
-                   .AsSelf()
-                   .InjectPropertiesAsAutowired()
-                   .SingleInstance();
-
-            return builder;
-        }
-
-        /// <summary>
-        ///     Registers <see cref="IocManager" /> to resolve in any dependencies.
-        /// </summary>
-        /// <param name="builder">Autofac's <see cref="ContainerBuilder" /></param>
-        /// <param name="iocManager">IocManager abstraction for Autofac <see cref="IocManager" /></param>
-        public static ContainerBuilder RegisterIocManager(this ContainerBuilder builder, IocManager iocManager)
-        {
-            builder.RegisterInstance(iocManager)
-                   .As<IIocManager, IIocResolver>()
-                   .AsSelf()
-                   .InjectPropertiesAsAutowired()
-                   .SingleInstance();
-
-            return builder;
-        }
-
-        /// <summary>
-        ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
-        /// </summary>
-        /// <param name="container"></param>
-        public static IContainer UseIocManager(this IContainer container)
-        {
-            IocManager.Instance.Container = container;
-            return container;
-        }
-
-        /// <summary>
-        ///     Sets current Autofac <see cref="IContainer" /> to <see cref="IocManager" />
-        /// </summary>
-        /// <param name="container"></param>
-        public static IContainer UseIocManager(this IContainer container, IocManager iocManager)
-        {
-            iocManager.Container = container;
-            return container;
-        }
-
-        /// <summary>
         ///     Helper for anonymouse resolvings <see cref="IocManager.Resolve{T}(object)" />
         /// </summary>
-        /// <param name="this"></param>
+        /// <param name="this">The this.</param>
         /// <returns></returns>
         internal static IEnumerable<TypedParameter> GetTypedResolvingParameters(this object @this)
         {
@@ -77,11 +26,12 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Finds and registers as DefaultInterfaces to container conventionally.
         /// </summary>
-        /// <typeparam name="TLimit"></typeparam>
-        /// <param name="registration"></param>
+        /// <typeparam name="TLimit">The type of the limit.</typeparam>
+        /// <param name="registration">The registration.</param>
         /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">registration</exception>
         public static IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle>
-                AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
+            AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
         {
             if (registration == null)
             {
@@ -100,8 +50,8 @@ namespace Autofac.Extras.IocManager
         internal static void RegisterDependenciesByAssembly<TLifetime>(this ContainerBuilder builder, Assembly assembly) where TLifetime : ILifetime
         {
             typeof(TLifetime)
-                    .AssignedTypesInAssembly(assembly)
-                    .ForEach(builder.RegisterApplyingLifetime<TLifetime>);
+                .AssignedTypesInAssembly(assembly)
+                .ForEach(builder.RegisterApplyingLifetime<TLifetime>);
         }
 
         /// <summary>
@@ -112,28 +62,35 @@ namespace Autofac.Extras.IocManager
         /// <param name="typeToRegister">Type to register Autofac Container</param>
         internal static void RegisterApplyingLifetime<TLifetime>(this ContainerBuilder builder, Type typeToRegister) where TLifetime : ILifetime
         {
-            var defaultInterfaces = typeToRegister.GetDefaultInterfaces().ToList();
-
-            if (typeToRegister.IsAssignableTo<IStartable>())
-            {
-                defaultInterfaces.Add(typeof(IStartable));
-            }
+            List<Type> defaultInterfaces = typeToRegister.GetDefaultInterfaces().ToList();
 
             if (typeToRegister.IsGenericTypeDefinition)
             {
+                List<Type> defaultGenerics = defaultInterfaces.Where(t => t.IsGenericType).ToList();
+                AddStartableIfPossible(typeToRegister, defaultGenerics);
                 builder.RegisterGeneric(typeToRegister)
-                       .As(defaultInterfaces.ToArray())
+                       .As(defaultGenerics.ToArray())
                        .AsSelf()
                        .InjectPropertiesAsAutowired()
                        .ApplyLifeStyle(typeof(TLifetime));
             }
             else
             {
+                List<Type> defaults = defaultInterfaces.Where(t => !t.IsGenericType).ToList();
+                AddStartableIfPossible(typeToRegister, defaults);
                 builder.RegisterType(typeToRegister)
-                       .As(defaultInterfaces.ToArray())
+                       .As(defaults.ToArray())
                        .AsSelf()
                        .InjectPropertiesAsAutowired()
                        .ApplyLifeStyle(typeof(TLifetime));
+            }
+        }
+
+        private static void AddStartableIfPossible(Type typeToRegister, ICollection<Type> defaultInterfaces)
+        {
+            if (typeToRegister.IsAssignableTo<IStartable>())
+            {
+                defaultInterfaces.Add(typeof(IStartable));
             }
         }
     }

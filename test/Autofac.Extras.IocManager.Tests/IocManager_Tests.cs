@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class IocManagerTests : TestBase
+    public class IocManager_Tests : TestBaseWithIocBuilder
     {
         [Fact]
         public void IocManagerShouldWork()
@@ -14,7 +14,7 @@ namespace Autofac.Extras.IocManager.Tests
             Building(builder => { });
 
             LocalIocManager.ShouldNotBeNull();
-            LocalIocManager.Container.ShouldNotBeNull();
+            LocalIocManager.Resolver.ShouldNotBeNull();
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDependency>().As<ISimpleDependency>().InstancePerLifetimeScope();
+                         builder.RegisterServices(f => f.Register<ISimpleDependency, SimpleDependency>(Lifetime.LifetimeScope));
                      });
 
             var simpleDependency = LocalIocManager.Resolve<ISimpleDependency>();
@@ -47,11 +47,11 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
+                         builder.RegisterServices(f => f.RegisterType<SimpleDisposableDependency>(Lifetime.LifetimeScope));
                      });
 
             SimpleDisposableDependency simpleDisposableDependency;
-            using (var simpleDependencyWrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableDependency>())
+            using (IDisposableDependencyObjectWrapper<SimpleDisposableDependency> simpleDependencyWrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableDependency>())
             {
                 simpleDisposableDependency = simpleDependencyWrapper.Object;
             }
@@ -62,14 +62,15 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void IocManager_ShouldInjectAnyDependecy()
         {
-            var container = Building(builder =>
+            IResolver resolver = Building(builder =>
                                      {
-                                         builder.RegisterType<SimpleDependencyWithIocManager>().InstancePerLifetimeScope();
+                                         builder.RegisterServices(f => f.RegisterType<SimpleDependencyWithIocManager>(Lifetime.LifetimeScope));
                                      });
 
-            var dependencyWithIocManager = container.Resolve<SimpleDependencyWithIocManager>();
+            var dependencyWithIocManager = resolver.Resolve<SimpleDependencyWithIocManager>();
 
             dependencyWithIocManager.GetIocManager().ShouldBeSameAs(LocalIocManager);
+            dependencyWithIocManager.GetIocResolver().ShouldBeSameAs(LocalIocManager);
         }
 
         [Fact]
@@ -77,11 +78,11 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
                      {
-                         builder.RegisterType<SimpleDisposableDependency>().InstancePerLifetimeScope();
+                         builder.RegisterServices(f => f.RegisterType<SimpleDisposableDependency>(Lifetime.LifetimeScope));
                      });
 
             SimpleDisposableDependency simpleDisposableDependency;
-            using (var iocScopedResolver = LocalIocManager.CreateScope())
+            using (IIocScopedResolver iocScopedResolver = LocalIocManager.CreateScope())
             {
                 simpleDisposableDependency = iocScopedResolver.Resolve<SimpleDisposableDependency>();
             }
@@ -110,15 +111,22 @@ namespace Autofac.Extras.IocManager.Tests
         internal class SimpleDependencyWithIocManager
         {
             private readonly IIocManager _iocManager;
+            private readonly IIocResolver _iocResolver;
 
-            public SimpleDependencyWithIocManager(IIocManager iocManager)
+            public SimpleDependencyWithIocManager(IIocManager iocManager, IIocResolver iocResolver)
             {
                 _iocManager = iocManager;
+                _iocResolver = iocResolver;
             }
 
             public IIocManager GetIocManager()
             {
                 return _iocManager;
+            }
+
+            public IIocResolver GetIocResolver()
+            {
+                return _iocResolver;
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="Release" />) after usage.
+        ///     Returning object must be should be released by <see cref="ILifetimeScope" /> after usage automatically.
         /// </summary>
         /// <typeparam name="T">Type of the object to get</typeparam>
         /// <returns>The object instance</returns>
@@ -29,7 +29,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="Release" />) after usage.
+        ///     Returning object must be should be released by <see cref="ILifetimeScope" /> after usage automatically.
         /// </summary>
         /// <typeparam name="T">Type of the object to cast</typeparam>
         /// <param name="type">Type of the object to resolve</param>
@@ -38,7 +38,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="Release" />) after usage.
+        ///     Returning object must be should be released by <see cref="ILifetimeScope" /> after usage automatically.
         /// </summary>
         /// <typeparam name="T">Type of the object to get</typeparam>
         /// <param name="argumentsAsAnonymousType">Constructor arguments</param>
@@ -47,7 +47,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="Release" />) after usage.
+        ///     Returning object must be should be released by <see cref="ILifetimeScope" /> after usage automatically.
         /// </summary>
         /// <param name="type">Type of the object to get</param>
         /// <returns>The object instance</returns>
@@ -55,7 +55,7 @@ namespace Autofac.Extras.IocManager
 
         /// <summary>
         ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="Release" />) after usage.
+        ///     Returning object must be should be released by <see cref="ILifetimeScope" /> after usage automatically.
         /// </summary>
         /// <param name="type">Type of the object to get</param>
         /// <param name="argumentsAsAnonymousType">Constructor arguments</param>
