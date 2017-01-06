@@ -11,11 +11,10 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder =>
             {
-                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
-                builder.RegisterServices(r => r.RegisterGeneric(typeof(IRepository<,>), typeof(StoveRepositoryBase<,>)));
-                builder.RegisterServices(r => r.RegisterGeneric(typeof(IRepository<,>), typeof(EfRepositoryBase<,>)));
-                builder.RegisterServices(r => r.RegisterGeneric(typeof(IRepository<>), typeof(EfRepositoryBase<>)));
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IMyModuleRepository<,>), typeof(MyModuleRepositoryBase<,>)));
+                builder.RegisterServices(r => r.RegisterGeneric(typeof(IMyModuleRepository<>), typeof(MyModuleRepositoryBase<>)));
+                builder.RegisterServices(r => r.RegisterGeneric(typeof(IRepository<,>), typeof(EfRepositoryBase<,>)));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
             });
 
             var myGenericResoulition = LocalIocManager.Resolve<IRepository<MyClass, int>>();
@@ -30,39 +29,43 @@ namespace Autofac.Extras.IocManager.Tests
         {
         }
 
-        public interface IRepository<TEntity> : IRepository<TEntity, int> where TEntity : class
+        public interface IRepository<TEntity> : IRepository<TEntity, int>
+            where TEntity : class
         {
         }
 
-        public abstract class StoveRepositoryBase<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : class
+        public abstract class StoveRepositoryBase<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>
+            where TEntity : class
         {
         }
 
-        public abstract class StoveRepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
+        public class EfRepositoryBase<TEntity, TPrimaryKey> : StoveRepositoryBase<TEntity, TPrimaryKey>
+            where TEntity : class
         {
         }
 
-        public class EfRepositoryBase<TEntity, TPrimaryKey> : StoveRepositoryBase<TEntity, TPrimaryKey> where TEntity : class
+        public class EfRepositoryBase<TEntity> : StoveRepositoryBase<TEntity, int>
+            where TEntity : class
         {
         }
 
-        public class EfRepositoryBase<TEntity> : StoveRepositoryBase<TEntity> where TEntity : class
+        public interface IMyModuleRepository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>
+            where TEntity : class
         {
         }
 
-        public interface IMyModuleRepository<TEntity> : IRepository<TEntity> where TEntity : class
+        public interface IMyModuleRepository<TEntity> : IMyModuleRepository<TEntity, int>
+            where TEntity : class
         {
         }
 
-        public interface IMyModuleRepository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey> where TEntity : class
+        public class MyModuleRepositoryBase<TEntity, TPrimaryKey> : EfRepositoryBase<TEntity, TPrimaryKey>, IMyModuleRepository<TEntity, TPrimaryKey>
+            where TEntity : class
         {
         }
 
-        public class MyModuleRepositoryBase<TEntity, TPrimaryKey> : EfRepositoryBase<TEntity, TPrimaryKey>, IMyModuleRepository<TEntity, TPrimaryKey> where TEntity : class
-        {
-        }
-
-        public class MyModuleRepositoryBase<TEntity> : MyModuleRepositoryBase<TEntity, int> where TEntity : class, IMyModuleRepository<TEntity>
+        public class MyModuleRepositoryBase<TEntity> : MyModuleRepositoryBase<TEntity, int>, IMyModuleRepository<TEntity>
+            where TEntity : class
         {
         }
 
