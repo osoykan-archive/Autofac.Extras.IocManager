@@ -93,5 +93,6 @@ namespace Autofac.Extras.IocManager
                 defaultInterfaces.Add(typeof(IStartable));
             }
         }
+
     }
 }

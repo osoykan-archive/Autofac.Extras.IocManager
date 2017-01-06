@@ -16,7 +16,7 @@ namespace Autofac.Extras.IocManager.Tests
             List<Type> interfaces = typeof(MyClass).GetDefaultInterfacesWithSelf().ToList();
 
             interfaces.ShouldNotBeNull();
-            interfaces.Count.ShouldBe(4);
+            interfaces.Count.ShouldBe(2);
         }
 
         private class MyClass : IMyClass

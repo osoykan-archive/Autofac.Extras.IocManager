@@ -31,9 +31,8 @@ namespace Autofac.Extras.IocManager
         /// </returns>
         public static Type[] GetDefaultInterfacesWithSelf(this Type @this)
         {
-            Type[] types = @this.GetInterfaces()
-                                .Where(x => @this.GetFriendlyNameWithoutTypeNames().EndsWith(x.GetFriendlyNameWithoutTypeNames().TrimStart('I')))
-                                .ToArray();
+            Type[] types = @this.GetAllInterfaces()
+                                .Where(i => @this.Name.Contains(GetInterfaceName(i))).ToArray();
             return types.Prepend(@this).ToArray();
         }
 
@@ -51,9 +50,19 @@ namespace Autofac.Extras.IocManager
         /// </returns>
         public static Type[] GetDefaultInterfaces(this Type @this)
         {
-            return @this.GetInterfaces()
-                        .Where(x => @this.GetFriendlyNameWithoutTypeNames().EndsWith(x.GetFriendlyNameWithoutTypeNames().TrimStart('I')))
-                        .ToArray();
+            return @this.GetAllInterfaces()
+                        .Where(i => @this.Name.Contains(GetInterfaceName(i))).ToArray();
+        }
+
+        private static string GetInterfaceName(Type @interface)
+        {
+            string name = @interface.Name;
+            if (name.Length > 1 && name[0] == 'I' && char.IsUpper(name[1]))
+            {
+                return name.Substring(1);
+            }
+
+            return name;
         }
 
         /// <summary>
