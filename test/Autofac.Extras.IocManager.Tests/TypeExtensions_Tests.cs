@@ -23,15 +23,15 @@ namespace Autofac.Extras.IocManager.Tests
         {
         }
 
-        private interface IMyClass : IMyClass2
+        private interface IMyClass : IMyClass<int, string>
         {
         }
 
-        private interface IMyClass2 : IMyClass3<int>
+        private interface IMyClass<T, T1> : IMyClass<int>
         {
         }
 
-        private interface IMyClass3<T>
+        private interface IMyClass<T>
         {
         }
     }
