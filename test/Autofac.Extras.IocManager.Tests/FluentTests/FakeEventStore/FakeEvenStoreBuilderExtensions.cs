@@ -1,6 +1,4 @@
-﻿using Autofac.Extras.IocManager.Tests.FluentTests.FakeEventStore;
-
-namespace Autofac.Extras.IocManager.Tests.FluentTests
+﻿namespace Autofac.Extras.IocManager.Tests.FluentTests.FakeEventStore
 {
     public static class FakeEvenStoreBuilderExtensions
     {

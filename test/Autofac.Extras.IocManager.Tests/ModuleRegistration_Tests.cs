@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Autofac.Extras.IocManager.TestBase;
+
 using Moq;
 
 using Xunit;

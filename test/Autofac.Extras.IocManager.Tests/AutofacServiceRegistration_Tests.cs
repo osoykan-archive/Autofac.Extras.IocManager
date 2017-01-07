@@ -1,4 +1,6 @@
-﻿using Shouldly;
+﻿using Autofac.Extras.IocManager.TestBase;
+
+using Shouldly;
 
 using Xunit;
 
@@ -94,9 +96,13 @@ namespace Autofac.Extras.IocManager.Tests
             magicClassDecorator1.Inner.ShouldBeAssignableTo<MagicClass>();
         }
 
-        private interface IMagicInterface {}
+        private interface IMagicInterface
+        {
+        }
 
-        private class MagicClass : IMagicInterface {}
+        private class MagicClass : IMagicInterface
+        {
+        }
 
         private class MagicClassDecorator1 : IMagicInterface
         {

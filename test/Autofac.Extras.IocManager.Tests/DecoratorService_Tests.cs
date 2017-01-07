@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using Autofac.Extras.IocManager.TestBase;
+
+using Moq;
 
 using Shouldly;
 

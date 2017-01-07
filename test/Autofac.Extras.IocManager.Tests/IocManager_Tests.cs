@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 
+using Autofac.Extras.IocManager.TestBase;
+
 using Shouldly;
 
 using Xunit;

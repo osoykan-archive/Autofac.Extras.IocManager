@@ -1,4 +1,6 @@
-﻿using Shouldly;
+﻿using Autofac.Extras.IocManager.TestBase;
+
+using Shouldly;
 
 using Xunit;
 
