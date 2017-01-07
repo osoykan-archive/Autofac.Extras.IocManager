@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Autofac.Extras.IocManager.Tests
+namespace Autofac.Extras.IocManager.TestBase
 {
     public class TestBaseWithIocBuilder
     {

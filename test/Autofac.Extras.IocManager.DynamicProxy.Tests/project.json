@@ -1,0 +1,16 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "testRunner": "xunit",
+
+  "dependencies": {
+    "Autofac.Extras.IocManager.TestBase": "1.0.0",
+    "Autofac.Extras.IocManager.DynamicProxy": "2.0.1"
+  },
+
+  "frameworks": {
+    "net452": {
+
+    }
+  }
+}

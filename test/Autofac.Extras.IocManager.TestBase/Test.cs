@@ -6,7 +6,7 @@ using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoNSubstitute;
 
-namespace Autofac.Extras.IocManager.Tests
+namespace Autofac.Extras.IocManager.TestBase
 {
     public abstract class Test
     {

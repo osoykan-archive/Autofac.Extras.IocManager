@@ -2,7 +2,7 @@
 
 using Ploeh.AutoFixture;
 
-namespace Autofac.Extras.IocManager.Tests
+namespace Autofac.Extras.IocManager.TestBase
 {
     public abstract class TestFor<TSut> : Test
     {

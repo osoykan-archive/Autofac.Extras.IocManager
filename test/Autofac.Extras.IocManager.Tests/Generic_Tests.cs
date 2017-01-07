@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
+using Autofac.Extras.IocManager.TestBase;
+
 using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests

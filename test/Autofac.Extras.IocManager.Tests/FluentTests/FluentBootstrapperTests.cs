@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 
+using Autofac.Extras.IocManager.TestBase;
 using Autofac.Extras.IocManager.Tests.FluentTests.FakeEventStore;
+using Autofac.Extras.IocManager.Tests.FluentTests.FakeNLog;
 using Autofac.Extras.IocManager.Tests.FluentTests.FakeRabbitMQ;
 
 using Shouldly;
