@@ -17,8 +17,7 @@ build:
   include_nuget_references: true
   verbosity: minimal
 after_build:
- - cmd: 
-    - dotnet pack "src\Autofac.Extras.IocManager" -c "Release" -o "nupkg/" 
+ - cmd: dotnet pack "src\Autofac.Extras.IocManager" -c "Release" -o "nupkg/" 
     - dotnet pack "src\Autofac.Extras.IocManager.DynamicProxy" -c "Release" -o "nupkg/"
 test:
   assemblies: 
