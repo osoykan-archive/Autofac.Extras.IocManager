@@ -18,8 +18,10 @@ build:
   verbosity: minimal
 after_build:
 - cmd: dotnet pack "src\Autofac.Extras.IocManager" -c "Release" -o "nupkg/"
+- cmd: dotnet pack "src\Autofac.Extras.IocManager.DynamicProxy" -c "Release" -o "nupkg/"
 test:
  assemblies: test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.Tests.dll
+ assemblies: test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.DynamicProxy.Tests.dll
 deploy:
 - provider: NuGet
   api_key:
