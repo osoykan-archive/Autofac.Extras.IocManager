@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 
 namespace Autofac.Extras.IocManager
 {
-    public static class TypeUtil
+    internal static class TypeUtil
     {
         public static FieldInfo[] GetAllFields(this Type type)
         {

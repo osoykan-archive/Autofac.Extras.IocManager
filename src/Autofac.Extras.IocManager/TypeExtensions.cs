@@ -10,7 +10,7 @@ namespace Autofac.Extras.IocManager
 {
     /// <summary>
     /// </summary>
-    public static class TypeExtensions
+    internal static class TypeExtensions
     {
         /// <summary>
         ///     The pretty print cache
