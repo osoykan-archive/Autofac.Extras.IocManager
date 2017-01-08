@@ -1,6 +1,6 @@
-Autofac.Extras.IocManager
+Autofac.Extras.IocManager [![Build status](https://ci.appveyor.com/api/projects/status/udvakwrxb3nhb25d?svg=true)](https://ci.appveyor.com/project/osoykan/autofac-extras-iocmanager) 
 =====================
-[![Build status](https://ci.appveyor.com/api/projects/status/udvakwrxb3nhb25d?svg=true)](https://ci.appveyor.com/project/osoykan/autofac-extras-iocmanager) 
+
 
 |Package|Status|
 |:-:|:-:|
