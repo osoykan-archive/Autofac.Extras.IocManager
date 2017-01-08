@@ -6,7 +6,7 @@ namespace Autofac.Extras.IocManager
     /// <summary>
     ///     Extension methods for all objects.
     /// </summary>
-    public static class ObjectExtensions
+    internal static class ObjectExtensions
     {
         /// <summary>
         ///     Used to simplify and beautify casting an object to a type.
