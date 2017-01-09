@@ -10,7 +10,7 @@ namespace Autofac.Extras.IocManager.Tests
 {
     public class AutofacExtensions_Tests
     {
-        [Fact]
+        [Fact] 
         public void GetTypedResolvingParameters_Test()
         {
             var obj = new { connectionString = "someString", dbContext = typeof(MyDbContext) };
