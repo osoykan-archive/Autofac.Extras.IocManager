@@ -45,6 +45,6 @@ namespace Autofac.Extras.IocManager
         ///     Creates the resolver.
         /// </summary>
         /// <returns></returns>
-        IRootResolver CreateResolver();
+        IRootResolver CreateResolver(bool ignoreStartableComponents = false);
     }
 }
