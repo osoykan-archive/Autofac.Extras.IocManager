@@ -430,9 +430,9 @@ namespace Autofac.Extras.IocManager
         ///     Creates the resolver.
         /// </summary>
         /// <returns></returns>
-        public IRootResolver CreateResolver()
+        public IRootResolver CreateResolver(bool ignoreStartableComponents = false)
         {
-            IContainer container = _containerBuilder.Build();
+            IContainer container = _containerBuilder.Build(ignoreStartableComponents ? ContainerBuildOptions.IgnoreStartableComponents : ContainerBuildOptions.None);
             return new RootResolver(container);
         }
 

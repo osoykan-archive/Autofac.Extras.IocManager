@@ -5,7 +5,7 @@
 
   "dependencies": {
     "Autofac.Extras.IocManager.TestBase": "1.0.0",
-    "Autofac.Extras.IocManager.DynamicProxy": "2.0.2"
+    "Autofac.Extras.IocManager.DynamicProxy": "2.0.3"
   },
 
   "frameworks": {
