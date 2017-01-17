@@ -1,8 +1,8 @@
 {
-  "version": "2.0.4-*",
+  "version": "2.0.5-*",
 
   "dependencies": {
-    "Autofac": "4.2.1",
+    "Autofac": "4.3.0",
     "FluentAssemblyScanner": "1.0.5"
   },
 
