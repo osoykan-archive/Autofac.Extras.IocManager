@@ -96,9 +96,9 @@ namespace Autofac.Extras.IocManager
         ///     Creates the resolver.
         /// </summary>
         /// <returns></returns>
-        public IRootResolver CreateResolver()
+        public IRootResolver CreateResolver(bool ignoreStartableComponents = false)
         {
-            return _lazyRegistrationFactory.Value.CreateResolver();
+            return _lazyRegistrationFactory.Value.CreateResolver(ignoreStartableComponents);
         }
 
         /// <summary>
