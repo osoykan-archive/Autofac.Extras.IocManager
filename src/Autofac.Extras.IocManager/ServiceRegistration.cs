@@ -39,6 +39,11 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
+        ///     Occurs when [registration completed].
+        /// </summary>
+        public event EventHandler<RegistrationCompletedEventArgs> RegistrationCompleted;
+
+        /// <summary>
         ///     Registers the specified lifetime.
         /// </summary>
         /// <typeparam name="TService1">The type of the service1.</typeparam>
@@ -429,11 +434,17 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Creates the resolver.
         /// </summary>
+        /// <param name="ignoreStartableComponents"></param>
         /// <returns></returns>
         public IRootResolver CreateResolver(bool ignoreStartableComponents = false)
         {
             IContainer container = _containerBuilder.Build(ignoreStartableComponents ? ContainerBuildOptions.IgnoreStartableComponents : ContainerBuildOptions.None);
-            return new RootResolver(container);
+            var rootResolver = new RootResolver(container);
+
+            EventHandler<RegistrationCompletedEventArgs> handler = RegistrationCompleted;
+            handler?.Invoke(this, new RegistrationCompletedEventArgs(rootResolver));
+
+            return rootResolver;
         }
 
         /// <summary>

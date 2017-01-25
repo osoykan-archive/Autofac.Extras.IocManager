@@ -6,6 +6,11 @@ namespace Autofac.Extras.IocManager
     public interface IServiceRegistration
     {
         /// <summary>
+        ///     Occurs when [registration completed].
+        /// </summary>
+        event EventHandler<RegistrationCompletedEventArgs> RegistrationCompleted;
+
+        /// <summary>
         ///     Registers the specified lifetime.
         /// </summary>
         /// <typeparam name="TService1">The type of the service1.</typeparam>
