@@ -6,7 +6,7 @@
   "dependencies": {
     "Autofac": "4.3.0",
     "Autofac.Extras.DynamicProxy": "4.1.0",
-    "Autofac.Extras.IocManager": "2.0.5-*",
+    "Autofac.Extras.IocManager": "2.0.6-*",
     "AutoFixture.AutoMoq": "3.50.2",
     "AutoFixture.AutoNSubstitute": "3.50.2",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
