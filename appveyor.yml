@@ -30,6 +30,8 @@ after_test:
   - tools\coverage\coveralls.net\csmacnz.Coveralls.exe --opencover -i xunit_opencovertests.xml --repoToken %COVERALLS_REPO_TOKEN% --commitBranch %APPVEYOR_REPO_BRANCH%
 deploy:
 - provider: NuGet
+  on:
+    branch: master
   api_key:
     secure: liSTqN52OJQy9fZJk6gubSgYBAy4EXcEPCDSCLJ/3T9cZufzpTwvBlGPLX+iP2n9
 artifacts:
