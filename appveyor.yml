@@ -26,7 +26,7 @@ test:
     - test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.Tests.dll
     - test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.DynamicProxy.Tests.dll
 after_test: 
-  - tools\coverage\opencover\OpenCover.Console.exe -register:user -target:"tools\xunitrunner\xunit.console.x86.exe" -targetdir:"test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64" -targetargs:"Autofac.Extras.IocManager.Tests.dll Autofac.Extras.IocManager.DynamicProxy.Tests.dll" -filter:"+[Autofac.Extras.IocManager*]* -[Autofac.Extras.IocManager.T*]* -[Autofac.Extras.IocManager.DynamicProxy.T*]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -output:xunit_opencovertests.xml -coverbytest:*.Tests.dll
+  - tools\coverage\opencover\OpenCover.Console.exe -register:user -target:"tools\xunitrunner\xunit.console.x86.exe"   -targetargs:"test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.Tests.dll test\Autofac.Extras.IocManager.DynamicProxy.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.DynamicProxy.Tests.dll -noshadow" -filter:"+[Autofac.Extras.IocManager*]* -[Autofac.Extras.IocManager.T*]* -[Autofac.Extras.IocManager.DynamicProxy.T*]*" -output:xunit_opencovertests.xml -coverbytest:*.Tests.dll
   - tools\coverage\coveralls.net\csmacnz.Coveralls.exe --opencover -i xunit_opencovertests.xml --repoToken %COVERALLS_REPO_TOKEN% --commitBranch %APPVEYOR_REPO_BRANCH%
 deploy:
 - provider: NuGet
