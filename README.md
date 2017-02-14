@@ -14,7 +14,6 @@ Autofac.Extras.IocManager allows Autofac Container to be portable. It also provi
 * [Stove](https://github.com/osoykan/Stove)
 
 
-
 #Sample Usage
 ```csharp
 IRootResolver resolver = IocBuilder.New
@@ -77,6 +76,10 @@ public static class StoveRegistrationExtensions
  
 ##Registrations
 ###Conventional assembly registrations
+There are 3 interfaces to mark an implementation.
+* `ITransientDependency` : Marks implementation as PerDepedency
+* `ISingletonDependency` : Marks implementation as SingleInstance
+* `ILifetimeScopeDependency` : Marks implementation as LifetimeScope
 
 Interface and classes:
 ```csharp
@@ -93,25 +96,24 @@ interface ISimpleDependency3 {}
 class SimpleDependency3 : ISimpleDependency3, ILifetimeScopeDependency {}
 ```
 
+To detect and register all marked implementations with it's *DefaultInterface* :
+```
+private static void RegisterSomeFeature(IIocBuilder builder)
+{
+   builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+}
+```
+ With this feature, you no longer don't have to define your registrations in `Builder`'s `Load` method explicitly. `RegisterAssemblyByConvention` does this with [interface marking pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern).
+
 ##IocManager Using
 
 After the container build which means `CreateResolver()` it can use:
-
  ```csharp
  IocManager.Instance.Resolve<ISimpleDependency3>();
  ```
- With this feature, you no longer don't have to define your registrations in `Builder`'s `Load` method explicitly. `RegisterAssemblyByConvention` does this with [interface marking pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern).
-
-##Resolvings
-
-###Injectable Resolvers
-
-* `IResolver`: Atomic resolver which uses Autofac's `IComponentContext` internally.
-* `IScopeResolver` : Able to start a new lifetime scope. An abstraction to Autofac's `ILifetimeScope`
-
-----
-
- Resolve instance:
+ This using is service locator approach, but it provides some extensions to avoid memory leaks.
+ 
+  Resolve instance:
  ```csharp
  IocManager.Instance.Resolve<IMyTransientClass>();
  ```
@@ -137,6 +139,19 @@ using (IIocScopedResolver iocScopedResolver = IocManager.Instance.CreateScope())
 
 simpleDisposableDependency.DisposeCount.ShouldBe(1);
 ```
+ 
+
+
+##Resolvings
+
+###Injectable Resolvers
+
+* `IResolver`: Atomic resolver which uses Autofac's `IComponentContext` internally.
+* `IScopeResolver` : Able to start a new lifetime scope. An abstraction to Autofac's `ILifetimeScope`
+
+----
+
+
 
 ##Property Injection
 Autofac.Extras.IocManager also provides property injection on public and private properties with `InjectPropertiesAsAutowired()` extension.
