@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using Autofac.Builder;
+using Autofac.Features.ResolveAnything;
 using Autofac.Features.Scanning;
 
 namespace Autofac.Extras.IocManager
@@ -32,7 +33,7 @@ namespace Autofac.Extras.IocManager
         public ServiceRegistration(ContainerBuilder containerBuilder)
         {
             _containerBuilder = containerBuilder ?? new ContainerBuilder();
-
+            _containerBuilder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
             _containerBuilder.RegisterType<Resolver>().As<IResolver>();
             _containerBuilder.RegisterType<ScopeResolver>().As<IScopeResolver>();
             _containerBuilder.Register<IDecoratorService>(_ => _decoratorService).SingleInstance();
