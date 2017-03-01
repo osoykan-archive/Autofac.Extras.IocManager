@@ -261,6 +261,100 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
+        ///     Registers if absent.
+        /// </summary>
+        /// <typeparam name="TService">The type of the service.</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterIfAbsent<TService, TImplementation>(
+            Lifetime lifetime = Lifetime.Transient)
+            where TService : class
+            where TImplementation : class, TService
+        {
+            IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterType<TImplementation>()
+                .InjectPropertiesAsAutowired()
+                .AsSelf()
+                .IfNotRegistered(typeof(TService));
+
+            _containerBuilder.Register<TService>(c => c.Resolve<TImplementation>())
+                             .As<TService>()
+                             .InjectPropertiesAsAutowired()
+                             .OnActivating(args =>
+                             {
+                                 TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
+                                 args.ReplaceInstance(instance);
+                             })
+                             .IfNotRegistered(typeof(TService));
+
+            registration.ApplyLifeStyle(lifetime);
+        }
+
+        /// <summary>
+        ///     Registers if absent.
+        /// </summary>
+        /// <param name="serviceType">Type of the service.</param>
+        /// <param name="implementationType">Type of the implementation.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterIfAbsent(Type serviceType, Type implementationType, Lifetime lifetime = Lifetime.Transient)
+        {
+            IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterType(implementationType)
+                .As(serviceType)
+                .InjectPropertiesAsAutowired()
+                .AsSelf()
+                .OnActivating(args =>
+                {
+                    object instance = _decoratorService.Decorate(serviceType, args.Instance, new ResolverContext(new Resolver(args.Context)));
+                    args.ReplaceInstance(instance);
+                }).IfNotRegistered(serviceType);
+
+            registration.ApplyLifeStyle(lifetime);
+        }
+
+        /// <summary>
+        ///     Registers if absent.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterIfAbsent(Type type, Lifetime lifetime = Lifetime.Transient)
+        {
+            IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterType(type)
+                .InjectPropertiesAsAutowired()
+                .AsSelf()
+                .OnActivating(args =>
+                {
+                    object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
+                    args.ReplaceInstance(instance);
+                })
+                .IfNotRegistered(type);
+
+            registration.ApplyLifeStyle(lifetime);
+        }
+
+        /// <summary>
+        ///     Registers if absent.
+        /// </summary>
+        /// <typeparam name="TService">The type of the service.</typeparam>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterIfAbsent<TService>(Lifetime lifetime = Lifetime.Transient) where TService : class
+        {
+            IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterType(typeof(TService))
+                .InjectPropertiesAsAutowired()
+                .AsSelf()
+                .OnActivating(args =>
+                {
+                    object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
+                    args.ReplaceInstance(instance);
+                })
+                .IfNotRegistered(typeof(TService));
+
+            registration.ApplyLifeStyle(lifetime);
+        }
+
+        /// <summary>
         ///     Registers the specified factory.
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>
