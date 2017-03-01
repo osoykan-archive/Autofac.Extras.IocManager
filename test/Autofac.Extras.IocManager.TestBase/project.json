@@ -4,17 +4,17 @@
   "testRunner": "xunit",
 
   "dependencies": {
-    "Autofac": "4.3.0",
-    "Autofac.Extras.DynamicProxy": "4.1.0",
+    "Autofac": "4.4.0",
+    "Autofac.Extras.DynamicProxy": "4.2.1",
     "Autofac.Extras.IocManager": "2.0.7-*",
     "AutoFixture.AutoMoq": "3.50.2",
     "AutoFixture.AutoNSubstitute": "3.50.2",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "NSubstitute": "1.10.0",
+    "NSubstitute": "2.0.2",
     "Shouldly": "2.8.2",
-    "xunit": "2.2.0-beta4-build3444",
-    "xunit.extensibility.execution": "2.2.0-beta4-build3444",
-    "xunit.runner.visualstudio": "2.2.0-beta4-build1194"
+    "xunit": "2.2.0",
+    "xunit.extensibility.execution": "2.2.0",
+    "xunit.runner.visualstudio": "2.2.0"
   },
 
   "frameworks" : {
