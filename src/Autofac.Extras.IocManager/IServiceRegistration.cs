@@ -136,18 +136,18 @@ namespace Autofac.Extras.IocManager
         /// <summary>
         ///     Registers if absent.
         /// </summary>
-        /// <typeparam name="TService">The type of the service.</typeparam>
-        /// <param name="lifetime">The lifetime.</param>
-        void RegisterIfAbsent<TService>(Lifetime lifetime = Lifetime.Transient)
-            where TService : class;
-
-        /// <summary>
-        ///     Registers if absent.
-        /// </summary>
         /// <param name="serviceType">Type of the service.</param>
         /// <param name="implementationType">Type of the implementation.</param>
         /// <param name="lifetime">The lifetime.</param>
         void RegisterIfAbsent(Type serviceType, Type implementationType, Lifetime lifetime = Lifetime.Transient);
+
+        /// <summary>
+        ///     Registers if absent.
+        /// </summary>
+        /// <typeparam name="TService">The type of the service.</typeparam>
+        /// <param name="lifetime">The lifetime.</param>
+        void RegisterIfAbsent<TService>(Lifetime lifetime = Lifetime.Transient)
+            where TService : class;
 
         /// <summary>
         ///     Registers if absent.

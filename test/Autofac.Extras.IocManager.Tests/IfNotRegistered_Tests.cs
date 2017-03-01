@@ -1,4 +1,5 @@
 ﻿using Autofac.Extras.IocManager.TestBase;
+using Autofac.Features.ResolveAnything;
 
 using Shouldly;
 
@@ -32,7 +33,6 @@ namespace Autofac.Extras.IocManager.Tests
                 {
                     r.Register<IService, ServiceA>();
                     r.RegisterIfAbsent<IService, ServiceB>();
-                    r.RegisterIfAbsent<MyClass>();
                 });
             });
 
@@ -41,7 +41,7 @@ namespace Autofac.Extras.IocManager.Tests
         }
 
         [Fact]
-        public void RegisterIfAbsent_should_work_with_type_parameters()
+        public void RegisterIfAbsent_should_work_with_type_parameters_()
         {
             Building(builder =>
             {
@@ -49,7 +49,6 @@ namespace Autofac.Extras.IocManager.Tests
                 {
                     r.Register<IService, ServiceA>();
                     r.RegisterIfAbsent(typeof(IService), typeof(ServiceB));
-                    r.RegisterIfAbsent<MyClass>();
                 });
             });
 
@@ -58,40 +57,83 @@ namespace Autofac.Extras.IocManager.Tests
         }
 
         [Fact]
-        public void RegisterIfAbsent_should_work_with_type()
+        public void RegisterIfAbsent_should_work_with_type_parameters_propertyinjection_should_not_be_null()
         {
             Building(builder =>
             {
                 builder.RegisterServices(r =>
                 {
-                    r.RegisterIfAbsent(typeof(ServiceA));
-                    r.Register<IService, ServiceA>();
+                    r.RegisterIfAbsent(typeof(MyClass));
+                    r.RegisterIfAbsent(typeof(IService), typeof(ServiceB));
                     r.RegisterIfAbsent<MyClass>();
                 });
             });
 
-            LocalIocManager.IsRegistered(typeof(ServiceA)).ShouldBe(true);
-            LocalIocManager.IsRegistered(typeof(IService)).ShouldBe(true);
-            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceA>();
+            LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(true);
+            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceB>();
+            LocalIocManager.Resolve<IService>().MyProperty.ShouldNotBeNull();
         }
 
         [Fact]
-        public void RegisterIfAbsent_should_work_with_only_concrete_type_registration()
+        public void RegisterIfAbsent_should_work_with_TGeneric_propertyinjection_should_not_be_null()
         {
             Building(builder =>
             {
                 builder.RegisterServices(r =>
                 {
-                    r.RegisterIfAbsent(typeof(ServiceA));
-                    r.RegisterIfAbsent<ServiceB>();
+                    r.RegisterType(typeof(MyClass));
+                    r.RegisterIfAbsent<IService, ServiceB>();
+                    r.RegisterIfAbsent<MyClass>();
                 });
             });
 
-            LocalIocManager.IsRegistered(typeof(ServiceA)).ShouldBe(true);
             LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(true);
+            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceB>();
+            LocalIocManager.Resolve<IService>().MyProperty.ShouldNotBeNull();
+        }
 
-            LocalIocManager.Resolve<ServiceA>().ShouldBeAssignableTo<ServiceA>();
-            LocalIocManager.Resolve<ServiceB>().ShouldBeAssignableTo<ServiceB>();
+        [Fact]
+        public void RegisterIfAbsent_should_work_on_propertyInjection()
+        {
+            Building(builder =>
+            {
+                builder.RegisterServices(r =>
+                {
+                    r.RegisterIfAbsent<IService, ServiceA>();
+                    r.RegisterIfAbsent(typeof(IService), typeof(ServiceB));
+                    r.RegisterType(typeof(MyClass));
+                });
+            });
+
+            LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(false);
+            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceA>();
+
+            var instanceA = LocalIocManager.Resolve<IService>();
+            instanceA.MyProperty.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public void IfNotRegistered_PropertyInjection_should_work()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<MyClass>().AsSelf().IfNotRegistered(typeof(MyClass));
+            builder.RegisterType<ServiceA>().As<IService>().IfNotRegistered(typeof(ServiceA)).AsSelf().PropertiesAutowired();
+            IContainer resolver = builder.Build();
+
+            var serviceAInstance = resolver.Resolve<ServiceA>();
+            serviceAInstance.MyProperty.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public void IfNotRegistered_PropertyInjection_should_work_single()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<MyClass>().AsSelf().IfNotRegistered(typeof(MyClass));
+            builder.RegisterType<ServiceA>().AsSelf().IfNotRegistered(typeof(ServiceA)).PropertiesAutowired();
+            IContainer resolver = builder.Build();
+
+            var serviceAInstance = resolver.Resolve<ServiceA>();
+            serviceAInstance.MyProperty.ShouldNotBeNull();
         }
 
         internal class ServiceA : IService
@@ -101,6 +143,7 @@ namespace Autofac.Extras.IocManager.Tests
 
         internal interface IService
         {
+            MyClass MyProperty { get; set; }
         }
 
         internal class ServiceB : IService
