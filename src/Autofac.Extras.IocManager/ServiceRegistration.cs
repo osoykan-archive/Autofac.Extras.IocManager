@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using Autofac.Builder;
+using Autofac.Features.ResolveAnything;
 using Autofac.Features.Scanning;
 
 namespace Autofac.Extras.IocManager
@@ -260,6 +261,68 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
+        ///     Registers if absent.
+        /// </summary>
+        /// <typeparam name="TService">The type of the service.</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterIfAbsent<TService, TImplementation>(
+            Lifetime lifetime = Lifetime.Transient)
+            where TService : class
+            where TImplementation : class, TService
+        {
+            RegisterIfAbsent(typeof(TService), typeof(TImplementation), lifetime);
+        }
+
+        /// <summary>
+        ///     Registers if absent.
+        /// </summary>
+        /// <param name="serviceType">Type of the service.</param>
+        /// <param name="implementationType">Type of the implementation.</param>
+        /// <param name="lifetime">The lifetime.</param>
+        public void RegisterIfAbsent(Type serviceType, Type implementationType, Lifetime lifetime = Lifetime.Transient)
+        {
+            IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+                .RegisterType(implementationType)
+                .InjectPropertiesAsAutowired()
+                .AsSelf()
+                .IfNotRegistered(serviceType);
+
+            _containerBuilder.Register(c => c.Resolve(implementationType))
+                             .As(serviceType)
+                             .InjectPropertiesAsAutowired()
+                             .OnActivating(args =>
+                             {
+                                 object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
+                                 args.ReplaceInstance(instance);
+                             })
+                             .IfNotRegistered(serviceType);
+
+            registration.ApplyLifeStyle(lifetime);
+        }
+
+
+        public void RegisterIfAbsent<TService>(Lifetime lifetime = Lifetime.Transient) where TService : class
+        {
+            RegisterIfAbsent(typeof(TService), lifetime);
+        }
+
+        public void RegisterIfAbsent(Type type, Lifetime lifetime = Lifetime.Transient)
+        {
+            IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
+               .RegisterType(type)
+               .InjectPropertiesAsAutowired()
+               .AsSelf()
+               .OnActivating(args =>
+               {
+                   object instance = _decoratorService.Decorate(type, args.Instance, new ResolverContext(new Resolver(args.Context)));
+                   args.ReplaceInstance(instance);
+               }).IfNotRegistered(type);
+
+            registration.ApplyLifeStyle(lifetime);
+        }
+
+        /// <summary>
         ///     Registers the specified factory.
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>
@@ -339,6 +402,7 @@ namespace Autofac.Extras.IocManager
                     object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
                     args.ReplaceInstance(instance);
                 });
+
             registration.ApplyLifeStyle(lifetime);
 
             if (keepDefault)

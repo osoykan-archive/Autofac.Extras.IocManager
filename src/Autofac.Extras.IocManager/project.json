@@ -1,9 +1,9 @@
 {
-  "version": "2.0.7-*",
+  "version": "2.1.0-*",
 
   "dependencies": {
-    "Autofac": "4.3.0",
-    "FluentAssemblyScanner": "1.0.5"
+    "Autofac": "4.4.0",
+    "FluentAssemblyScanner": "1.0.7"
   },
 
   "frameworks": {

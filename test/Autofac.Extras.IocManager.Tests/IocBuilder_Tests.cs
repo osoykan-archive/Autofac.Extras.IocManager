@@ -21,6 +21,15 @@ namespace Autofac.Extras.IocManager.Tests
             myDependencyFromLocalIocManager.ShouldBeSameAs(myDependencyFromResolver);
         }
 
+        [Fact]
+        public void ResolverContext_should_not_be_null()
+        {
+            IResolver resolver = Building(builder => { });
+
+            var resolverContext = new ResolverContext(resolver);
+            resolverContext.Resolver.ShouldNotBeNull();
+        }
+
         internal interface IMyDependency
         {
         }

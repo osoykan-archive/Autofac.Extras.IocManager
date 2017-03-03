@@ -1,10 +1,10 @@
 {
-  "version" : "2.0.7-*",
+  "version" : "2.1.0-*",
 
   "dependencies": {
-    "Autofac": "4.3.0",
-    "Autofac.Extras.DynamicProxy": "4.1.0",
-    "Autofac.Extras.IocManager": "2.0.7",
+    "Autofac": "4.4.0",
+    "Autofac.Extras.DynamicProxy": "4.2.1",
+    "Autofac.Extras.IocManager": "2.1.0",
     "Castle.Core": "4.0.0"
   },
 

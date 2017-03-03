@@ -1,4 +1,4 @@
-Autofac.Extras.IocManager [![Build status](https://ci.appveyor.com/api/projects/status/udvakwrxb3nhb25d?svg=true)](https://ci.appveyor.com/project/osoykan/autofac-extras-iocmanager) 
+Autofac.Extras.IocManager [![Build status](https://ci.appveyor.com/api/projects/status/udvakwrxb3nhb25d?svg=true)](https://ci.appveyor.com/project/osoykan/autofac-extras-iocmanager)  [![Coverage Status](https://coveralls.io/repos/github/osoykan/Autofac.Extras.IocManager/badge.svg?branch=dev)](https://coveralls.io/github/osoykan/Autofac.Extras.IocManager?branch=dev)
 =====================
 
 
