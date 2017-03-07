@@ -1,5 +1,8 @@
 version: 1.0.{build}
-
+configuration: Release
+image: Visual Studio 2017 RC
+before_build:
+  - dotnet restore
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
