@@ -18,8 +18,8 @@ build:
   include_nuget_references: true
   verbosity: minimal
 after_build:
- - cmd: nuget pack "src\Autofac.Extras.IocManager" -c "Release" -o "nupkg/" 
- - cmd: nuget pack "src\Autofac.Extras.IocManager.DynamicProxy" -c "Release" -o "nupkg/"
+ - cmd: nuget pack "src\Autofac.Extras.IocManager" -o "nupkg/" 
+ - cmd: nuget pack "src\Autofac.Extras.IocManager.DynamicProxy" -o "nupkg/"
 test:
   assemblies: 
     - test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.Tests.dll
