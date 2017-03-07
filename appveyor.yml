@@ -18,8 +18,8 @@ build:
     verbosity: minimal
     
 after_build:
- - cmd: nuget pack src\Autofac.Extras.IocManager
- - cmd: nuget pack src\Autofac.Extras.IocManager.DynamicProxy
+ - cmd: nuget pack src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.csproj
+ - cmd: nuget pack src\Autofac.Extras.IocManager.DynamicProxy\Autofac.Extras.IocManager.DynamicProxy.csproj
  
 assembly_info:
   patch: true
