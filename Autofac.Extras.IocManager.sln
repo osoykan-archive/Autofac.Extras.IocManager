@@ -1,26 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{22C28F63-ABA1-4AC8-A3F8-BE2513E7F11D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CCAEDF67-43F5-4C1A-98F0-5760AC67040E}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Autofac.Extras.IocManager", "src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.xproj", "{8FE26180-DDCB-4D85-A6E6-E6CB815E4B6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C763B71A-6296-412A-8063-385C8DEF0FE3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Autofac.Extras.IocManager.Tests", "test\Autofac.Extras.IocManager.Tests\Autofac.Extras.IocManager.Tests.xproj", "{55E22544-92E4-4FEA-A333-6E00A575B828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Extras.IocManager", "src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.csproj", "{8FE26180-DDCB-4D85-A6E6-E6CB815E4B6B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Autofac.Extras.IocManager.DynamicProxy", "src\Autofac.Extras.IocManager.DynamicProxy\Autofac.Extras.IocManager.DynamicProxy.xproj", "{9B2B300B-5A03-4F76-8C8E-4A174B47F7AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Extras.IocManager.Tests", "test\Autofac.Extras.IocManager.Tests\Autofac.Extras.IocManager.Tests.csproj", "{55E22544-92E4-4FEA-A333-6E00A575B828}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Autofac.Extras.IocManager.DynamicProxy.Tests", "test\Autofac.Extras.IocManager.DynamicProxy.Tests\Autofac.Extras.IocManager.DynamicProxy.Tests.xproj", "{8FCAF277-E8E0-4ECE-B6D3-7135713C4CB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Extras.IocManager.DynamicProxy", "src\Autofac.Extras.IocManager.DynamicProxy\Autofac.Extras.IocManager.DynamicProxy.csproj", "{9B2B300B-5A03-4F76-8C8E-4A174B47F7AA}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Autofac.Extras.IocManager.TestBase", "test\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.xproj", "{00AD6263-BE77-4E7A-AA86-5F07182AE153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Extras.IocManager.DynamicProxy.Tests", "test\Autofac.Extras.IocManager.DynamicProxy.Tests\Autofac.Extras.IocManager.DynamicProxy.Tests.csproj", "{8FCAF277-E8E0-4ECE-B6D3-7135713C4CB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Extras.IocManager.TestBase", "test\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj", "{00AD6263-BE77-4E7A-AA86-5F07182AE153}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
