@@ -8,6 +8,7 @@ before_build:
  - cmd: set PATH=%appveyor_build_folder%\NuGet.CommandLine\tools;%PATH%
  - cmd: nuget restore src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.csproj
  - cmd: nuget restore src\Autofac.Extras.IocManager.DynamicProxy\Autofac.Extras.IocManager.DynamicProxy.csproj
+ - cmd: nuget restore Autofac.Extras.IocManager.sln 
 
 build:
     project: Autofac.Extras.IocManager.sln 
