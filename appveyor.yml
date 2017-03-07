@@ -1,6 +1,9 @@
+configuration: Release
+
+image: Visual Studio 2017 RC
+
 version: 1.0.{build}
-before_build:
-- cmd: dotnet.exe restore
+ 
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -19,8 +22,8 @@ build:
   include_nuget_references: true
   verbosity: minimal
 after_build:
- - cmd: dotnet pack "src\Autofac.Extras.IocManager" -c "Release" -o "nupkg/" 
- - cmd: dotnet pack "src\Autofac.Extras.IocManager.DynamicProxy" -c "Release" -o "nupkg/"
+ - cmd: nuget pack "src\Autofac.Extras.IocManager" -o "nupkg/" 
+ - cmd: nuget pack "src\Autofac.Extras.IocManager.DynamicProxy" -o "nupkg/"
 test:
   assemblies: 
     - test\Autofac.Extras.IocManager.Tests\bin\Debug\net452\win7-x64\Autofac.Extras.IocManager.Tests.dll
