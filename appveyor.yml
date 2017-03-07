@@ -1,8 +1,12 @@
 configuration: Release
 
-image: Visual Studio 2017 RC
-
 version: 1.0.{build}
+
+before_build:
+   - nuget restore
+ 
+build_script:
+   - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
  
 assembly_info:
   patch: true
