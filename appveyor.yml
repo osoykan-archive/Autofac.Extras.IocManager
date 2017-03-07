@@ -1,6 +1,6 @@
 version: 1.0.{build}
 configuration: Release
-image: Visual Studio 2017 RC
+image: Visual Studio 2017
 before_build:
   - dotnet restore
 assembly_info:
