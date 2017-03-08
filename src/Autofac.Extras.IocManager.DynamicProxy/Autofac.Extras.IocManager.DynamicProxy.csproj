@@ -14,6 +14,9 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Oguzhan Soykan</Authors>
+    <Description>DynamicProxy integration for Autofac.Extras.IocManager</Description>
   </PropertyGroup>
 
   <ItemGroup>
