@@ -18,6 +18,7 @@ build:
     verbosity: minimal
     
 after_build:
+ - cmd: set PATH=%appveyor_build_folder%\NuGet.CommandLine\tools;%PATH%
  - cmd: nuget pack src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.csproj
  - cmd: nuget pack src\Autofac.Extras.IocManager.DynamicProxy\Autofac.Extras.IocManager.DynamicProxy.csproj
  
