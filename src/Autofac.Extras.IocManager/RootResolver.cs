@@ -1,4 +1,6 @@
-﻿namespace Autofac.Extras.IocManager
+﻿using System;
+
+namespace Autofac.Extras.IocManager
 {
     internal class RootResolver : ScopeResolver, IRootResolver
     {
@@ -25,8 +27,14 @@
         /// </summary>
         public override void Dispose()
         {
+            OnDisposing?.Invoke(this, new OnDisposingEventArgs(this));
             base.Dispose();
             Container.Dispose();
         }
+
+        /// <summary>
+        ///     Occurs when [on disposing].
+        /// </summary>
+        public event EventHandler<OnDisposingEventArgs> OnDisposing;
     }
 }

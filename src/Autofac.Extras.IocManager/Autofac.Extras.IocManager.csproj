@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>2.2.0</VersionPrefix>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>Autofac.Extras.IocManager</AssemblyName>
+    <PackageId>Autofac.Extras.IocManager</PackageId>
+    <PackageTags>Autofac;Resolve;Composition Root;Service Locator</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/osoykan/Stove/master/stove.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/osoykan/Autofac.Extras.IocManager</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/osoykan/Autofac.Extras.IocManager/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/osoykan/Autofac.Extras.IocManager</RepositoryUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Oguzhan Soykan</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="bin\Release\net452\Autofac.Extras.IocManager.pdb">
+      <PackagePath>lib/net452/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.4.0" />
+    <PackageReference Include="FluentAssemblyScanner" Version="1.0.7" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

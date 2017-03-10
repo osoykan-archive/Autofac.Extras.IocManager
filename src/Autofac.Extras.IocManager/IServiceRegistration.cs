@@ -11,6 +11,12 @@ namespace Autofac.Extras.IocManager
         event EventHandler<RegistrationCompletedEventArgs> RegistrationCompleted;
 
         /// <summary>
+        ///     Callback action, called when <see cref="RootResolver" /> or in other words application is disposing.
+        ///     <see cref="IRootResolver.OnDisposing" />
+        /// </summary>
+        event EventHandler<OnDisposingEventArgs> OnDisposing;
+
+        /// <summary>
         ///     Registers the specified lifetime.
         /// </summary>
         /// <typeparam name="TService1">The type of the service1.</typeparam>
