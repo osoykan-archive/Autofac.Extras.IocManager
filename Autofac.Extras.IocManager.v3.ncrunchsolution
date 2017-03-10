@@ -1,6 +1,11 @@
 ﻿<SolutionConfiguration>
   <Settings>
     <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>test\Autofac.Extras.IocManager.DynamicProxy.Tests\Autofac.Extras.IocManager.DynamicProxy.Tests.csproj</Value>
+      <Value>test\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj</Value>
+      <Value>test\Autofac.Extras.IocManager.Tests\Autofac.Extras.IocManager.Tests.csproj</Value>
+    </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
 </SolutionConfiguration>
