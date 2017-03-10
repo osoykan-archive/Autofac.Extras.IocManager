@@ -1,4 +1,6 @@
-﻿namespace Autofac.Extras.IocManager
+﻿using System;
+
+namespace Autofac.Extras.IocManager
 {
     /// <summary>
     ///     Root resolver for IocBuilder. This is not registered in the Autofac Container.
@@ -14,5 +16,10 @@
         ///     The container.
         /// </value>
         IContainer Container { get; }
+
+        /// <summary>
+        ///     Occurs when [on disposing].
+        /// </summary>
+        event EventHandler<OnDisposingEventArgs> OnDisposing;
     }
 }

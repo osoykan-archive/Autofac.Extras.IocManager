@@ -2,7 +2,6 @@
 using System.Reflection;
 
 using Autofac.Builder;
-using Autofac.Features.ResolveAnything;
 using Autofac.Features.Scanning;
 
 namespace Autofac.Extras.IocManager
@@ -18,6 +17,11 @@ namespace Autofac.Extras.IocManager
         ///     The decorator service
         /// </summary>
         private readonly DecoratorService _decoratorService = new DecoratorService();
+
+        /// <summary>
+        ///     The root resolver
+        /// </summary>
+        private IRootResolver _rootResolver;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ServiceRegistration" /> class.
@@ -43,6 +47,11 @@ namespace Autofac.Extras.IocManager
         ///     Occurs when [registration completed].
         /// </summary>
         public event EventHandler<RegistrationCompletedEventArgs> RegistrationCompleted;
+
+        /// <summary>
+        ///     Callback action, when IocManager is isposing.
+        /// </summary>
+        public event EventHandler<OnDisposingEventArgs> OnDisposing;
 
         /// <summary>
         ///     Registers the specified lifetime.
@@ -301,7 +310,6 @@ namespace Autofac.Extras.IocManager
             registration.ApplyLifeStyle(lifetime);
         }
 
-
         public void RegisterIfAbsent<TService>(Lifetime lifetime = Lifetime.Transient) where TService : class
         {
             RegisterIfAbsent(typeof(TService), lifetime);
@@ -310,14 +318,14 @@ namespace Autofac.Extras.IocManager
         public void RegisterIfAbsent(Type type, Lifetime lifetime = Lifetime.Transient)
         {
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
-               .RegisterType(type)
-               .InjectPropertiesAsAutowired()
-               .AsSelf()
-               .OnActivating(args =>
-               {
-                   object instance = _decoratorService.Decorate(type, args.Instance, new ResolverContext(new Resolver(args.Context)));
-                   args.ReplaceInstance(instance);
-               }).IfNotRegistered(type);
+                .RegisterType(type)
+                .InjectPropertiesAsAutowired()
+                .AsSelf()
+                .OnActivating(args =>
+                {
+                    object instance = _decoratorService.Decorate(type, args.Instance, new ResolverContext(new Resolver(args.Context)));
+                    args.ReplaceInstance(instance);
+                }).IfNotRegistered(type);
 
             registration.ApplyLifeStyle(lifetime);
         }
@@ -503,12 +511,14 @@ namespace Autofac.Extras.IocManager
         public IRootResolver CreateResolver(bool ignoreStartableComponents = false)
         {
             IContainer container = _containerBuilder.Build(ignoreStartableComponents ? ContainerBuildOptions.IgnoreStartableComponents : ContainerBuildOptions.None);
-            var rootResolver = new RootResolver(container);
+            _rootResolver = new RootResolver(container);
 
             EventHandler<RegistrationCompletedEventArgs> handler = RegistrationCompleted;
-            handler?.Invoke(this, new RegistrationCompletedEventArgs(rootResolver));
+            handler?.Invoke(this, new RegistrationCompletedEventArgs(_rootResolver));
 
-            return rootResolver;
+            _rootResolver.OnDisposing += (sender, args) => { OnServicesDisposing(args.Context.Resolver); };
+
+            return _rootResolver;
         }
 
         /// <summary>
@@ -518,6 +528,15 @@ namespace Autofac.Extras.IocManager
         public void UseBuilder(Action<ContainerBuilder> builderAction)
         {
             builderAction(_containerBuilder);
+        }
+
+        /// <summary>
+        ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        private void OnServicesDisposing(IResolver resolver)
+        {
+            EventHandler<OnDisposingEventArgs> handler = OnDisposing;
+            handler?.Invoke(this, new OnDisposingEventArgs(resolver));
         }
     }
 }
