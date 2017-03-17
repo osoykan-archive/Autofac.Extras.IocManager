@@ -14,6 +14,11 @@ namespace Autofac.Extras.IocManager
             Container = container;
         }
 
+        public event EventHandler<OnDisposingEventArgs> OnDisposing;
+
+        /// <summary>
+        ///     Occurs when [on disposing].
+        /// </summary>
         /// <summary>
         ///     Gets the Autofac Container.
         /// </summary>
@@ -30,11 +35,8 @@ namespace Autofac.Extras.IocManager
             OnDisposing?.Invoke(this, new OnDisposingEventArgs(this));
             base.Dispose();
             Container.Dispose();
-        }
 
-        /// <summary>
-        ///     Occurs when [on disposing].
-        /// </summary>
-        public event EventHandler<OnDisposingEventArgs> OnDisposing;
+            if (OnDisposing != null) { OnDisposing -= OnDisposing; }
+        }
     }
 }
