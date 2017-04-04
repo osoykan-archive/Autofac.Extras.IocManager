@@ -79,8 +79,8 @@ namespace Autofac.Extras.IocManager.DynamicProxy
                 IInterceptor[] interceptors = interceptorInstances.ToArray();
 
                 object interceptedInstance = interceptAdditionalInterfaces
-                    ? generator.CreateClassProxyWithTarget(type, interfaces, e.Instance, interceptors)
-                    : generator.CreateClassProxyWithTarget(type, e.Instance, interceptors);
+                    ? generator.CreateInterfaceProxyWithTargetInterface(theInterface, interfaces, e.Instance, interceptors)
+                    : generator.CreateInterfaceProxyWithTargetInterface(theInterface, e.Instance, interceptors);
 
                 e.ReplaceInstance(interceptedInstance);
             }

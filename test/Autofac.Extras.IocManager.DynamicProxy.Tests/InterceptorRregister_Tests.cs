@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 using Autofac.Core;
@@ -42,9 +40,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
 
             var orderService = The<IOrderAppService>();
             orderService.ProductAppService.ShouldNotBeNull();
-
-            var orderAppService = The<OrderAppService>();
-            orderAppService.ProductAppService.ShouldNotBeNull();
+            orderService.DoSomeCoolStuff();
         }
 
         [Fact]
@@ -72,20 +68,13 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
         {
             Building(builder =>
             {
-                builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += (sender, args) =>
-                {
-                    MultipleInterceptorRegistrar(args);
-                })));
+                builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += (sender, args) => { MultipleInterceptorRegistrar(args); })));
                 builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
             });
 
             var orderService = The<IOrderAppService>();
             orderService.ProductAppService.ShouldNotBeNull();
             orderService.DoSomeCoolStuff();
-
-            var orderAppService = The<OrderAppService>();
-            orderAppService.ProductAppService.ShouldNotBeNull();
-            orderAppService.DoSomeCoolStuff();
         }
 
         private static void UnitOfWorkRegistrar(ComponentRegisteredEventArgs args)
@@ -149,6 +138,13 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
 
         public class OrderAppService : IOrderAppService, IApplicationService
         {
+            private readonly IProductAppService _productAppService;
+
+            public OrderAppService(IProductAppService productAppService)
+            {
+                _productAppService = productAppService;
+            }
+
             public IProductAppService ProductAppService { get; set; }
 
             public virtual void DoSomeCoolStuff()
@@ -177,46 +173,6 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
         {
             public void Log(string message)
             {
-            }
-        }
-
-        public class UnitOfWorkInterceptorRegistrarModule : Module
-        {
-            // This is a private constant from the Autofac.Extras.DynamicProxy2 assembly
-            // that is needed to "poke" interceptors into registrations.
-            private const string InterceptorsPropertyName = "Autofac.Extras.DynamicProxy2.RegistrationExtensions.InterceptorsPropertyName";
-
-            protected override void Load(ContainerBuilder builder)
-            {
-                builder.RegisterType<UnitOfWorkInterceptor>().As<IInterceptor>().AsSelf();
-            }
-
-            protected override void AttachToComponentRegistration(IComponentRegistry componentRegistry, IComponentRegistration registration)
-            {
-                // Here is where you define your "global interceptor list"
-                var interceptorServices = new Service[] { new TypedService(typeof(UnitOfWorkInterceptor)) };
-
-                Type impl = registration.Activator.LimitType;
-
-                //Type[] services = registration.Services.OfType<TypedService>().Select(x => x.ServiceType).ToArray();
-
-                // Append the global interceptors to any existing list, or create a new interceptor
-                // list if none are specified. Note this info will only be used by registrations
-                // that are set to have interceptors enabled. It'll be ignored by others.
-
-                if (typeof(IApplicationService).IsAssignableFrom(impl))
-                {
-                    object existing;
-                    if (registration.Metadata.TryGetValue(InterceptorsPropertyName, out existing))
-                    {
-                        registration.Metadata[InterceptorsPropertyName] =
-                            ((IEnumerable<Service>)existing).Concat(interceptorServices).Distinct();
-                    }
-                    else
-                    {
-                        registration.Metadata.Add(InterceptorsPropertyName, interceptorServices);
-                    }
-                }
             }
         }
     }
