@@ -19,7 +19,7 @@ namespace Autofac.Extras.IocManager.Tests
                 builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
             });
 
-            var myGenericResoulition = LocalIocManager.Resolve<IRepository<MyClass, int>>();
+            var myGenericResoulition = The<IRepository<MyClass, int>>();
         }
 
         public interface IRepository : ITransientDependency

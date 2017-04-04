@@ -25,10 +25,26 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
                 builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
             });
 
-            var orderService = LocalIocManager.Resolve<IOrderAppService>();
+            var orderService = The<IOrderAppService>();
             orderService.DoSomeCoolStuff();
             orderService.ShouldNotBeNull();
             orderService.GetType().Name.ShouldContain("Proxy");
+        }
+
+        [Fact]
+        public void interceptor_registration_with_registercallback_should_work_with_property_injection()
+        {
+            Building(builder =>
+            {
+                builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += (sender, args) => { UnitOfWorkRegistrar(args); })));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+            });
+
+            var orderService = The<IOrderAppService>();
+            orderService.ProductAppService.ShouldNotBeNull();
+
+            var orderAppService = The<OrderAppService>();
+            orderAppService.ProductAppService.ShouldNotBeNull();
         }
 
         [Fact]
@@ -45,10 +61,31 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
                 builder.RegisterServices(r => r.Register<ILogger, Logger>());
             });
 
-            var orderService = LocalIocManager.Resolve<IOrderAppService>();
+            var orderService = The<IOrderAppService>();
             orderService.DoSomeCoolStuff();
             orderService.ShouldNotBeNull();
             orderService.GetType().Name.ShouldContain("Proxy");
+        }
+
+        [Fact]
+        public void multiple_interceptor_should_be_able_to_intercept_any_dependency()
+        {
+            Building(builder =>
+            {
+                builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += (sender, args) =>
+                {
+                    MultipleInterceptorRegistrar(args);
+                })));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+            });
+
+            var orderService = The<IOrderAppService>();
+            orderService.ProductAppService.ShouldNotBeNull();
+            orderService.DoSomeCoolStuff();
+
+            var orderAppService = The<OrderAppService>();
+            orderAppService.ProductAppService.ShouldNotBeNull();
+            orderAppService.DoSomeCoolStuff();
         }
 
         private static void UnitOfWorkRegistrar(ComponentRegisteredEventArgs args)
@@ -58,6 +95,16 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             if (typeof(IApplicationService).IsAssignableFrom(implType))
             {
                 args.ComponentRegistration.InterceptedBy<UnitOfWorkInterceptor>();
+            }
+        }
+
+        private static void MultipleInterceptorRegistrar(ComponentRegisteredEventArgs args)
+        {
+            Type implType = args.ComponentRegistration.Activator.LimitType;
+
+            if (typeof(IApplicationService).IsAssignableFrom(implType))
+            {
+                args.ComponentRegistration.InterceptedBy(typeof(UnitOfWorkInterceptor), typeof(ExceptionInterceptor));
             }
         }
 
@@ -73,17 +120,38 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             public void Intercept(IInvocation invocation)
             {
                 _logger.Log(invocation.Method.Name);
+                invocation.Proceed();
+            }
+        }
+
+        public class ExceptionInterceptor : IInterceptor, ITransientDependency
+        {
+            private readonly ILogger _logger;
+
+            public ExceptionInterceptor(ILogger logger)
+            {
+                _logger = logger;
+            }
+
+            public void Intercept(IInvocation invocation)
+            {
+                _logger.Log(invocation.Method.Name);
+                invocation.Proceed();
             }
         }
 
         public interface IOrderAppService
         {
+            IProductAppService ProductAppService { get; set; }
+
             void DoSomeCoolStuff();
         }
 
         public class OrderAppService : IOrderAppService, IApplicationService
         {
-            public void DoSomeCoolStuff()
+            public IProductAppService ProductAppService { get; set; }
+
+            public virtual void DoSomeCoolStuff()
             {
             }
         }

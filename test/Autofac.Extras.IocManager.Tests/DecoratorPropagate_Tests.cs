@@ -21,7 +21,7 @@ namespace Autofac.Extras.IocManager.Tests
                 builder.RegisterServices(r => r.Decorate<IServiceC>((context, c) => new ServiceCDecorator(c)));
             });
 
-            var serviceCDecorator = LocalIocManager.Resolve<Func<IServiceA, IServiceB, IServiceC>>();
+            var serviceCDecorator = The<Func<IServiceA, IServiceB, IServiceC>>();
             IServiceC serviceC = serviceCDecorator(new ServiceAImpl(), new ServiceBImpl());
 
             serviceC.ShouldBeOfType(typeof(ServiceCDecorator));

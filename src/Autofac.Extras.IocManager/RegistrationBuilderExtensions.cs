@@ -141,7 +141,7 @@ namespace Autofac.Extras.IocManager
                     if (IsInjectable(instance, overrideSetValues, propertyInfo, accessors))
                     {
                         object obj = context.Resolve(propertyType);
-                        propertyInfo.SetValue(instance, obj, null);
+                        propertyInfo.SetValue(instance, obj);
                     }
                 }
             }

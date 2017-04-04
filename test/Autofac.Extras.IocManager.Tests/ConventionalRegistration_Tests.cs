@@ -15,19 +15,19 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
 
-            var myTransientInstance = LocalIocManager.Resolve<IMyTransientClass>();
+            var myTransientInstance = The<IMyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
-            myTransientInstance = LocalIocManager.Resolve<MyTransientClass>();
+            myTransientInstance = The<MyTransientClass>();
             myTransientInstance.ShouldNotBeNull();
 
-            var mySingletonInstance = LocalIocManager.Resolve<IMySingletonClass>();
+            var mySingletonInstance = The<IMySingletonClass>();
             mySingletonInstance.ShouldNotBeNull();
-            mySingletonInstance = LocalIocManager.Resolve<MySingletonClass>();
+            mySingletonInstance = The<MySingletonClass>();
             mySingletonInstance.ShouldNotBeNull();
 
-            var myLifeTimeScopeInstance = LocalIocManager.Resolve<IMyLifeTimeScopeClass>();
+            var myLifeTimeScopeInstance = The<IMyLifeTimeScopeClass>();
             myLifeTimeScopeInstance.ShouldNotBeNull();
-            myLifeTimeScopeInstance = LocalIocManager.Resolve<MyLifeTimeScopeClass>();
+            myLifeTimeScopeInstance = The<MyLifeTimeScopeClass>();
             myLifeTimeScopeInstance.ShouldNotBeNull();
         }
 
@@ -36,7 +36,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
 
-            var genericHumanInstance = LocalIocManager.Resolve<IMyGenericClass<MyTransientClass>>();
+            var genericHumanInstance = The<IMyGenericClass<MyTransientClass>>();
             genericHumanInstance.Object.ShouldBeAssignableTo(typeof(MyTransientClass));
         }
 

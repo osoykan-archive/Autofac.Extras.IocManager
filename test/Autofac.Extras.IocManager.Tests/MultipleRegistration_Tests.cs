@@ -17,10 +17,10 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
 
-            var messageHandler = LocalIocManager.Resolve<IMessageHandler>();
+            var messageHandler = The<IMessageHandler>();
             messageHandler.ShouldBeAssignableTo<ThirdMessageHandler>();
 
-            var messageHandlers = LocalIocManager.Resolve<IEnumerable<IMessageHandler>>();
+            var messageHandlers = The<IEnumerable<IMessageHandler>>();
             messageHandlers.Count().ShouldBe(3);
         }
 
@@ -37,10 +37,10 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            var messageHandler = LocalIocManager.Resolve<IMessageHandler>();
+            var messageHandler = The<IMessageHandler>();
             messageHandler.ShouldBeAssignableTo<ThirdMessageHandler>();
 
-            var messageHandlers = LocalIocManager.Resolve<IEnumerable<IMessageHandler>>();
+            var messageHandlers = The<IEnumerable<IMessageHandler>>();
             messageHandlers.Count().ShouldBe(3);
         }
 
