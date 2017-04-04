@@ -20,5 +20,10 @@ namespace Autofac.Extras.IocManager.TestBase
             builderAction(IocBuilder);
             return IocBuilder.CreateResolver().UseIocManager(LocalIocManager);
         }
+
+        protected T The<T>()
+        {
+            return LocalIocManager.Resolve<T>();
+        }
     }
 }

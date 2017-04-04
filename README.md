@@ -10,11 +10,11 @@ Autofac.Extras.IocManager [![Build status](https://ci.appveyor.com/api/projects/
 Autofac.Extras.IocManager allows Autofac Container to be portable. It also provides entire resolve methods which belong to Autofac Container and also provides conventional registration mechanism. IocManager is the best alternative to [common Service Locator anti-pattern](http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/).
 
 
-##Example Projects which use Autofac.Extras.IocManager
+## Example Projects which use Autofac.Extras.IocManager
 * [Stove](https://github.com/osoykan/Stove)
 
 
-#Sample Usage
+# Sample Usage
 ```csharp
 IRootResolver resolver = IocBuilder.New
                                    .UseAutofacContainerBuilder()
@@ -34,7 +34,7 @@ someDomainService.DoSomeStuff();
  ```
  
 
-##Extension Oriented Registrations
+## Extension Oriented Registrations
  
  Extension sample:
  
@@ -74,8 +74,8 @@ public static class StoveRegistrationExtensions
 }
  ```
  
-##Registrations
-###Conventional assembly registrations
+## Registrations
+### Conventional assembly registrations
 There are 3 interfaces to mark an implementation.
 * `ITransientDependency` : Marks implementation as PerDepedency
 * `ISingletonDependency` : Marks implementation as SingleInstance
@@ -105,7 +105,7 @@ private static void RegisterSomeFeature(IIocBuilder builder)
 ```
  With this feature, you no longer don't have to define your registrations in `Builder`'s `Load` method explicitly. `RegisterAssemblyByConvention` does this with [interface marking pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern).
 
-##IocManager Using
+## IocManager Using
 
 After the container build which means `CreateResolver()` it can use:
  ```csharp
@@ -142,9 +142,9 @@ simpleDisposableDependency.DisposeCount.ShouldBe(1);
  
 
 
-##Resolvings
+## Resolvings
 
-###Injectable Resolvers
+### Injectable Resolvers
 
 * `IResolver`: Atomic resolver which uses Autofac's `IComponentContext` internally.
 * `IScopeResolver` : Able to start a new lifetime scope. An abstraction to Autofac's `ILifetimeScope`
@@ -153,7 +153,7 @@ simpleDisposableDependency.DisposeCount.ShouldBe(1);
 
 
 
-##Property Injection
+## Property Injection
 Autofac.Extras.IocManager also provides property injection on public and private properties with `InjectPropertiesAsAutowired()` extension.
 It does this autowire operation internally. Just use register api `builder.RegisterServices(r => r.Register<IConnectionStringResolver, DefaultConnectionStringResolver>());` it autowires all propery injections implicitly according to your `[DoNotInject]` attribute.
 
@@ -172,7 +172,7 @@ Also you may not want to inject all properties for a dependency, it can be done 
  }
 ```
 
-##Injectable IocManager
+## Injectable IocManager
 IocManager also self-injectable in any dependencies. For example:
 
 ```csharp
@@ -213,7 +213,7 @@ class SimpleDependencyWithIocManager
 feel free to use `IIocManager` for resolving operations in any dependency.
 
 
-#Example
+# Example
 
 Extension:
 ```csharp

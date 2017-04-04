@@ -16,6 +16,7 @@ namespace Autofac.Extras.IocManager
         /// <typeparam name="TRegistrationStyle">The type of the registration style.</typeparam>
         /// <param name="registration">The registration.</param>
         /// <returns></returns>
+        [Obsolete("This will be removed next major release, use Autofac's PropertiesAutoWired(attributepropertyselector) method instead.")]
         public static IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle>
             InjectPropertiesAsAutowired<TLimit, TActivatorData, TRegistrationStyle>(
                 this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration)

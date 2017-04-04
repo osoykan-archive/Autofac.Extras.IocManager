@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>2.2.0</VersionPrefix>
+    <VersionPrefix>2.2.1</VersionPrefix>
     <TargetFramework>net452</TargetFramework>
     <AssemblyName>Autofac.Extras.IocManager</AssemblyName>
     <PackageId>Autofac.Extras.IocManager</PackageId>
