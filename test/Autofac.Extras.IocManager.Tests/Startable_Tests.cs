@@ -15,7 +15,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
-            var startableDependency = LocalIocManager.Resolve<IStartableDependency>();
+            var startableDependency = The<IStartableDependency>();
             startableDependency.StartCallExecuted.ShouldBe(true);
         }
 
@@ -24,7 +24,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
-            var startableDependency = LocalIocManager.Resolve<IStartableDependency2>();
+            var startableDependency = The<IStartableDependency2>();
 
             startableDependency.StartCallExecuted.ShouldBe(true);
             startableDependency.GetIocManager().ShouldNotBeNull();
@@ -38,7 +38,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
-            var concreteStartable = LocalIocManager.Resolve<ConcreteStartable>();
+            var concreteStartable = The<ConcreteStartable>();
 
             concreteStartable.StartCallExecuted.ShouldBe(true);
         }

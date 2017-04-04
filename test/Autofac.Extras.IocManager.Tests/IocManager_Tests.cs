@@ -25,9 +25,9 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { });
 
-            var resolver = LocalIocManager.Resolve<IIocResolver>();
-            var managerByInterface = LocalIocManager.Resolve<IIocManager>();
-            var managerByClass = LocalIocManager.Resolve<IocManager>();
+            var resolver = The<IIocResolver>();
+            var managerByInterface = The<IIocManager>();
+            var managerByClass = The<IocManager>();
 
             managerByClass.ShouldBeSameAs(resolver);
             managerByClass.ShouldBeSameAs(managerByInterface);
@@ -38,7 +38,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { builder.RegisterServices(f => f.Register<ISimpleDependency, SimpleDependency>(Lifetime.LifetimeScope)); });
 
-            var simpleDependency = LocalIocManager.Resolve<ISimpleDependency>();
+            var simpleDependency = The<ISimpleDependency>();
             simpleDependency.ShouldNotBeNull();
         }
 
@@ -86,7 +86,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
 
-            LocalIocManager.Resolve<ICurrentUnitOfWorkProvider>().ShouldNotBeNull();
+            The<ICurrentUnitOfWorkProvider>().ShouldNotBeNull();
         }
 
         internal class CallContextCurrentUnitOfWorkProvider : ICurrentUnitOfWorkProvider,ITransientDependency

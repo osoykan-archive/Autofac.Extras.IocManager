@@ -24,7 +24,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IRepository<,>), typeof(EfRepositoryBase<,>)));
             });
 
-            var myGenericResoulition = LocalIocManager.Resolve<IRepository<MyClass, int>>();
+            var myGenericResoulition = The<IRepository<MyClass, int>>();
         }
 
         private void RegistryOnRegistered(object sender, ComponentRegisteredEventArgs args)

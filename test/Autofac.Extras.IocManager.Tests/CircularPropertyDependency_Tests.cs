@@ -27,12 +27,12 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Initialize_Test_LifeTimeScope();
 
-            var obj1 = LocalIocManager.Resolve<MyClass1>();
+            var obj1 = The<MyClass1>();
             obj1.Obj2.ShouldNotBe(null);
             obj1.Obj3.ShouldNotBe(null);
             obj1.Obj2.Obj3.ShouldNotBe(null);
 
-            var obj2 = LocalIocManager.Resolve<MyClass2>();
+            var obj2 = The<MyClass2>();
             obj2.Obj1.ShouldNotBe(null);
             obj2.Obj3.ShouldNotBe(null);
             obj2.Obj1.Obj3.ShouldNotBe(null);

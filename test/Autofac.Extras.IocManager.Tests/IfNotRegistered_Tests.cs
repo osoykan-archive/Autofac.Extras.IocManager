@@ -37,7 +37,7 @@ namespace Autofac.Extras.IocManager.Tests
             });
 
             LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(false);
-            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceA>();
+            The<IService>().ShouldBeAssignableTo<ServiceA>();
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace Autofac.Extras.IocManager.Tests
             });
 
             LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(false);
-            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceA>();
+            The<IService>().ShouldBeAssignableTo<ServiceA>();
         }
 
         [Fact]
@@ -70,8 +70,8 @@ namespace Autofac.Extras.IocManager.Tests
             });
 
             LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(true);
-            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceB>();
-            LocalIocManager.Resolve<IService>().MyProperty.ShouldNotBeNull();
+            The<IService>().ShouldBeAssignableTo<ServiceB>();
+            The<IService>().MyProperty.ShouldNotBeNull();
         }
 
         [Fact]
@@ -88,8 +88,8 @@ namespace Autofac.Extras.IocManager.Tests
             });
 
             LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(true);
-            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceB>();
-            LocalIocManager.Resolve<IService>().MyProperty.ShouldNotBeNull();
+            The<IService>().ShouldBeAssignableTo<ServiceB>();
+            The<IService>().MyProperty.ShouldNotBeNull();
         }
 
         [Fact]
@@ -106,9 +106,9 @@ namespace Autofac.Extras.IocManager.Tests
             });
 
             LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(false);
-            LocalIocManager.Resolve<IService>().ShouldBeAssignableTo<ServiceA>();
+            The<IService>().ShouldBeAssignableTo<ServiceA>();
 
-            var instanceA = LocalIocManager.Resolve<IService>();
+            var instanceA = The<IService>();
             instanceA.MyProperty.ShouldNotBeNull();
         }
 

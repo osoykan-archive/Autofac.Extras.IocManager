@@ -13,7 +13,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { builder.RegisterServices(r => r.UseBuilder(containerBuilder => containerBuilder.RegisterType<MyClass>())); });
 
-            LocalIocManager.Resolve<MyClass>().ShouldNotBeNull();
+            The<MyClass>().ShouldNotBeNull();
         }
 
         internal class MyClass
