@@ -71,7 +71,7 @@ namespace Autofac.Extras.IocManager
                 builder.RegisterGeneric(typeToRegister)
                        .As(defaultGenerics.ToArray())
                        .AsSelf()
-                       .InjectPropertiesAsAutowired()
+                       .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                        .ApplyLifeStyle(typeof(TLifetime));
             }
             else
@@ -81,7 +81,7 @@ namespace Autofac.Extras.IocManager
                 builder.RegisterType(typeToRegister)
                        .As(defaults.ToArray())
                        .AsSelf()
-                       .InjectPropertiesAsAutowired()
+                       .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                        .ApplyLifeStyle(typeof(TLifetime));
             }
         }
@@ -93,6 +93,5 @@ namespace Autofac.Extras.IocManager
                 defaultInterfaces.Add(typeof(IStartable));
             }
         }
-
     }
 }

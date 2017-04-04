@@ -70,7 +70,7 @@ namespace Autofac.Extras.IocManager
             IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType<TImplementation>()
                 .As<TService1, TService2>()
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .AsSelf();
 
             registration.ApplyLifeStyle(lifetime);
@@ -102,7 +102,7 @@ namespace Autofac.Extras.IocManager
                 .RegisterInstance(instance)
                 .As<TService1, TService2>()
                 .AsSelf()
-                .InjectPropertiesAsAutowired();
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true);
 
             registration.ApplyLifeStyle(lifetime);
 
@@ -132,7 +132,7 @@ namespace Autofac.Extras.IocManager
             IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType<TImplementation>()
                 .As<TService1, TService2, TService3>()
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .AsSelf();
 
             registration.ApplyLifeStyle(lifetime);
@@ -159,9 +159,10 @@ namespace Autofac.Extras.IocManager
             where TService2 : class
         {
             IRegistrationBuilder<object, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
-                .RegisterInstance(instance).As<TService1, TService2>()
+                .RegisterInstance(instance)
+                .As<TService1, TService2>()
                 .AsSelf()
-                .InjectPropertiesAsAutowired();
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true);
 
             registration.ApplyLifeStyle(lifetime);
 
@@ -191,9 +192,10 @@ namespace Autofac.Extras.IocManager
             where TImplementation : class, TService1, TService2, TService3
         {
             IRegistrationBuilder<object, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
-                .RegisterInstance(instance).As<TService1, TService2, TService3>()
+                .RegisterInstance(instance)
+                .As<TService1, TService2, TService3>()
                 .AsSelf()
-                .InjectPropertiesAsAutowired();
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true);
 
             registration.ApplyLifeStyle(lifetime);
 
@@ -221,9 +223,10 @@ namespace Autofac.Extras.IocManager
             where TService3 : class
         {
             IRegistrationBuilder<object, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
-                .RegisterInstance(instance).As<TService1, TService2, TService3>()
+                .RegisterInstance(instance)
+                .As<TService1, TService2, TService3>()
                 .AsSelf()
-                .InjectPropertiesAsAutowired();
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true);
 
             registration.ApplyLifeStyle(lifetime);
 
@@ -248,13 +251,13 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<TImplementation, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType<TImplementation>()
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .AsSelf();
 
             IRegistrationBuilder<TService, SimpleActivatorData, SingleRegistrationStyle> serviceRegistration = _containerBuilder
                 .Register<TService>(c => c.Resolve<TImplementation>())
                 .As<TService>()
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .OnActivating(args =>
                 {
                     TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
@@ -293,13 +296,13 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType(implementationType)
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .AsSelf()
                 .IfNotRegistered(serviceType);
 
             _containerBuilder.Register(c => c.Resolve(implementationType))
                              .As(serviceType)
-                             .InjectPropertiesAsAutowired()
+                             .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                              .OnActivating(args =>
                              {
                                  object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
@@ -319,13 +322,14 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType(type)
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .AsSelf()
                 .OnActivating(args =>
                 {
                     object instance = _decoratorService.Decorate(type, args.Instance, new ResolverContext(new Resolver(args.Context)));
                     args.ReplaceInstance(instance);
-                }).IfNotRegistered(type);
+                })
+                .IfNotRegistered(type);
 
             registration.ApplyLifeStyle(lifetime);
         }
@@ -345,7 +349,7 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<TService, SimpleActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .Register(cc => factory(new ResolverContext(new Resolver(cc))))
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .OnActivating(args =>
                 {
                     TService instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
@@ -375,7 +379,7 @@ namespace Autofac.Extras.IocManager
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType(implementationType)
                 .As(serviceType)
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .AsSelf()
                 .OnActivating(args =>
                 {
@@ -403,7 +407,7 @@ namespace Autofac.Extras.IocManager
         {
             IRegistrationBuilder<object, ConcreteReflectionActivatorData, SingleRegistrationStyle> registration = _containerBuilder
                 .RegisterType(serviceType)
-                .InjectPropertiesAsAutowired()
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
                 .AsSelf()
                 .OnActivating(args =>
                 {
@@ -447,7 +451,7 @@ namespace Autofac.Extras.IocManager
                 .RegisterGeneric(implementationType)
                 .As(serviceType)
                 .AsSelf()
-                .InjectPropertiesAsAutowired();
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true);
 
             registration.ApplyLifeStyle(lifetime);
         }
@@ -498,7 +502,7 @@ namespace Autofac.Extras.IocManager
                 .RegisterAssemblyTypes(assembly)
                 .AsClosedTypesOf(closedServiceType)
                 .AsImplementedInterfaces()
-                .InjectPropertiesAsAutowired();
+                .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true);
 
             registration.ApplyLifeStyle(lifetime);
         }
