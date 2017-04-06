@@ -44,7 +44,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
         }
 
         [Fact]
-        public void interceptor_registration_with_registercallback_should_work()
+        public void interceptor_registration_should_work()
         {
             Building(builder =>
             {
