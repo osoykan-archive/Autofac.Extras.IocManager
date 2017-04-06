@@ -13,8 +13,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="Autofac" Version="4.5.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.2.1" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="3.50.2" />
@@ -22,11 +24,6 @@
     <PackageReference Include="NSubstitute" Version="2.0.2" />
     <PackageReference Include="Shouldly" Version="2.8.2" />
     <PackageReference Include="xunit" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
 </Project>
