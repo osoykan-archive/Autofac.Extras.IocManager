@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <VersionPrefix>2.2.4</VersionPrefix>
+    <TargetFramework>net452</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <PackageIconUrl>https://raw.githubusercontent.com/osoykan/Stove/master/stove.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/osoykan/Autofac.Extras.IocManager</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/osoykan/Autofac.Extras.IocManager/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/osoykan/Autofac.Extras.IocManager</RepositoryUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Oguzhan Soykan</Authors>
+  </PropertyGroup>
+</Project>
