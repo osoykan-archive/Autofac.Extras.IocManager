@@ -1,22 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\common.props"></Import>
+  
   <PropertyGroup>
-    <VersionPrefix>2.2.3</VersionPrefix>
-    <TargetFramework>net452</TargetFramework>
     <AssemblyName>Autofac.Extras.IocManager.DynamicProxy</AssemblyName>
     <PackageId>Autofac.Extras.IocManager.DynamicProxy</PackageId>
     <PackageTags>Autofac;DynamicProxy;Resolve;Composition Root</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/osoykan/Stove/master/stove.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/osoykan/Autofac.Extras.IocManager</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/osoykan/Autofac.Extras.IocManager/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/osoykan/Autofac.Extras.IocManager</RepositoryUrl>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>Oguzhan Soykan</Authors>
     <Description>DynamicProxy integration for Autofac.Extras.IocManager</Description>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.4.0" />
+    <PackageReference Include="Autofac" Version="4.5.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.2.1" />
     <PackageReference Include="Castle.Core" Version="4.0.0" />
   </ItemGroup>

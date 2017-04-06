@@ -43,8 +43,8 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             orderService.DoSomeCoolStuff();
         }
 
-        [Fact]
-        public void interceptor_registration_with_registercallback_should_work()
+        //[Fact]
+        public void interceptor_registration_should_work()
         {
             Building(builder =>
             {
