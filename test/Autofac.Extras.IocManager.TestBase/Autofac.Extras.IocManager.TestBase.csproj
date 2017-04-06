@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.4.0" />
+    <PackageReference Include="Autofac" Version="4.5.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.2.1" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="3.50.2" />
     <PackageReference Include="AutoFixture.AutoNSubstitute" Version="3.50.2" />
