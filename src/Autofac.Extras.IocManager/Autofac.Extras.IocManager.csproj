@@ -9,6 +9,11 @@
     <Description>Provides abstractions to Autofac's registration and resolvings.</Description>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="bin\Release\net452\Autofac.Extras.IocManager.pdb">
       <PackagePath>lib/net452/</PackagePath>

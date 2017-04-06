@@ -8,6 +8,11 @@
     <PackageTags>Autofac;DynamicProxy;Resolve;Composition Root</PackageTags>
     <Description>DynamicProxy integration for Autofac.Extras.IocManager</Description>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Update="bin\Release\net452\Autofac.Extras.IocManager.DynamicProxy.pdb">
