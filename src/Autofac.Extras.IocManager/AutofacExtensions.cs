@@ -71,7 +71,7 @@ namespace Autofac.Extras.IocManager
                 builder.RegisterGeneric(typeToRegister)
                        .As(defaultGenerics.ToArray())
                        .AsSelf()
-                       .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
+                       .WithPropertyInjection()
                        .ApplyLifeStyle(typeof(TLifetime));
             }
             else
@@ -81,7 +81,7 @@ namespace Autofac.Extras.IocManager
                 builder.RegisterType(typeToRegister)
                        .As(defaults.ToArray())
                        .AsSelf()
-                       .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
+                       .WithPropertyInjection()
                        .ApplyLifeStyle(typeof(TLifetime));
             }
         }

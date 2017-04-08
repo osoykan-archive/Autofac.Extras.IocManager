@@ -25,6 +25,22 @@ namespace Autofac.Extras.IocManager
         }
 
         /// <summary>
+        ///     Injects properties as autowired with considering <see cref="DoNotInjectAttribute" />
+        /// </summary>
+        /// <typeparam name="TLimit">The type of the limit.</typeparam>
+        /// <typeparam name="TActivatorData">The type of the activator data.</typeparam>
+        /// <typeparam name="TRegistrationStyle">The type of the registration style.</typeparam>
+        /// <param name="registration">The registration.</param>
+        /// <param name="allowCircularPropertyInjection">if set to <c>true</c> [allow circular property injection].</param>
+        /// <returns></returns>
+        public static IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle>
+            WithPropertyInjection<TLimit, TActivatorData, TRegistrationStyle>(
+                this IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> registration, bool allowCircularPropertyInjection = true)
+        {
+            return registration.PropertiesAutowired(new DoNotInjectAttributePropertySelector(), allowCircularPropertyInjection);
+        }
+
+        /// <summary>
         ///     Determines whether the specified property information is injectable.
         /// </summary>
         /// <param name="propertySelector">The property selector.</param>
