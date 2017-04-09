@@ -20,7 +20,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             Building(builder =>
             {
                 builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += (sender, args) => { UnitOfWorkRegistrar(args); })));
-                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.DynamicProxy.Tests"))));
             });
 
             var orderService = The<IOrderAppService>();
@@ -35,7 +35,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             Building(builder =>
             {
                 builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += (sender, args) => { UnitOfWorkRegistrar(args); })));
-                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.DynamicProxy.Tests"))));
             });
 
             var orderService = The<IOrderAppService>();
@@ -69,7 +69,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             Building(builder =>
             {
                 builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += (sender, args) => { MultipleInterceptorRegistrar(args); })));
-                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.DynamicProxy.Tests"))));
             });
 
             var orderService = The<IOrderAppService>();

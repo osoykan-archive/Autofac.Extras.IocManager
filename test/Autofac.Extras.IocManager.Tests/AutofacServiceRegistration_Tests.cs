@@ -1,12 +1,10 @@
-﻿using Autofac.Extras.IocManager.TestBase;
-
-using Shouldly;
+﻿using Shouldly;
 
 using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class AutofacServiceRegistration_Tests : Test
+    public class AutofacServiceRegistration_Tests
     {
         private readonly ServiceRegistration _sut;
 

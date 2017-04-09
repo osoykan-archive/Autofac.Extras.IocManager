@@ -18,7 +18,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             Building(builder =>
             {
                 builder.RegisterServices(r => r.UseBuilder(cb => cb.RegisterCallback(registry => registry.Registered += RegistryOnRegistered)));
-                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.DynamicProxy.Tests"))));
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IMyModuleRepository<,>), typeof(MyModuleRepositoryBase<,>)));
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IMyModuleRepository<>), typeof(MyModuleRepositoryBase<>)));
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IRepository<,>), typeof(EfRepositoryBase<,>)));

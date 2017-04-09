@@ -16,7 +16,7 @@ namespace Autofac.Extras.IocManager.Tests
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IMyModuleRepository<,>), typeof(MyModuleRepositoryBase<,>)));
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IMyModuleRepository<>), typeof(MyModuleRepositoryBase<>)));
                 builder.RegisterServices(r => r.RegisterGeneric(typeof(IRepository<,>), typeof(EfRepositoryBase<,>)));
-                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly()));
+                builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests"))));
             });
 
             var myGenericResoulition = The<IRepository<MyClass, int>>();
