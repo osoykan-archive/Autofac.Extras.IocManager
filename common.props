@@ -1,7 +1,6 @@
 <Project>
   <PropertyGroup>
     <VersionPrefix>2.2.4</VersionPrefix>
-    <TargetFramework>net452</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <PackageIconUrl>https://raw.githubusercontent.com/osoykan/Stove/master/stove.png</PackageIconUrl>

@@ -141,7 +141,7 @@ namespace Autofac.Extras.IocManager
                 throw new ArgumentNullException(nameof(propertySelector));
             }
 
-            foreach (PropertyInfo propertyInfo in instance.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            foreach (PropertyInfo propertyInfo in instance.GetType().GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 if (!propertySelector.IsInjectable(propertyInfo, instance))
                 {
@@ -190,7 +190,7 @@ namespace Autofac.Extras.IocManager
         /// </returns>
         private static bool IsInjectable(IComponentContext context, PropertyInfo propertyInfo, Type propertyType)
         {
-            return (!propertyType.IsValueType || propertyType.IsEnum) && propertyInfo.GetIndexParameters().Length == 0 && context.IsRegistered(propertyType);
+            return (!propertyType.GetTypeInfo().IsValueType || propertyType.GetTypeInfo().IsEnum) && propertyInfo.GetIndexParameters().Length == 0 && context.IsRegistered(propertyType);
         }
     }
 }
