@@ -42,6 +42,7 @@ deploy:
 - provider: NuGet
   on:
     branch: master
+    branch: dotnet-standard
   api_key:
     secure: liSTqN52OJQy9fZJk6gubSgYBAy4EXcEPCDSCLJ/3T9cZufzpTwvBlGPLX+iP2n9
 
