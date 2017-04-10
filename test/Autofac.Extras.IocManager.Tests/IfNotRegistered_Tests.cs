@@ -1,5 +1,4 @@
 ﻿using Autofac.Extras.IocManager.TestBase;
-using Autofac.Features.ResolveAnything;
 
 using Shouldly;
 

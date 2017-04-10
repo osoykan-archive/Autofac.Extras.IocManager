@@ -15,7 +15,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void RegisterAssemblyByConvention_should_select_last_registration_as_default_implementation()
         {
-            Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
+            Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))); });
 
             var messageHandler = The<IMessageHandler>();
             messageHandler.ShouldBeAssignableTo<ThirdMessageHandler>();

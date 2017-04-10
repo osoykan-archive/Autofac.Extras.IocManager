@@ -15,11 +15,11 @@ namespace Autofac.Extras.IocManager.Tests
             MyClass3.CreateCount = 0;
 
             Building(builder =>
-                     {
-                         builder.RegisterServices(f => f.RegisterType<MyClass1>(Lifetime.LifetimeScope));
-                         builder.RegisterServices(f => f.RegisterType<MyClass2>(Lifetime.LifetimeScope));
-                         builder.RegisterServices(f => f.RegisterType<MyClass3>(Lifetime.LifetimeScope));
-                     });
+            {
+                builder.RegisterServices(f => f.RegisterType<MyClass1>(Lifetime.LifetimeScope));
+                builder.RegisterServices(f => f.RegisterType<MyClass2>(Lifetime.LifetimeScope));
+                builder.RegisterServices(f => f.RegisterType<MyClass3>(Lifetime.LifetimeScope));
+            });
         }
 
         [Fact]

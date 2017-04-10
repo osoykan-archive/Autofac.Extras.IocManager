@@ -13,10 +13,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ClosedTypesRegistration_ShouldWork()
         {
-            IResolver resolver = Building(builder =>
-            {
-                builder.RegisterServices(r => r.RegisterAssemblyAsClosedTypesOf(Assembly.GetExecutingAssembly(), typeof(IMyGenericInterface<>)));
-            });
+            IResolver resolver = Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyAsClosedTypesOf(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")), typeof(IMyGenericInterface<>))); });
 
             resolver.IsRegistered<MyBaseClass>().ShouldBe(true);
             resolver.IsRegistered<MyGeneric<SomeClass>>().ShouldBe(true);

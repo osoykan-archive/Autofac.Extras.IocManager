@@ -1,6 +1,4 @@
-﻿using Autofac.Extras.IocManager.TestBase;
-
-using Moq;
+﻿using NSubstitute;
 
 using Shouldly;
 
@@ -8,19 +6,21 @@ using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
 {
-    public class DecoratorService_Tests : TestFor<DecoratorService>
+    public class DecoratorService_Tests
     {
-        private readonly Mock<IResolverContext> _resolverContextMock;
+        private readonly IResolverContext _resolverContextMock;
+        public DecoratorService Sut;
 
         public DecoratorService_Tests()
         {
-            _resolverContextMock = new Mock<IResolverContext>();
+            _resolverContextMock = Substitute.For<IResolverContext>();
+            Sut = new DecoratorService();
         }
 
         [Fact]
         public void NoDecoratorReturnsSame()
         {
-            var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock.Object);
+            var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock);
 
             instance.ShouldNotBeNull();
             instance.ShouldBeAssignableTo<MagicClass>();
@@ -32,7 +32,7 @@ namespace Autofac.Extras.IocManager.Tests
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator1(s));
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator2(s));
 
-            var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock.Object);
+            var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock);
 
             instance.ShouldBeAssignableTo<MagicClassDecorator2>();
             var magicClassDecorator2 = (MagicClassDecorator2)instance;
@@ -47,7 +47,7 @@ namespace Autofac.Extras.IocManager.Tests
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator1(s));
             Sut.AddDecorator<IMagicInterface>((r, s) => new MagicClassDecorator2(s));
 
-            object instance = Sut.Decorate(typeof(IMagicInterface), new MagicClass(), _resolverContextMock.Object);
+            object instance = Sut.Decorate(typeof(IMagicInterface), new MagicClass(), _resolverContextMock);
 
             instance.ShouldBeAssignableTo<MagicClassDecorator2>();
             var magicClassDecorator2 = (MagicClassDecorator2)instance;
@@ -56,9 +56,13 @@ namespace Autofac.Extras.IocManager.Tests
             magicClassDecorator1.Inner.ShouldBeAssignableTo<MagicClass>();
         }
 
-        private interface IMagicInterface {}
+        private interface IMagicInterface
+        {
+        }
 
-        private class MagicClass : IMagicInterface {}
+        private class MagicClass : IMagicInterface
+        {
+        }
 
         private class MagicClassDecorator1 : IMagicInterface
         {

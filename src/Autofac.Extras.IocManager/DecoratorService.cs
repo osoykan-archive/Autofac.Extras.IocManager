@@ -25,7 +25,7 @@ namespace Autofac.Extras.IocManager
                 serviceType,
                 t =>
                 {
-                    MethodInfo genericMethodInfo = GetType()
+                    MethodInfo genericMethodInfo = GetType().GetTypeInfo()
                         .GetMethods()
                         .Single(mi => mi.IsGenericMethodDefinition && mi.Name == "Decorate");
                     MethodInfo methodInfo = genericMethodInfo.MakeGenericMethod(t);

@@ -28,7 +28,6 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-
             The<MyClass>().ResolveCount.ShouldBe(1);
         }
     }

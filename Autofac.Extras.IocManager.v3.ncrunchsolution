@@ -8,6 +8,9 @@
       <Value>test\Autofac.Extras.IocManager.DynamicProxy.Tests\Autofac.Extras.IocManager.DynamicProxy.Tests.csproj:net452</Value>
       <Value>test\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj:net452</Value>
       <Value>test\Autofac.Extras.IocManager.Tests\Autofac.Extras.IocManager.Tests.csproj:net452</Value>
+      <Value>test\Autofac.Extras.IocManager.DynamicProxy.Tests\Autofac.Extras.IocManager.DynamicProxy.Tests.csproj:netcoreapp1.0</Value>
+      <Value>test\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj:netcoreapp1.0</Value>
+      <Value>test\Autofac.Extras.IocManager.Tests\Autofac.Extras.IocManager.Tests.csproj:netcoreapp1.0</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

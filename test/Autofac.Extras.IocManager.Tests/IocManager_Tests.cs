@@ -84,12 +84,12 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void DefaultInterfaces_registration_should_work()
         {
-            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))));
 
             The<ICurrentUnitOfWorkProvider>().ShouldNotBeNull();
         }
 
-        internal class CallContextCurrentUnitOfWorkProvider : ICurrentUnitOfWorkProvider,ITransientDependency
+        internal class CallContextCurrentUnitOfWorkProvider : ICurrentUnitOfWorkProvider, ITransientDependency
         {
         }
 
