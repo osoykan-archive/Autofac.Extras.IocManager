@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-using Autofac.Builder;
-using Autofac.Features.Scanning;
-
 namespace Autofac.Extras.IocManager
 {
     public static class AutofacExtensions
@@ -17,28 +14,10 @@ namespace Autofac.Extras.IocManager
         /// <returns></returns>
         internal static IEnumerable<TypedParameter> GetTypedResolvingParameters(this object @this)
         {
-            foreach (PropertyInfo propertyInfo in @this.GetType().GetProperties())
+            foreach (PropertyInfo propertyInfo in @this.GetType().GetTypeInfo().GetProperties())
             {
                 yield return new TypedParameter(propertyInfo.PropertyType, propertyInfo.GetValue(@this, null));
             }
-        }
-
-        /// <summary>
-        ///     Finds and registers as DefaultInterfaces to container conventionally.
-        /// </summary>
-        /// <typeparam name="TLimit">The type of the limit.</typeparam>
-        /// <param name="registration">The registration.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">registration</exception>
-        public static IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle>
-            AsDefaultInterfacesWithSelf<TLimit>(this IRegistrationBuilder<TLimit, ScanningActivatorData, DynamicRegistrationStyle> registration)
-        {
-            if (registration == null)
-            {
-                throw new ArgumentNullException(nameof(registration));
-            }
-
-            return registration.As(t => (IEnumerable<Type>)t.GetDefaultInterfacesWithSelf());
         }
 
         /// <summary>
@@ -64,24 +43,24 @@ namespace Autofac.Extras.IocManager
         {
             List<Type> defaultInterfaces = typeToRegister.GetDefaultInterfaces().ToList();
 
-            if (typeToRegister.IsGenericTypeDefinition)
+            if (typeToRegister.GetTypeInfo().IsGenericTypeDefinition)
             {
-                List<Type> defaultGenerics = defaultInterfaces.Where(t => t.IsGenericType).ToList();
+                List<Type> defaultGenerics = defaultInterfaces.Where(t => t.GetTypeInfo().IsGenericType).ToList();
                 AddStartableIfPossible(typeToRegister, defaultGenerics);
                 builder.RegisterGeneric(typeToRegister)
                        .As(defaultGenerics.ToArray())
                        .AsSelf()
-                       .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
+                       .WithPropertyInjection()
                        .ApplyLifeStyle(typeof(TLifetime));
             }
             else
             {
-                List<Type> defaults = defaultInterfaces.Where(t => !t.IsGenericType).ToList();
+                List<Type> defaults = defaultInterfaces.Where(t => !t.GetTypeInfo().IsGenericType).ToList();
                 AddStartableIfPossible(typeToRegister, defaults);
                 builder.RegisterType(typeToRegister)
                        .As(defaults.ToArray())
                        .AsSelf()
-                       .PropertiesAutowired(new DoNotInjectAttributePropertySelector(), true)
+                       .WithPropertyInjection()
                        .ApplyLifeStyle(typeof(TLifetime));
             }
         }

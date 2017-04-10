@@ -1,4 +1,6 @@
 ﻿namespace Autofac.Extras.IocManager.Tests.FluentTests.FakeEventStore
 {
-    public interface IEventStore {}
+    public interface IEventStore
+    {
+    }
 }

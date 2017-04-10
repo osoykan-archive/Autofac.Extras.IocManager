@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 using Autofac.Builder;
 using Autofac.Core;
@@ -54,12 +55,12 @@ namespace Autofac.Extras.IocManager.DynamicProxy
         {
             Type type = e.Instance.GetType();
 
-            if (e.Component.Services.OfType<IServiceWithType>().Any(swt => !swt.ServiceType.IsVisible) || type.Namespace == "Castle.Proxies")
+            if (e.Component.Services.OfType<IServiceWithType>().Any(swt => !swt.ServiceType.GetTypeInfo().IsVisible) || type.Namespace == "Castle.Proxies")
             {
                 return;
             }
 
-            Type[] proxiedInterfaces = type.GetInterfaces().Where(i => i.IsVisible).ToArray();
+            Type[] proxiedInterfaces = type.GetInterfaces().Where(i => i.GetTypeInfo().IsVisible).ToArray();
             if (!proxiedInterfaces.Any())
             {
                 return;

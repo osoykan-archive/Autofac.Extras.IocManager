@@ -19,7 +19,7 @@ public class ModuleRegistration : IModuleRegistration
     ///     Initializes a new instance of the <see cref="ModuleRegistration" /> class.
     /// </summary>
     /// <param name="iocBuilder">The ioc builder.</param>
-    public ModuleRegistration(IocBuilder iocBuilder)
+    public ModuleRegistration(IIocBuilder iocBuilder)
     {
         this.iocBuilder = iocBuilder;
     }

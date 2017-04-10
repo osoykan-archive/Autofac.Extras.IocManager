@@ -21,7 +21,8 @@ namespace Autofac.Extras.IocManager.Tests
                                               _manager = args.Context.Resolver.Resolve<ISomeManager>();
                                               _manager.Shutdown();
                                           };
-                                      }).CreateResolver();
+                                      })
+                                      .CreateResolver();
         }
 
         [Fact]

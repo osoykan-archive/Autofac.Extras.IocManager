@@ -12,7 +12,7 @@ namespace Autofac.Extras.IocManager.Tests
     {
         public DoNotInject_Tests()
         {
-            Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())); });
+            Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))); });
         }
 
         [Fact]

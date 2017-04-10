@@ -13,7 +13,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void StartableShouldWork()
         {
-            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))));
 
             var startableDependency = The<IStartableDependency>();
             startableDependency.StartCallExecuted.ShouldBe(true);
@@ -22,7 +22,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void Startable_ShouldInject_Any_Dependency()
         {
-            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))));
 
             var startableDependency = The<IStartableDependency2>();
 
@@ -36,7 +36,7 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void ConcreteStartable_should_instantiatable()
         {
-            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly())));
+            Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))));
 
             var concreteStartable = The<ConcreteStartable>();
 
