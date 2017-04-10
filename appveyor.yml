@@ -44,11 +44,6 @@ deploy:
     branch: master
   api_key:
     secure: liSTqN52OJQy9fZJk6gubSgYBAy4EXcEPCDSCLJ/3T9cZufzpTwvBlGPLX+iP2n9
-- provider: NuGet
-  on:
-    branch: dotnet-standard
-  api_key:
-    secure: liSTqN52OJQy9fZJk6gubSgYBAy4EXcEPCDSCLJ/3T9cZufzpTwvBlGPLX+iP2n9
 
 artifacts:
 - path: '**\.nupkg/'
