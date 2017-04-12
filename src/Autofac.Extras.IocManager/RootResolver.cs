@@ -32,11 +32,16 @@ namespace Autofac.Extras.IocManager
         /// </summary>
         public override void Dispose()
         {
-            OnDisposing?.Invoke(this, new OnDisposingEventArgs(this));
-            base.Dispose();
-            Container.Dispose();
-
-            if (OnDisposing != null) { OnDisposing -= OnDisposing; }
+            try
+            {
+                OnDisposing?.Invoke(this, new OnDisposingEventArgs(this));
+            }
+            finally
+            {
+                base.Dispose();
+                Container.Dispose();
+                if (OnDisposing != null) { OnDisposing -= OnDisposing; }
+            }
         }
     }
 }
