@@ -1,11 +1,11 @@
-Autofac.Extras.IocManager [![Build status](https://ci.appveyor.com/api/projects/status/udvakwrxb3nhb25d?svg=true)](https://ci.appveyor.com/project/osoykan/autofac-extras-iocmanager)  [![Coverage Status](https://coveralls.io/repos/github/osoykan/Autofac.Extras.IocManager/badge.svg?branch=dev)](https://coveralls.io/github/osoykan/Autofac.Extras.IocManager?branch=dev)
+Autofac.Extras.IocManager [![Build status](https://ci.appveyor.com/api/projects/status/udvakwrxb3nhb25d?svg=true)](https://ci.appveyor.com/project/osoykan/autofac-extras-iocmanager)  [![Coverage Status](https://coveralls.io/repos/github/osoykan/Autofac.Extras.IocManager/badge.svg?branch=master)](https://coveralls.io/github/osoykan/Autofac.Extras.IocManager?branch=master)
 =====================
 
 
 |Package|Status|
 |:-:|:-:|
-|Autofac.Extras.IocManager| [![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager) [![NuGet Pre Release](https://img.shields.io/nuget/vpre/Autofac.Extras.IocManager.svg)](https://www.nuget.org/packages/Autofac.Extras.IocManager/)|
-|Autofac.Extras.IocManager.DynamicProxy|[![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy) [![NuGet Pre Release](https://img.shields.io/nuget/vpre/Autofac.Extras.IocManager.svg)](https://www.nuget.org/packages/Autofac.Extras.IocManager.DynamicProxy/)|
+|Autofac.Extras.IocManager| [![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager)|
+|Autofac.Extras.IocManager.DynamicProxy|[![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy)|
 
 Autofac.Extras.IocManager allows Autofac Container to be portable. It also provides entire resolve methods which belong to Autofac Container and also provides conventional registration mechanism. IocManager is the best alternative to [common Service Locator anti-pattern](http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/).
 
