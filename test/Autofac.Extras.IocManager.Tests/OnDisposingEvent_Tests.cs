@@ -49,13 +49,13 @@ namespace Autofac.Extras.IocManager.Tests
                                                            manager = args.Context.Resolver.Resolve<ISomeManager>();
                                                            manager.Shutdown();
 
-                                                           throw new ApplicationException();
+                                                           throw new HandlerException();
                                                        };
                                                    })
                                                    .CreateResolver();
 
             Action act = () => rootResolver.Dispose();
-            act.ShouldThrow<ApplicationException>();
+            act.ShouldThrow<HandlerException>();
 
             Action containerDisposedAction = () => rootResolver.Container.Resolve<ISomeManager>();
             containerDisposedAction.ShouldThrow<ObjectDisposedException>();
@@ -64,6 +64,10 @@ namespace Autofac.Extras.IocManager.Tests
             rootResolverDisposedAction.ShouldThrow<ObjectDisposedException>();
 
             manager.ShutdownCount.ShouldBe(1);
+        }
+
+        public class HandlerException : Exception
+        {
         }
 
         public interface ISomeManager
