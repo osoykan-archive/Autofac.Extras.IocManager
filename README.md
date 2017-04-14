@@ -2,10 +2,10 @@ Autofac.Extras.IocManager [![Build status](https://ci.appveyor.com/api/projects/
 =====================
 
 
-|Package|Status|
-|:-:|:-:|
-|Autofac.Extras.IocManager| [![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager)|
-|Autofac.Extras.IocManager.DynamicProxy|[![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy)|
+|Package|Status|Supported Platforms|
+|:-:|:-:|:-:|
+|Autofac.Extras.IocManager| [![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager)|.NET 4.5.2, .NET Standard 1.6|
+|Autofac.Extras.IocManager.DynamicProxy|[![NuGet version](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy.svg)](https://badge.fury.io/nu/Autofac.Extras.IocManager.DynamicProxy)|.NET 4.5.2, .NET Standard 1.6|
 
 Autofac.Extras.IocManager allows Autofac Container to be portable. It also provides entire resolve methods which belong to Autofac Container and also provides conventional registration mechanism. IocManager is the best alternative to [common Service Locator anti-pattern](http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/).
 
