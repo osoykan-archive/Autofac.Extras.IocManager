@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj" />
     <ProjectReference Include="..\..\src\Autofac.Extras.IocManager.DynamicProxy\Autofac.Extras.IocManager.DynamicProxy.csproj" />
-    <PackageReference Include="Autofac" Version="4.5.0" />
+    <PackageReference Include="Autofac" Version="4.6.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.2.1" />
   </ItemGroup>
 
