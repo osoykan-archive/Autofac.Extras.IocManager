@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 
 using Autofac.Extras.IocManager.TestBase;
 
@@ -15,20 +13,32 @@ namespace Autofac.Extras.IocManager.Tests
 		[Fact]
 		public void test()
 		{
-			var dbContexts = new List<Type>();
-
 			Building(builder =>
 			{
 				builder.RegisterServices(r =>
 				{
 					r.OnConventionalRegistering += (sender, args) => { };
 
-					r.OnRegistering += (sender, args) =>
+					r.OnRegistering += (sender, args) => { args.ContainerBuilder.RegisterType<CStoveDbContext>().As<IStoveDbContext>().AsSelf(); };
+
+					r.RegisterAssemblyByConvention(typeof(LastChanceOfRegistrationEvent_Tests).GetTypeInfo().Assembly);
+				});
+			});
+
+			LocalIocManager.Resolve<CStoveDbContext>().ShouldNotBeNull();
+		}
+
+		[Fact]
+		public void before_registration_completed_should_register_last_chance()
+		{
+			Building(builder =>
+			{
+				builder.RegisterServices(r =>
+				{
+					r.BeforeRegistrationCompleted += (sender, args) =>
 					{
 						args.ContainerBuilder.RegisterType<CStoveDbContext>().As<IStoveDbContext>().AsSelf();
 					};
-
-					r.RegisterAssemblyByConvention(typeof(LastChanceOfRegistrationEvent_Tests).GetTypeInfo().Assembly);
 				});
 			});
 
