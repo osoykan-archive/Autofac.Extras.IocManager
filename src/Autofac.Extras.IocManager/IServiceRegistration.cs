@@ -27,6 +27,11 @@ namespace Autofac.Extras.IocManager
 		event EventHandler<OnRegisteringEventArgs> OnRegistering;
 
 		/// <summary>
+		///     Occurs when [before registration completed].
+		/// </summary>
+		event EventHandler<BeforeRegistrationCompletedEventArgs> BeforeRegistrationCompleted;
+
+		/// <summary>
 		///     Registers the specified lifetime.
 		/// </summary>
 		/// <typeparam name="TService1">The type of the service1.</typeparam>

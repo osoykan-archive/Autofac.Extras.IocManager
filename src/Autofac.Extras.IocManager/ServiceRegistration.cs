@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -65,6 +64,11 @@ namespace Autofac.Extras.IocManager
 		///     Occurs when [on registering].
 		/// </summary>
 		public event EventHandler<OnRegisteringEventArgs> OnRegistering;
+
+		/// <summary>
+		///     Occurs when [before registration completed].
+		/// </summary>
+		public event EventHandler<BeforeRegistrationCompletedEventArgs> BeforeRegistrationCompleted;
 
 		/// <summary>
 		///     Registers the specified lifetime.
@@ -354,14 +358,14 @@ namespace Autofac.Extras.IocManager
 				.IfNotRegistered(serviceType);
 
 			_containerBuilder.Register(c => c.Resolve(implementationType))
-							 .As(serviceType)
-							 .WithPropertyInjection()
-							 .OnActivating(args =>
-							 {
-								 object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
-								 args.ReplaceInstance(instance);
-							 })
-							 .IfNotRegistered(serviceType);
+			                 .As(serviceType)
+			                 .WithPropertyInjection()
+			                 .OnActivating(args =>
+			                 {
+				                 object instance = _decoratorService.Decorate(args.Instance, new ResolverContext(new Resolver(args.Context)));
+				                 args.ReplaceInstance(instance);
+			                 })
+			                 .IfNotRegistered(serviceType);
 
 			registration.ApplyLifeStyle(lifetime);
 		}
@@ -596,6 +600,8 @@ namespace Autofac.Extras.IocManager
 		/// <returns></returns>
 		public IRootResolver CreateResolver(bool ignoreStartableComponents = false)
 		{
+			BeforeRegistrationCompleted?.Invoke(this, new BeforeRegistrationCompletedEventArgs(_containerBuilder));
+
 			IContainer container = _containerBuilder.Build(ignoreStartableComponents ? ContainerBuildOptions.IgnoreStartableComponents : ContainerBuildOptions.None);
 			_rootResolver = new RootResolver(container);
 
@@ -654,10 +660,10 @@ namespace Autofac.Extras.IocManager
 				AddStartableIfPossible(typeToRegister, defaultGenerics);
 				OnRegistering?.Invoke(this, new OnRegisteringEventArgs(_containerBuilder, typeToRegister, defaultGenerics.ToArray(), FindLifetime(typeof(TLifetime))));
 				builder.RegisterGeneric(typeToRegister)
-					   .As(defaultGenerics.ToArray())
-					   .AsSelf()
-					   .WithPropertyInjection()
-					   .ApplyLifeStyle(typeof(TLifetime));
+				       .As(defaultGenerics.ToArray())
+				       .AsSelf()
+				       .WithPropertyInjection()
+				       .ApplyLifeStyle(typeof(TLifetime));
 			}
 			else
 			{
@@ -665,10 +671,10 @@ namespace Autofac.Extras.IocManager
 				AddStartableIfPossible(typeToRegister, defaults);
 				OnRegistering?.Invoke(this, new OnRegisteringEventArgs(_containerBuilder, typeToRegister, defaults.ToArray(), FindLifetime(typeof(TLifetime))));
 				builder.RegisterType(typeToRegister)
-					   .As(defaults.ToArray())
-					   .AsSelf()
-					   .WithPropertyInjection()
-					   .ApplyLifeStyle(typeof(TLifetime));
+				       .As(defaults.ToArray())
+				       .AsSelf()
+				       .WithPropertyInjection()
+				       .ApplyLifeStyle(typeof(TLifetime));
 			}
 		}
 
