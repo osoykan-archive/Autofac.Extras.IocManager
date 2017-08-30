@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{22C28F63-ABA1-4AC8-A3F8-BE2513E7F11D}"
 EndProject
@@ -25,6 +25,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Extras.IocManager.DynamicProxy.Tests", "test\Autofac.Extras.IocManager.DynamicProxy.Tests\Autofac.Extras.IocManager.DynamicProxy.Tests.csproj", "{8FCAF277-E8E0-4ECE-B6D3-7135713C4CB8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Extras.IocManager.TestBase", "test\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj", "{00AD6263-BE77-4E7A-AA86-5F07182AE153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Extras.IocManager.MsDependencyInjection.Tests", "test\Autofac.Extras.IocManager.MsDependencyInjection.Tests\Autofac.Extras.IocManager.MsDependencyInjection.Tests.csproj", "{F2259981-F5D3-45CD-BB6B-74E93F6C2288}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{00AD6263-BE77-4E7A-AA86-5F07182AE153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00AD6263-BE77-4E7A-AA86-5F07182AE153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00AD6263-BE77-4E7A-AA86-5F07182AE153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2259981-F5D3-45CD-BB6B-74E93F6C2288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2259981-F5D3-45CD-BB6B-74E93F6C2288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2259981-F5D3-45CD-BB6B-74E93F6C2288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2259981-F5D3-45CD-BB6B-74E93F6C2288}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,5 +68,9 @@ Global
 		{9B2B300B-5A03-4F76-8C8E-4A174B47F7AA} = {22C28F63-ABA1-4AC8-A3F8-BE2513E7F11D}
 		{8FCAF277-E8E0-4ECE-B6D3-7135713C4CB8} = {C763B71A-6296-412A-8063-385C8DEF0FE3}
 		{00AD6263-BE77-4E7A-AA86-5F07182AE153} = {C763B71A-6296-412A-8063-385C8DEF0FE3}
+		{F2259981-F5D3-45CD-BB6B-74E93F6C2288} = {C763B71A-6296-412A-8063-385C8DEF0FE3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2290DD7-8594-4CD9-A61F-4215AE81B7B1}
 	EndGlobalSection
 EndGlobal

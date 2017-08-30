@@ -21,9 +21,7 @@ namespace Autofac.Extras.IocManager.Tests
             typedParameters.FirstOrDefault(x => x.Type == typeof(string)).ShouldNotBeNull();
             typedParameters.FirstOrDefault(x => x.Type == typeof(Type)).ShouldNotBeNull();
             typedParameters.FirstOrDefault(x => x.Type == typeof(string)).Value.ShouldBe("someString");
-            ;
             typedParameters.FirstOrDefault(x => x.Type == typeof(Type)).Value.ShouldBe(typeof(MyDbContext));
-            ;
         }
 
         private class MyDbContext
