@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Common;
+using System.Linq;
 
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.IocManager.TestBase;
@@ -47,12 +48,16 @@ namespace Autofac.Extras.IocManager.MsDependencyInjection.Tests
 
 			using (ILifetimeScope beginLifetimeScope = serviceProvider.GetService<ILifetimeScope>().BeginLifetimeScope(
 				"message",
-				ctx =>
-				{
-					ctx.RegisterType<UserCreatedConsumer>().AsSelf().InstancePerDependency();
-				}))
+				ctx => { ctx.RegisterType<UserCreatedConsumer>().AsSelf().InstancePerDependency(); }))
 			{
-				beginLifetimeScope.Resolve<UserCreatedConsumer>().Consume();
+				using (var scopeResolver = beginLifetimeScope.Resolve<IScopeResolver>())
+				{
+					Type service = scopeResolver.GetRegisteredServices().FirstOrDefault(x => x == typeof(IStoveDbContextConfigurer<ContextBoundObject>));
+					scopeResolver.IsRegistered<IStoveDbContextConfigurer<ContextBoundObject>>().Should().Be(true);
+					service = scopeResolver.GetRegisteredServices().FirstOrDefault(x => x == typeof(IStoveDbContextConfigurer<ContextBoundObject>));
+					scopeResolver.Resolve<ILifetimeScope>().IsRegistered<IStoveDbContextConfigurer<ContextBoundObject>>().Should().Be(true);
+					scopeResolver.Resolve<UserCreatedConsumer>().Consume();
+				}
 			}
 		}
 	}
