@@ -13,18 +13,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj" />
     <ProjectReference Include="..\..\src\Autofac.Extras.IocManager.DynamicProxy\Autofac.Extras.IocManager.DynamicProxy.csproj" />
-    <PackageReference Include="Autofac" Version="4.6.1" />
-    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.2.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="FakeItEasy" Version="4.0.0" />
+    <PackageReference Include="NSubstitute" Version="2.0.3" />
+    <PackageReference Include="Shouldly" Version="3.0.0-beta0003" />
+    <PackageReference Include="xunit" Version="2.3.0-beta4-build3742" />
   </ItemGroup>
 
 </Project>
