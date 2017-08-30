@@ -3,11 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netcoreapp1.0</TargetFrameworks>
     <AssemblyName>Autofac.Extras.IocManager.Tests</AssemblyName>
-    <PackageId>Autofac.Extras.IocManager.Tests</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +11,7 @@
     <PackageReference Include="Shouldly" Version="3.0.0-beta0003" />
     <PackageReference Include="xunit" Version="2.3.0-beta4-build3742" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta4-build3742" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
   </ItemGroup>
 
   <ItemGroup>

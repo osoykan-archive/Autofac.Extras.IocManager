@@ -2,10 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.csproj" />
     <ProjectReference Include="..\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
   </ItemGroup>
 
 </Project>

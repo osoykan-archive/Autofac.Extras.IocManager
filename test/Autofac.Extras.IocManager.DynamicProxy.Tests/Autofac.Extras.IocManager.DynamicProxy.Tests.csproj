@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netcoreapp1.0</TargetFrameworks>
     <AssemblyName>Autofac.Extras.IocManager.DynamicProxy.Tests</AssemblyName>
-    <PackageId>Autofac.Extras.IocManager.DynamicProxy.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -17,6 +16,7 @@
     <PackageReference Include="NSubstitute" Version="2.0.3" />
     <PackageReference Include="Shouldly" Version="3.0.0-beta0003" />
     <PackageReference Include="xunit" Version="2.3.0-beta4-build3742" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
   </ItemGroup>
 
 </Project>
