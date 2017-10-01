@@ -6,16 +6,16 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
-    <PackageReference Include="FluentAssertions" Version="5.0.0-beta0001" />
+    <PackageReference Include="FluentAssertions" Version="5.0.0-beta0002" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
-    <PackageReference Include="xunit" Version="2.3.0-beta4-build3742" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta4-build3742" />
+    <PackageReference Include="xunit" Version="2.3.0-beta5-build3769" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta5-build3769" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Autofac.Extras.IocManager\Autofac.Extras.IocManager.csproj" />
     <ProjectReference Include="..\Autofac.Extras.IocManager.TestBase\Autofac.Extras.IocManager.TestBase.csproj" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170923-02" />
   </ItemGroup>
 
 </Project>
