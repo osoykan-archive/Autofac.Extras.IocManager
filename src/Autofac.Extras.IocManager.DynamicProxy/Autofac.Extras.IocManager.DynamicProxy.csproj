@@ -4,7 +4,7 @@
   
   <PropertyGroup>
     <AssemblyName>Autofac.Extras.IocManager.DynamicProxy</AssemblyName>
-    <TargetFrameworks>net452;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
     <PackageId>Autofac.Extras.IocManager.DynamicProxy</PackageId>
     <PackageTags>Autofac;DynamicProxy;Resolve;Composition Root</PackageTags>
     <Description>DynamicProxy integration for Autofac.Extras.IocManager</Description>

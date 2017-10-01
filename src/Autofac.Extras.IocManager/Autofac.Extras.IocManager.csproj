@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <AssemblyName>Autofac.Extras.IocManager</AssemblyName>
-    <TargetFrameworks>net452;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
     <PackageId>Autofac.Extras.IocManager</PackageId>
     <PackageTags>Autofac;Resolve;Composition Root;Service Locator</PackageTags>
     <Description>Provides abstractions to Autofac's registration and resolvings.</Description>

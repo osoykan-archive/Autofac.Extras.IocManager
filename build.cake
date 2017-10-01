@@ -26,14 +26,13 @@ var testProjects = new List<Tuple<string, string[]>>
                 {
                     new Tuple<string, string[]>("Autofac.Extras.IocManager.Tests", new[] { "net452", "netcoreapp1.0" }),
                     new Tuple<string, string[]>("Autofac.Extras.IocManager.DynamicProxy.Tests", new[] { "netcoreapp1.0" }),
-                    new Tuple<string, string[]>("Autofac.Extras.IocManager.MsDependencyInjection.Tests", new[] { "netcoreapp2.0" }),
-
+                    new Tuple<string, string[]>("Autofac.Extras.IocManager.MsDependencyInjection.Tests", new[] { "netcoreapp2.0" })
                 };
                       
 
 var nupkgPath = "nupkg";
 var nupkgRegex = $"**/{projectName}*.nupkg";
-var nugetPath = toolpath + "/NuGet.CommandLine/tools/nuget.exe";
+var nugetPath = toolpath + "/nuget.exe";
 var nugetQueryUrl = "https://www.nuget.org/api/v2/";
 var nugetPushUrl = "https://www.nuget.org/api/v2/package";
 var NUGET_PUSH_SETTINGS = new NuGetPushSettings
