@@ -24,8 +24,8 @@ var nugetApiKey = EnvironmentVariable("nugetApiKey");
 
 var testProjects = new List<Tuple<string, string[]>>
                 {
-                    new Tuple<string, string[]>("Autofac.Extras.IocManager.Tests", new[] { "net452", "netcoreapp1.0" }),
-                    new Tuple<string, string[]>("Autofac.Extras.IocManager.DynamicProxy.Tests", new[] { "netcoreapp1.0" }),
+                    new Tuple<string, string[]>("Autofac.Extras.IocManager.Tests", new[] { "net452", "netcoreapp2.0" }),
+                    new Tuple<string, string[]>("Autofac.Extras.IocManager.DynamicProxy.Tests", new[] { "netcoreapp2.0" }),
                     new Tuple<string, string[]>("Autofac.Extras.IocManager.MsDependencyInjection.Tests", new[] { "netcoreapp2.0" })
                 };
                       
