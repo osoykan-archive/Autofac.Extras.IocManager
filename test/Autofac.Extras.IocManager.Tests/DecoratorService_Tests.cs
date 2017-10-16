@@ -1,6 +1,6 @@
-﻿using NSubstitute;
+﻿using FluentAssertions;
 
-using Shouldly;
+using NSubstitute;
 
 using Xunit;
 
@@ -22,8 +22,8 @@ namespace Autofac.Extras.IocManager.Tests
         {
             var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock);
 
-            instance.ShouldNotBeNull();
-            instance.ShouldBeAssignableTo<MagicClass>();
+            instance.Should().NotBeNull();
+            instance.Should().BeAssignableTo<MagicClass>();
         }
 
         [Fact]
@@ -34,11 +34,11 @@ namespace Autofac.Extras.IocManager.Tests
 
             var instance = Sut.Decorate<IMagicInterface>(new MagicClass(), _resolverContextMock);
 
-            instance.ShouldBeAssignableTo<MagicClassDecorator2>();
+            instance.Should().BeAssignableTo<MagicClassDecorator2>();
             var magicClassDecorator2 = (MagicClassDecorator2)instance;
-            magicClassDecorator2.Inner.ShouldBeAssignableTo<MagicClassDecorator1>();
+            magicClassDecorator2.Inner.Should().BeAssignableTo<MagicClassDecorator1>();
             var magicClassDecorator1 = (MagicClassDecorator1)magicClassDecorator2.Inner;
-            magicClassDecorator1.Inner.ShouldBeAssignableTo<MagicClass>();
+            magicClassDecorator1.Inner.Should().BeAssignableTo<MagicClass>();
         }
 
         [Fact]
@@ -49,11 +49,11 @@ namespace Autofac.Extras.IocManager.Tests
 
             object instance = Sut.Decorate(typeof(IMagicInterface), new MagicClass(), _resolverContextMock);
 
-            instance.ShouldBeAssignableTo<MagicClassDecorator2>();
+            instance.Should().BeAssignableTo<MagicClassDecorator2>();
             var magicClassDecorator2 = (MagicClassDecorator2)instance;
-            magicClassDecorator2.Inner.ShouldBeAssignableTo<MagicClassDecorator1>();
+            magicClassDecorator2.Inner.Should().BeAssignableTo<MagicClassDecorator1>();
             var magicClassDecorator1 = (MagicClassDecorator1)magicClassDecorator2.Inner;
-            magicClassDecorator1.Inner.ShouldBeAssignableTo<MagicClass>();
+            magicClassDecorator1.Inner.Should().BeAssignableTo<MagicClass>();
         }
 
         private interface IMagicInterface

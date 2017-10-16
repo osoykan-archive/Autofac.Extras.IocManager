@@ -2,9 +2,9 @@
 
 using FakeItEasy;
 
-using NSubstitute;
+using FluentAssertions;
 
-using Shouldly;
+using NSubstitute;
 
 using Xunit;
 
@@ -56,8 +56,8 @@ namespace Autofac.Extras.IocManager.Tests
             Sut.Register(moduleB);
 
             // Assert
-            Sut.GetModule<IModuleA>().ShouldBe(moduleA);
-            Sut.GetModule<IModuleB>().ShouldBe(moduleB);
+            Sut.GetModule<IModuleA>().Should().Be(moduleA);
+            Sut.GetModule<IModuleB>().Should().Be(moduleB);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Autofac.Extras.IocManager.Tests
             IModuleB moduleB;
 
             // Act
-            Sut.TryGetModule(out moduleB).ShouldBeFalse();
+            Sut.TryGetModule(out moduleB).Should().BeFalse();
         }
 
         [Fact]
@@ -92,10 +92,10 @@ namespace Autofac.Extras.IocManager.Tests
             IModuleA fetchedModuleA;
 
             // Act
-            Sut.TryGetModule(out fetchedModuleA).ShouldBeTrue();
+            Sut.TryGetModule(out fetchedModuleA).Should().BeTrue();
 
             // Assert
-            fetchedModuleA.ShouldBe(moduleA);
+            fetchedModuleA.Should().Be(moduleA);
         }
 
         public interface IModuleA : IModule

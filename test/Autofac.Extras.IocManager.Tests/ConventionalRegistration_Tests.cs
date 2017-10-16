@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -16,19 +16,19 @@ namespace Autofac.Extras.IocManager.Tests
             Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))); });
 
             var myTransientInstance = The<IMyTransientClass>();
-            myTransientInstance.ShouldNotBeNull();
+            myTransientInstance.Should().NotBeNull();
             myTransientInstance = The<MyTransientClass>();
-            myTransientInstance.ShouldNotBeNull();
+            myTransientInstance.Should().NotBeNull();
 
             var mySingletonInstance = The<IMySingletonClass>();
-            mySingletonInstance.ShouldNotBeNull();
+            mySingletonInstance.Should().NotBeNull();
             mySingletonInstance = The<MySingletonClass>();
-            mySingletonInstance.ShouldNotBeNull();
+            mySingletonInstance.Should().NotBeNull();
 
             var myLifeTimeScopeInstance = The<IMyLifeTimeScopeClass>();
-            myLifeTimeScopeInstance.ShouldNotBeNull();
+            myLifeTimeScopeInstance.Should().NotBeNull();
             myLifeTimeScopeInstance = The<MyLifeTimeScopeClass>();
-            myLifeTimeScopeInstance.ShouldNotBeNull();
+            myLifeTimeScopeInstance.Should().NotBeNull();
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace Autofac.Extras.IocManager.Tests
             Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))); });
 
             var genericHumanInstance = The<IMyGenericClass<MyTransientClass>>();
-            genericHumanInstance.Object.ShouldBeAssignableTo(typeof(MyTransientClass));
+            genericHumanInstance.Object.Should().BeAssignableTo(typeof(MyTransientClass));
         }
 
         internal class MyTransientClass : IMyTransientClass, ITransientDependency

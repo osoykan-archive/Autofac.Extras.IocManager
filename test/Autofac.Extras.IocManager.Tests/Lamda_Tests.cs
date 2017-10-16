@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -18,7 +18,7 @@ namespace Autofac.Extras.IocManager.Tests
 		[Fact]
 		public void funcs_are_registered()
 		{
-			The<Func<string, string>>().ShouldNotBeNull();
+			The<Func<string, string>>().Should().NotBeNull();
 
 			using (ILifetimeScope scope = The<ILifetimeScope>().BeginLifetimeScope("message", x => x.Register<Func<int, int>>(ctx => (i =>
 			{
@@ -26,11 +26,11 @@ namespace Autofac.Extras.IocManager.Tests
 				return i;
 			}))))
 			{
-				scope.Resolve<Func<int, int>>().Invoke(4).ShouldBe(16);
+				scope.Resolve<Func<int, int>>().Invoke(4).Should().Be(16);
 
 				using (ILifetimeScope beginLifetimeScope = scope.BeginLifetimeScope())
 				{
-					beginLifetimeScope.Resolve<Func<string, string>>().Invoke("A").ShouldBe("a");
+					beginLifetimeScope.Resolve<Func<string, string>>().Invoke("A").Should().Be("a");
 				}
 			}
 		}

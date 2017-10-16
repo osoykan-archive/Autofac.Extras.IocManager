@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -16,7 +16,7 @@ namespace Autofac.Extras.IocManager.Tests
             Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))));
 
             var startableDependency = The<IStartableDependency>();
-            startableDependency.StartCallExecuted.ShouldBe(true);
+            startableDependency.StartCallExecuted.Should().Be(true);
         }
 
         [Fact]
@@ -26,11 +26,11 @@ namespace Autofac.Extras.IocManager.Tests
 
             var startableDependency = The<IStartableDependency2>();
 
-            startableDependency.StartCallExecuted.ShouldBe(true);
-            startableDependency.GetIocManager().ShouldNotBeNull();
-            startableDependency.GetIocManager().ShouldBeSameAs(LocalIocManager);
-            startableDependency.IocResolver.ShouldNotBeNull();
-            startableDependency.IocResolver.ShouldBeSameAs(LocalIocManager);
+            startableDependency.StartCallExecuted.Should().Be(true);
+            startableDependency.GetIocManager().Should().NotBeNull();
+            startableDependency.GetIocManager().Should().BeSameAs(LocalIocManager);
+            startableDependency.IocResolver.Should().NotBeNull();
+            startableDependency.IocResolver.Should().BeSameAs(LocalIocManager);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Autofac.Extras.IocManager.Tests
 
             var concreteStartable = The<ConcreteStartable>();
 
-            concreteStartable.StartCallExecuted.ShouldBe(true);
+            concreteStartable.StartCallExecuted.Should().Be(true);
         }
 
         internal class ConcreteStartable : MyConcreteStartable, ISingletonDependency, IStartable

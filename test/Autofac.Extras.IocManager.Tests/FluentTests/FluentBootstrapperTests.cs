@@ -5,7 +5,7 @@ using Autofac.Extras.IocManager.Tests.FluentTests.FakeEventStore;
 using Autofac.Extras.IocManager.Tests.FluentTests.FakeNLog;
 using Autofac.Extras.IocManager.Tests.FluentTests.FakeRabbitMQ;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -24,13 +24,13 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
                        .RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests"))));
             });
 
-            resolver.IsRegistered<IEventStore>().ShouldBe(true);
-            resolver.IsRegistered<ILogger>().ShouldBe(true);
-            resolver.IsRegistered<IBus>().ShouldBe(true);
+            resolver.IsRegistered<IEventStore>().Should().Be(true);
+            resolver.IsRegistered<ILogger>().Should().Be(true);
+            resolver.IsRegistered<IBus>().Should().Be(true);
 
-            LocalIocManager.IsRegistered<IEventStore>().ShouldBe(true);
-            LocalIocManager.IsRegistered<ILogger>().ShouldBe(true);
-            LocalIocManager.IsRegistered<IBus>().ShouldBe(true);
+            LocalIocManager.IsRegistered<IEventStore>().Should().Be(true);
+            LocalIocManager.IsRegistered<ILogger>().Should().Be(true);
+            LocalIocManager.IsRegistered<IBus>().Should().Be(true);
         }
 
         [Fact]
@@ -39,9 +39,9 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
             IResolver resolver = Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))); });
 
             var injectable = resolver.Resolve<InjectableIocResolver>();
-            injectable.ShouldNotBeNull();
-            injectable.GetResolver().ShouldBeAssignableTo<IResolver>();
-            injectable.GetScopeResolver().ShouldBeAssignableTo<IScopeResolver>();
+            injectable.Should().NotBeNull();
+            injectable.GetResolver().Should().BeAssignableTo<IResolver>();
+            injectable.GetScopeResolver().Should().BeAssignableTo<IScopeResolver>();
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
 
             bool moduleBasedEventStore = resolver.IsRegistered<IModuleBasedEventStore>();
 
-            moduleBasedEventStore.ShouldNotBeNull();
+            moduleBasedEventStore.Should();
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Autofac.Extras.IocManager.Tests.FluentTests
 
             bool moduleBasedEventStore = resolver.IsRegistered<IModuleBasedEventStore>();
 
-            moduleBasedEventStore.ShouldNotBeNull();
+            moduleBasedEventStore.Should().Be(true);
         }
 
         internal class InjectableIocResolver : ITransientDependency

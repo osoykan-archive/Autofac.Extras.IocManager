@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -15,9 +15,9 @@ namespace Autofac.Extras.IocManager.Tests
         {
             IResolver resolver = Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyAsClosedTypesOf(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")), typeof(IMyGenericInterface<>))); });
 
-            resolver.IsRegistered<MyBaseClass>().ShouldBe(true);
-            resolver.IsRegistered<MyGeneric<SomeClass>>().ShouldBe(true);
-            resolver.IsRegistered<IMyGenericInterface<SomeClass>>().ShouldBe(true);
+            resolver.IsRegistered<MyBaseClass>().Should().Be(true);
+            resolver.IsRegistered<MyGeneric<SomeClass>>().Should().Be(true);
+            resolver.IsRegistered<IMyGenericInterface<SomeClass>>().Should().Be(true);
         }
 
         internal class SomeClass

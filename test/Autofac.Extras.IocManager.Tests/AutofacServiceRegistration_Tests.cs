@@ -1,4 +1,4 @@
-﻿using Shouldly;
+﻿using FluentAssertions;
 
 using Xunit;
 
@@ -42,8 +42,8 @@ namespace Autofac.Extras.IocManager.Tests
             IRootResolver resolver = _sut.CreateResolver();
             var magicInterface = resolver.Resolve<IMagicInterface>();
 
-            magicInterface.ShouldNotBeNull();
-            magicInterface.ShouldBeAssignableTo<MagicClass>();
+            magicInterface.Should().NotBeNull();
+            magicInterface.Should().BeAssignableTo<MagicClass>();
         }
 
         [Fact]
@@ -87,11 +87,11 @@ namespace Autofac.Extras.IocManager.Tests
             IRootResolver resolver = _sut.CreateResolver();
             var magic = resolver.Resolve<IMagicInterface>();
 
-            magic.ShouldBeAssignableTo<MagicClassDecorator2>();
+            magic.Should().BeAssignableTo<MagicClassDecorator2>();
             var magicClassDecorator2 = (MagicClassDecorator2)magic;
-            magicClassDecorator2.Inner.ShouldBeAssignableTo<MagicClassDecorator1>();
+            magicClassDecorator2.Inner.Should().BeAssignableTo<MagicClassDecorator1>();
             var magicClassDecorator1 = (MagicClassDecorator1)magicClassDecorator2.Inner;
-            magicClassDecorator1.Inner.ShouldBeAssignableTo<MagicClass>();
+            magicClassDecorator1.Inner.Should().BeAssignableTo<MagicClass>();
         }
 
         private interface IMagicInterface

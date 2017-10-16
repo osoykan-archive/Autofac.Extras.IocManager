@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -16,12 +16,12 @@ namespace Autofac.Extras.IocManager.Tests
             var obj = new { connectionString = "someString", dbContext = typeof(MyDbContext) };
 
             IEnumerable<TypedParameter> typedParameters = obj.GetTypedResolvingParameters().ToList();
-            typedParameters.ShouldNotBeNull();
-            typedParameters.ShouldBeOfType<List<TypedParameter>>();
-            typedParameters.FirstOrDefault(x => x.Type == typeof(string)).ShouldNotBeNull();
-            typedParameters.FirstOrDefault(x => x.Type == typeof(Type)).ShouldNotBeNull();
-            typedParameters.FirstOrDefault(x => x.Type == typeof(string)).Value.ShouldBe("someString");
-            typedParameters.FirstOrDefault(x => x.Type == typeof(Type)).Value.ShouldBe(typeof(MyDbContext));
+            typedParameters.Should().NotBeNull();
+            typedParameters.Should().BeOfType<List<TypedParameter>>();
+            typedParameters.FirstOrDefault(x => x.Type == typeof(string)).Should().NotBeNull();
+            typedParameters.FirstOrDefault(x => x.Type == typeof(Type)).Should().NotBeNull();
+            typedParameters.FirstOrDefault(x => x.Type == typeof(string)).Value.Should().Be("someString");
+            typedParameters.FirstOrDefault(x => x.Type == typeof(Type)).Value.Should().Be(typeof(MyDbContext));
         }
 
         private class MyDbContext

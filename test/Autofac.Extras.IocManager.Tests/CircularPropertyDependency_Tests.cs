@@ -1,6 +1,6 @@
 ﻿using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -28,18 +28,18 @@ namespace Autofac.Extras.IocManager.Tests
             Initialize_Test_LifeTimeScope();
 
             var obj1 = The<MyClass1>();
-            obj1.Obj2.ShouldNotBe(null);
-            obj1.Obj3.ShouldNotBe(null);
-            obj1.Obj2.Obj3.ShouldNotBe(null);
+            obj1.Obj2.Should().NotBeNull();
+            obj1.Obj3.Should().NotBeNull();
+            obj1.Obj2.Obj3.Should().NotBeNull();
 
             var obj2 = The<MyClass2>();
-            obj2.Obj1.ShouldNotBe(null);
-            obj2.Obj3.ShouldNotBe(null);
-            obj2.Obj1.Obj3.ShouldNotBe(null);
+            obj2.Obj1.Should().NotBeNull();
+            obj2.Obj3.Should().NotBeNull();
+            obj2.Obj1.Obj3.Should().NotBeNull();
 
-            MyClass1.CreateCount.ShouldBe(1);
-            MyClass2.CreateCount.ShouldBe(1);
-            MyClass3.CreateCount.ShouldBe(1);
+            MyClass1.CreateCount.Should().Be(1);
+            MyClass2.CreateCount.Should().Be(1);
+            MyClass3.CreateCount.Should().Be(1);
         }
 
         public class MyClass1

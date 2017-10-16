@@ -126,7 +126,7 @@ using (var simpleDependencyWrapper = IocManager.Instance.ResolveAsDisposable<Sim
     simpleDisposableDependency = simpleDependencyWrapper.Object;
 }
 
-simpleDisposableDependency.DisposeCount.ShouldBe(1);
+simpleDisposableDependency.DisposeCount.Should().Be(1);
 ```
 
 Scoped resolver to avoid memory leaks:
@@ -137,7 +137,7 @@ using (IIocScopedResolver iocScopedResolver = IocManager.Instance.CreateScope())
     simpleDisposableDependency = iocScopedResolver.Resolve<SimpleDisposableDependency>();
 }
 
-simpleDisposableDependency.DisposeCount.ShouldBe(1);
+simpleDisposableDependency.DisposeCount.Should().Be(1);
 ```
  
 
