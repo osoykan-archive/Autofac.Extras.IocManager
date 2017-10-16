@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -24,7 +24,7 @@ namespace Autofac.Extras.IocManager.Tests
             var serviceCDecorator = The<Func<IServiceA, IServiceB, IServiceC>>();
             IServiceC serviceC = serviceCDecorator(new ServiceAImpl(), new ServiceBImpl());
 
-            serviceC.ShouldBeOfType(typeof(ServiceCDecorator));
+            serviceC.Should().BeOfType(typeof(ServiceCDecorator));
         }
 
         internal interface IServiceA

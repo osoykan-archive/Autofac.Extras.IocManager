@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -32,7 +32,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             _rootResolver.Dispose();
 
-            _manager.ShutdownCount.ShouldBe(1);
+            _manager.ShutdownCount.Should().Be(1);
         }
 
         [Fact]
@@ -55,15 +55,15 @@ namespace Autofac.Extras.IocManager.Tests
                                                    .CreateResolver();
 
             Action act = () => rootResolver.Dispose();
-            act.ShouldThrow<HandlerException>();
+            act.Should().Throw<HandlerException>();
 
             Action containerDisposedAction = () => rootResolver.Container.Resolve<ISomeManager>();
-            containerDisposedAction.ShouldThrow<ObjectDisposedException>();
+            containerDisposedAction.Should().Throw<ObjectDisposedException>();
 
             Action rootResolverDisposedAction = () => rootResolver.Resolve<ISomeManager>();
-            rootResolverDisposedAction.ShouldThrow<ObjectDisposedException>();
+            rootResolverDisposedAction.Should().Throw<ObjectDisposedException>();
 
-            manager.ShutdownCount.ShouldBe(1);
+            manager.ShutdownCount.Should().Be(1);
         }
 
         public class HandlerException : Exception

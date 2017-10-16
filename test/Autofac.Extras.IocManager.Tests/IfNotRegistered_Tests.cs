@@ -1,6 +1,6 @@
 ﻿using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -20,7 +20,7 @@ namespace Autofac.Extras.IocManager.Tests
                 }));
             });
 
-            LocalIocManager.IsRegistered<ServiceB>().ShouldBe(false);
+            LocalIocManager.IsRegistered<ServiceB>().Should().Be(false);
         }
 
         [Fact]
@@ -35,8 +35,8 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(false);
-            The<IService>().ShouldBeAssignableTo<ServiceA>();
+            LocalIocManager.IsRegistered(typeof(ServiceB)).Should().Be(false);
+            The<IService>().Should().BeAssignableTo<ServiceA>();
         }
 
         [Fact]
@@ -51,8 +51,8 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(false);
-            The<IService>().ShouldBeAssignableTo<ServiceA>();
+            LocalIocManager.IsRegistered(typeof(ServiceB)).Should().Be(false);
+            The<IService>().Should().BeAssignableTo<ServiceA>();
         }
 
         [Fact]
@@ -68,9 +68,9 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(true);
-            The<IService>().ShouldBeAssignableTo<ServiceB>();
-            The<IService>().MyProperty.ShouldNotBeNull();
+            LocalIocManager.IsRegistered(typeof(ServiceB)).Should().Be(true);
+            The<IService>().Should().BeAssignableTo<ServiceB>();
+            The<IService>().MyProperty.Should().NotBeNull();
         }
 
         [Fact]
@@ -86,9 +86,9 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(true);
-            The<IService>().ShouldBeAssignableTo<ServiceB>();
-            The<IService>().MyProperty.ShouldNotBeNull();
+            LocalIocManager.IsRegistered(typeof(ServiceB)).Should().Be(true);
+            The<IService>().Should().BeAssignableTo<ServiceB>();
+            The<IService>().MyProperty.Should().NotBeNull();
         }
 
         [Fact]
@@ -104,11 +104,11 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            LocalIocManager.IsRegistered(typeof(ServiceB)).ShouldBe(false);
-            The<IService>().ShouldBeAssignableTo<ServiceA>();
+            LocalIocManager.IsRegistered(typeof(ServiceB)).Should().Be(false);
+            The<IService>().Should().BeAssignableTo<ServiceA>();
 
             var instanceA = The<IService>();
-            instanceA.MyProperty.ShouldNotBeNull();
+            instanceA.MyProperty.Should().NotBeNull();
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace Autofac.Extras.IocManager.Tests
             IContainer resolver = builder.Build();
 
             var serviceAInstance = resolver.Resolve<ServiceA>();
-            serviceAInstance.MyProperty.ShouldNotBeNull();
+            serviceAInstance.MyProperty.Should().NotBeNull();
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace Autofac.Extras.IocManager.Tests
             IContainer resolver = builder.Build();
 
             var serviceAInstance = resolver.Resolve<ServiceA>();
-            serviceAInstance.MyProperty.ShouldNotBeNull();
+            serviceAInstance.MyProperty.Should().NotBeNull();
         }
 
         internal class ServiceA : IService

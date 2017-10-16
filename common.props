@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>3.2.0</VersionPrefix>
+    <VersionPrefix>3.2.1</VersionPrefix>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <PackageIconUrl>https://raw.githubusercontent.com/osoykan/Stove/master/stove.png</PackageIconUrl>
@@ -16,6 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.4.0" PrivateAssets="All" />
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.5.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>

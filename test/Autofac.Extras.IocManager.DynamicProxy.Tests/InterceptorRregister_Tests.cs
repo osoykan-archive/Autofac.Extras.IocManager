@@ -6,7 +6,7 @@ using Autofac.Extras.IocManager.TestBase;
 
 using Castle.DynamicProxy;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -25,8 +25,8 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
 
             var orderService = The<IOrderAppService>();
             orderService.DoSomeCoolStuff();
-            orderService.ShouldNotBeNull();
-            orderService.GetType().Name.ShouldContain("Proxy");
+            orderService.Should().NotBeNull();
+            orderService.GetType().Name.Should().Contain("Proxy");
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             });
 
             var orderService = The<IOrderAppService>();
-            orderService.ProductAppService.ShouldNotBeNull();
+            orderService.ProductAppService.Should().NotBeNull();
             orderService.DoSomeCoolStuff();
         }
 
@@ -59,8 +59,8 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
 
             var orderService = The<IOrderAppService>();
             orderService.DoSomeCoolStuff();
-            orderService.ShouldNotBeNull();
-            orderService.GetType().Name.ShouldContain("Proxy");
+            orderService.Should().NotBeNull();
+            orderService.GetType().Name.Should().Contain("Proxy");
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
             });
 
             var orderService = The<IOrderAppService>();
-            orderService.ProductAppService.ShouldNotBeNull();
+            orderService.ProductAppService.Should().NotBeNull();
             orderService.DoSomeCoolStuff();
         }
 
@@ -81,20 +81,14 @@ namespace Autofac.Extras.IocManager.DynamicProxy.Tests
         {
             Type implType = args.ComponentRegistration.Activator.LimitType;
 
-            if (typeof(IApplicationService).IsAssignableFrom(implType))
-            {
-                args.ComponentRegistration.InterceptedBy<UnitOfWorkInterceptor>();
-            }
+            if (typeof(IApplicationService).IsAssignableFrom(implType)) args.ComponentRegistration.InterceptedBy<UnitOfWorkInterceptor>();
         }
 
         private static void MultipleInterceptorRegistrar(ComponentRegisteredEventArgs args)
         {
             Type implType = args.ComponentRegistration.Activator.LimitType;
 
-            if (typeof(IApplicationService).IsAssignableFrom(implType))
-            {
-                args.ComponentRegistration.InterceptedBy(typeof(UnitOfWorkInterceptor), typeof(ExceptionInterceptor));
-            }
+            if (typeof(IApplicationService).IsAssignableFrom(implType)) args.ComponentRegistration.InterceptedBy(typeof(UnitOfWorkInterceptor), typeof(ExceptionInterceptor));
         }
 
         public class UnitOfWorkInterceptor : IInterceptor, ITransientDependency

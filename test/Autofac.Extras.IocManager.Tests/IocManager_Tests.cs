@@ -3,7 +3,7 @@ using System.Reflection;
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -16,8 +16,8 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { });
 
-            LocalIocManager.ShouldNotBeNull();
-            LocalIocManager.Resolver.ShouldNotBeNull();
+            LocalIocManager.Should().NotBeNull();
+            LocalIocManager.Resolver.Should().NotBeNull();
         }
 
         [Fact]
@@ -29,8 +29,8 @@ namespace Autofac.Extras.IocManager.Tests
             var managerByInterface = The<IIocManager>();
             var managerByClass = The<IocManager>();
 
-            managerByClass.ShouldBeSameAs(resolver);
-            managerByClass.ShouldBeSameAs(managerByInterface);
+            managerByClass.Should().BeSameAs(resolver);
+            managerByClass.Should().BeSameAs(managerByInterface);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Autofac.Extras.IocManager.Tests
             Building(builder => { builder.RegisterServices(f => f.Register<ISimpleDependency, SimpleDependency>(Lifetime.LifetimeScope)); });
 
             var simpleDependency = The<ISimpleDependency>();
-            simpleDependency.ShouldNotBeNull();
+            simpleDependency.Should().NotBeNull();
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace Autofac.Extras.IocManager.Tests
                 simpleDisposableDependency = simpleDependencyWrapper.Object;
             }
 
-            simpleDisposableDependency.DisposeCount.ShouldBe(1);
+            simpleDisposableDependency.DisposeCount.Should().Be(1);
         }
 
         [Fact]
@@ -63,8 +63,8 @@ namespace Autofac.Extras.IocManager.Tests
 
             var dependencyWithIocManager = resolver.Resolve<SimpleDependencyWithIocManager>();
 
-            dependencyWithIocManager.GetIocManager().ShouldBeSameAs(LocalIocManager);
-            dependencyWithIocManager.GetIocResolver().ShouldBeSameAs(LocalIocManager);
+            dependencyWithIocManager.GetIocManager().Should().BeSameAs(LocalIocManager);
+            dependencyWithIocManager.GetIocResolver().Should().BeSameAs(LocalIocManager);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Autofac.Extras.IocManager.Tests
                 simpleDisposableDependency = iocScopedResolver.Resolve<SimpleDisposableDependency>();
             }
 
-            simpleDisposableDependency.DisposeCount.ShouldBe(1);
+            simpleDisposableDependency.DisposeCount.Should().Be(1);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))));
 
-            The<ICurrentUnitOfWorkProvider>().ShouldNotBeNull();
+            The<ICurrentUnitOfWorkProvider>().Should().NotBeNull();
         }
 
         internal class CallContextCurrentUnitOfWorkProvider : ICurrentUnitOfWorkProvider, ITransientDependency

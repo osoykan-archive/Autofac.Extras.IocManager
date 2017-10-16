@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -17,7 +17,7 @@ namespace Autofac.Extras.IocManager.Tests
 
             using (IDisposableDependencyObjectWrapper<SimpleDisposableObject> wrapper = LocalIocManager.ResolveAsDisposable<SimpleDisposableObject>(new { myData = 42 }))
             {
-                wrapper.Object.MyData.ShouldBe(42);
+                wrapper.Object.MyData.Should().Be(42);
             }
         }
 
@@ -26,7 +26,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { builder.RegisterServices(f => f.RegisterType<SimpleDisposableObject>()); });
 
-            LocalIocManager.ResolveUsing<SimpleDisposableObject>(obj => obj.MyData.ShouldBe(0));
+            LocalIocManager.ResolveUsing<SimpleDisposableObject>(obj => obj.MyData.Should().Be(0));
         }
 
         internal class SimpleDisposableObject : IDisposable

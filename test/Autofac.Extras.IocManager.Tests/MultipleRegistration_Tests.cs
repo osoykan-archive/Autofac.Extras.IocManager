@@ -4,7 +4,7 @@ using System.Reflection;
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -18,10 +18,10 @@ namespace Autofac.Extras.IocManager.Tests
             Building(builder => { builder.RegisterServices(r => r.RegisterAssemblyByConvention(Assembly.Load(new AssemblyName("Autofac.Extras.IocManager.Tests")))); });
 
             var messageHandler = The<IMessageHandler>();
-            messageHandler.ShouldBeAssignableTo<ThirdMessageHandler>();
+            messageHandler.Should().BeAssignableTo<ThirdMessageHandler>();
 
             var messageHandlers = The<IEnumerable<IMessageHandler>>();
-            messageHandlers.Count().ShouldBe(3);
+            messageHandlers.Count().Should().Be(3);
         }
 
         [Fact]
@@ -38,10 +38,10 @@ namespace Autofac.Extras.IocManager.Tests
             });
 
             var messageHandler = The<IMessageHandler>();
-            messageHandler.ShouldBeAssignableTo<ThirdMessageHandler>();
+            messageHandler.Should().BeAssignableTo<ThirdMessageHandler>();
 
             var messageHandlers = The<IEnumerable<IMessageHandler>>();
-            messageHandlers.Count().ShouldBe(3);
+            messageHandlers.Count().Should().Be(3);
         }
 
         public interface IMessageHandler : ITransientDependency

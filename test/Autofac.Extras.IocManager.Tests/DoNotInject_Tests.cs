@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -18,14 +18,14 @@ namespace Autofac.Extras.IocManager.Tests
         [Fact]
         public void DoNotInject_Should_Work()
         {
-            The<IFoo>().Bar.ShouldNotBeNull();
+            The<IFoo>().Bar.Should().NotBeNull();
 
-            The<IFoo>().Gong.ShouldBeNull();
+            The<IFoo>().Gong.Should().BeNull();
 
-            The<FooKinda>().Foo.ShouldNotBeNull();
+            The<FooKinda>().Foo.Should().NotBeNull();
 
-            The<FooKinda>().GetGong().ShouldNotBeNull();
-            The<FooKinda>().GetBar().ShouldBeNull();
+            The<FooKinda>().GetGong().Should().NotBeNull();
+            The<FooKinda>().GetBar().Should().BeNull();
         }
 
         public class FooKinda : FooBase

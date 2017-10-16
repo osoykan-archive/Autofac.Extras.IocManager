@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -25,7 +25,7 @@ namespace Autofac.Extras.IocManager.Tests
 				});
 			});
 
-			LocalIocManager.Resolve<CStoveDbContext>().ShouldNotBeNull();
+			LocalIocManager.Resolve<CStoveDbContext>().Should().NotBeNull();
 		}
 
 		[Fact]
@@ -42,7 +42,7 @@ namespace Autofac.Extras.IocManager.Tests
 				});
 			});
 
-			LocalIocManager.Resolve<CStoveDbContext>().ShouldNotBeNull();
+			LocalIocManager.Resolve<CStoveDbContext>().Should().NotBeNull();
 		}
 	}
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -15,8 +15,8 @@ namespace Autofac.Extras.IocManager.Tests
         {
             List<Type> interfaces = typeof(MyClass).GetDefaultInterfacesWithSelf().ToList();
 
-            interfaces.ShouldNotBeNull();
-            interfaces.Count.ShouldBe(2);
+            interfaces.Should().NotBeNull();
+            interfaces.Count.Should().Be(2);
         }
 
         private class MyClass : IMyClass

@@ -2,6 +2,8 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
+using FluentAssertions;
+
 using Xunit;
 
 namespace Autofac.Extras.IocManager.Tests
@@ -20,6 +22,35 @@ namespace Autofac.Extras.IocManager.Tests
             });
 
             var myGenericResoulition = The<IRepository<MyClass, int>>();
+        }
+
+        [Fact]
+        public void generic_registration_with_property_injection_should_work()
+        {
+            Building(builder =>
+            {
+                builder.RegisterServices(r =>
+                {
+                    r.RegisterGeneric(typeof(IProvider<>), typeof(Provider<>));
+                    r.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+                });
+            });
+
+            The<IProvider<int>>().BullShitDependency.Should().NotBeNull();
+        }
+
+        public interface IProvider<T>
+        {
+            BullShitDependency BullShitDependency { get; set; }
+        }
+
+        public class Provider<T> : IProvider<T>
+        {
+            public BullShitDependency BullShitDependency { get; set; }
+        }
+
+        public class BullShitDependency : ITransientDependency
+        {
         }
 
         public interface IRepository : ITransientDependency

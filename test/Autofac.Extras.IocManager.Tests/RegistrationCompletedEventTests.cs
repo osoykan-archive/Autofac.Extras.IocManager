@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -29,7 +29,7 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            sampleClassInstance.DisposeCount.ShouldBe(1);
+            sampleClassInstance.DisposeCount.Should().Be(1);
         }
 
         [Fact]

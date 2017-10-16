@@ -2,7 +2,7 @@
 
 using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -18,7 +18,7 @@ namespace Autofac.Extras.IocManager.Tests
             var myDependencyFromLocalIocManager = The<IMyDependency>();
             var myDependencyFromResolver = resolver.Resolve<IMyDependency>();
 
-            myDependencyFromLocalIocManager.ShouldBeSameAs(myDependencyFromResolver);
+            myDependencyFromLocalIocManager.Should().BeSameAs(myDependencyFromResolver);
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace Autofac.Extras.IocManager.Tests
             IResolver resolver = Building(builder => { });
 
             var resolverContext = new ResolverContext(resolver);
-            resolverContext.Resolver.ShouldNotBeNull();
+            resolverContext.Resolver.Should().NotBeNull();
         }
 
         internal interface IMyDependency

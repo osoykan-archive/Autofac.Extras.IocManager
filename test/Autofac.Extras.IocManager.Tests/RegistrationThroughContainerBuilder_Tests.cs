@@ -1,6 +1,6 @@
 ﻿using Autofac.Extras.IocManager.TestBase;
 
-using Shouldly;
+using FluentAssertions;
 
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace Autofac.Extras.IocManager.Tests
         {
             Building(builder => { builder.RegisterServices(r => r.UseBuilder(containerBuilder => containerBuilder.RegisterType<MyClass>())); });
 
-            The<MyClass>().ShouldNotBeNull();
+            The<MyClass>().Should().NotBeNull();
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace Autofac.Extras.IocManager.Tests
                 });
             });
 
-            The<MyClass>().ResolveCount.ShouldBe(1);
+            The<MyClass>().ResolveCount.Should().Be(1);
         }
     }
 
