@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Autofac.Builder;
+using Autofac.Core;
+using Autofac.Extras.DynamicProxy;
+
+using Castle.DynamicProxy;
 
 namespace Autofac.Extras.IocManager
 {
@@ -76,6 +82,69 @@ namespace Autofac.Extras.IocManager
             {
                 registration.InstancePerDependency();
             }
+        }
+
+        internal static IRegistrationBuilder<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle>
+            ConfigureCallbacks<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle>
+            (this IRegistrationBuilder<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle> rb,
+                ContainerBuilder cb)
+            where TConcreteReflectionActivatorData : ConcreteReflectionActivatorData
+        {
+            var callbacks = cb.GetInstance<InterceptionCallbackContextList>(Callbacks.InterceptionCallbackContext);
+
+            Type serviceType = rb.RegistrationData.Services.OfType<IServiceWithType>().FirstOrDefault()?.ServiceType;
+            if (serviceType == null)
+            {
+                return rb;
+            }
+
+            Type implementationType = rb.ActivatorData.ImplementationType;
+            if (implementationType == null)
+            {
+                return rb;
+            }
+
+            ICollection<Type> interceptorTypes = callbacks.FirstOrDefault(x => x.Selector(serviceType))?.InterceptorTypes;
+
+            if (interceptorTypes != null && interceptorTypes.Any())
+            {
+                rb = rb.EnableClassInterceptors(ProxyGenerationOptions.Default, serviceType);
+
+                foreach (Type interceptor in interceptorTypes)
+                {
+                    rb.InterceptedBy(interceptor);
+                }
+            }
+
+            return rb;
+        }
+
+        internal static IRegistrationBuilder<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle>
+            ConfigureCallbacksOnGenerics<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle>
+            (this IRegistrationBuilder<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle> rb,
+                ContainerBuilder cb)
+        {
+            var callbacks = cb.GetInstance<InterceptionCallbackContextList>(Callbacks.InterceptionCallbackContext);
+
+            Type serviceType = rb.RegistrationData.Services.OfType<IServiceWithType>().FirstOrDefault()?.ServiceType;
+            if (serviceType == null)
+            {
+                return rb;
+            }
+
+            ICollection<Type> interceptorTypes = callbacks.FirstOrDefault(x => x.Selector(serviceType))?.InterceptorTypes;
+
+            if (interceptorTypes != null && interceptorTypes.Any())
+            {
+                rb.EnableInterfaceInterceptors(ProxyGenerationOptions.Default);
+
+                foreach (Type interceptor in interceptorTypes)
+                {
+                    rb.InterceptedBy(interceptor);
+                }
+            }
+
+            return rb;
         }
     }
 }
